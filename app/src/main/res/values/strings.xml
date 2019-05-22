@@ -1,3 +1,54 @@
 <resources>
     <string name="app_name">Utalii</string>
+
+
+
+    <string name="msg_no_internet">No internet connection, please check your internet connection and try again.</string>
+    <string name="msg_invalid_name">Please enter valid name</string>
+    <string name="msg_invalid_email">Please enter valid email id</string>
+    <string name="msg_invalid_mobile_no">Please enter valid mobile number</string>
+    <string name="msg_empty_mobile_no">Please enter your mobile number</string>
+    <string name="msg_empty_pass">Please enter your password</string>
+    <string name="msg_invalid_pass">Password must be atleast 6 characters in length</string>
+
+
+    <string name="hint_enter_name">Enter Name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_mobile_number">Mobile Number</string>
+    <string name="hint_enter_new_password">Enter new password</string>
+    <string name="hint_re_enter_new_password">Re enter new password</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_retype_password">Retype password</string>
+    <string name="hint_enter_password">Enter password</string>
+    <string name="hint_enter_your_mobile_number">Enter your mobile number</string>
+
+
+    <string name="button_sign_up">SIGN UP</string>
+
+    <string name="text_sign_up">SIGN UP</string>
+    <string name="text_enter_your_personal_details">Enter your personal details</string>
+    <string name="text_already_have_an_account">already have an account</string>
+    <string name="text_sign_in">SIGN IN</string>
+    <string name="text_guide_profile_setup">Guide profile setup</string>
+    <string name="text_upload_documents">Upload Documents</string>
+    <string name="text_name_of_the_document">Name of the document</string>
+    <string name="text_get_started">GET STARTED</string>
+    <string name="text_learn_more">LEARN MORE</string>
+    <string name="text_login">LOGIN</string>
+    <string name="text_log_in">LOG IN</string>
+    <string name="text_forgot_pass">Forgot Password?</string>
+    <string name="text_verification">Verification</string>
+    <string name="text_we_have_send_an_otp">We have send an OTP</string>
+    <string name="text_resend_otp">RESEND OTP</string>
+    <string name="text_verify">VERIFY</string>
+    <string name="text_recovery">Recovery</string>
+    <string name="text_we_will_do_verification_by_mobile_number">We will do verification by mobile number</string>
+    <string name="text_send_otp">SEND OTP</string>
+    <string name="text_guides_available_for_this_place">Guides available for this place</string>
+    <string name="text_save">Save</string>
+    <string name="text_please_create_new_password">Please create new password</string>
+    <string name="text_new_user">New User?</string>
+    <string name="text_view_all">VIEW ALL</string>
+
+
 </resources>

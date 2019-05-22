@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <FrameLayout
+            android:id="@+id/layout_top"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:src="@color/colorBlack"
+        />
+
+        <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/arrow_back_white"
+        />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="bottom"
+                android:src="@color/color_blue"
+        />
+
+    </FrameLayout>
+
+    <com.utalli.RobotoRegularTextView
+            android:id="@+id/tv_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/layout_top"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:paddingRight="15dp"
+            android:singleLine="true"
+            android:textColor="@color/colorBlack"
+            app:layout_constraintRight_toLeftOf="@+id/tv_guide_charges"
+            android:text="Zachary R.Barr"
+    />
+
+
+    <com.utalli.RobotoRegularTextView
+            android:id="@+id/tv_guide_charges"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"
+            android:text="$ 60"
+            android:maxLength="8"
+            android:includeFontPadding="false"
+            app:layout_constraintRight_toLeftOf="@+id/tv_txt_per_day"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_name"
+
+    />
+
+    <com.utalli.RobotoRegularTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="/day"
+            android:textColor="@color/grey"
+            android:layout_marginRight="15dp"
+            android:id="@+id/tv_txt_per_day"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_name"
+    />
+
+
+    <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            app:cardElevation="5dp"
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="10dp" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_first"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/vieww1"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                <com.utalli.RobotoRegularTextView
+                        android:id="@+id/tv_trips"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:textColor="@color/colorBlack"
+                        android:alpha=".8"
+                        android:textSize="14sp"
+                        android:text="Trips"
+                />
+                <com.utalli.RobotoMediumTextView
+                        android:id="@+id/tv_trips_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_trips"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorBlack"
+                        android:text="20+"
+                />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <View
+                    android:id="@+id/vieww1"
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintLeft_toRightOf="@+id/cl_first"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:background="@color/grey_1"
+                    app:layout_constraintRight_toLeftOf="@+id/cl_second"
+            />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_second"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toRightOf="@+id/vieww1"
+                    app:layout_constraintRight_toLeftOf="@+id/vieww2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                <com.utalli.RobotoRegularTextView
+                        android:id="@+id/tv_knownPlaces"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        android:alpha=".8"
+                        android:text="Known Places"
+                />
+                <com.utalli.RobotoMediumTextView
+                        android:id="@+id/tv_knownPlaces_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_knownPlaces"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:text="20+"
+                />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <View
+                    android:id="@+id/vieww2"
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintLeft_toRightOf="@+id/cl_second"
+                    app:layout_constraintRight_toLeftOf="@+id/cl_third"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:background="@color/grey_1"
+            />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_third"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toRightOf="@+id/vieww2"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                <com.utalli.RobotoRegularTextView
+                        android:id="@+id/tv_from"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        android:alpha=".8"
+                        android:text="From"
+                />
+                <com.utalli.RobotoMediumTextView
+                        android:id="@+id/tv_from_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_from"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16sp"
+                        android:text="SA"
+                />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <com.utalli.RobotoRegularTextView
+            android:id="@+id/txt_ratingValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardview_layout"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:textColor="#f4ad42"
+            android:text="4.0"
+    />
+
+    <RatingBar
+            android:id="@+id/ratingbar_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="15dp"
+            android:numStars="1"
+            style="?android:attr/ratingBarStyleSmall"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_ratingValue"
+            app:layout_constraintLeft_toRightOf="@+id/txt_ratingValue"
+            app:layout_constraintTop_toBottomOf="@+id/cardview_layout"/>
+
+    <com.utalli.RobotoRegularTextView
+            android:id="@+id/tv_about_place"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/txt_ratingValue"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tv_description"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="12sp"
+            android:text="About Zachary R.Barr"
+    />
+
+    <com.utalli.RobotoRegularTextView
+            android:id="@+id/tv_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv_about_place"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:textColor="@color/grey"
+            android:textSize="12sp"
+            android:text="Zachary R.Barr gvhvb vnvn whbvhwvn bhvb bwy bhb hbwhfw hbheb hbhbn uyfbhv  fhfbn vhvhb hfhwb hvwhbcn gwh chgcevc bvwgvc h"
+    />
+
+
+    <View
+            android:id="@+id/vieww"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@color/grey_1"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description"
+    />
+
+
+    <com.utalli.RobotoRegularTextView
+            android:id="@+id/tv_language_known"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/vieww"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:textSize="12sp"
+            android:textColor="@color/grey"
+            android:text="Language Known"
+    />
+
+    <com.utalli.RobotoRegularTextView
+            android:id="@+id/tv_laguageName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv_language_known"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:textSize="16sp"
+            android:textColor="@color/colorBlack"
+            android:text="English"
+    />
+
+
+
+    <com.utalli.RobotoMediumButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv_laguageName"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/rounded_rect_blue"
+            android:text="SELECT THIS GUIDE"
+    />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.core.widget.NestedScrollView>
+
