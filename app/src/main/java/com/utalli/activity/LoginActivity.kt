@@ -2,6 +2,8 @@ package com.utalli.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.utalli.R
@@ -9,6 +11,8 @@ import com.utalli.helpers.Utils
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
+
+    var showPassword: Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +28,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         tv_login_btn.setOnClickListener(this)
         tv_forgot_pass.setOnClickListener(this)
         tv_signUp.setOnClickListener(this)
+        iv_password_toggle.setOnClickListener(this)
     }
 
 
@@ -38,10 +43,25 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
                 finish()
             }
+            R.id.iv_password_toggle ->{
+                if (showPassword) {
+                    et_password.transformationMethod = PasswordTransformationMethod.getInstance()
+
+                    iv_password_toggle.setImageResource(R.drawable.eye_hide)
+                } else {
+
+                    et_password.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                    iv_password_toggle.setImageResource(R.drawable.eye)
+                }
+                et_password.setSelection(et_password.text!!.length)
+                showPassword = !showPassword
+            }
             R.id.tv_login_btn ->{
 
                 if(checkValidation()){
-
+                    val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }
 
             }

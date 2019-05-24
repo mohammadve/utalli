@@ -78,18 +78,19 @@
             android:backgroundTint="@color/color_blue"
             android:textCursorDrawable="@color/color_blue"
             android:textSize="14sp"
+            android:inputType="textPassword"
             android:singleLine="true"
             android:padding="15dp"
             android:hint="@string/hint_password"/>
 
         <ImageView
-            android:id="@+id/iv"
+            android:id="@+id/iv_password_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@+id/et_password"
             app:layout_constraintBottom_toBottomOf="@+id/et_password"
             app:layout_constraintRight_toRightOf="@+id/et_password"
-            android:src="@drawable/ic_add_black_24dp"
+            android:src="@drawable/eye_hide"
             android:padding="12dp"
             />
 
