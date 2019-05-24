@@ -22,6 +22,7 @@
     <string name="hint_enter_password">Enter password</string>
     <string name="hint_enter_your_mobile_number">Enter your mobile number</string>
     <string name="hint_explore_country_or_place">Explore country or place</string>
+    <string name="hint_type_message">Type a message</string>
 
 
     <string name="button_sign_up">SIGN UP</string>
@@ -51,7 +52,8 @@
     <string name="text_new_user">New User?</string>
     <string name="text_view_all">VIEW ALL</string>
     <string name="text_you_are_at">You are at</string>
-
+    <string name="text_name">Name</string>
+    <string name="text_contact_details">Contact details</string>
 
 
 </resources>

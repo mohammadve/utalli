@@ -49,6 +49,12 @@
         <activity android:name=".activity.PlaceProfileDetailsActivity"
         android:screenOrientation="portrait"/>
 
+        <activity android:name=".activity.MyProfileActivity"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.NotificationActivity"
+        android:screenOrientation="portrait"/>
+
 
 
 
