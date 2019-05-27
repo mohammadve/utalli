@@ -22,15 +22,18 @@ class RecoveryPasswordActivity : AppCompatActivity(), View.OnClickListener {
     private fun initViews() {
 
         tv_save.setOnClickListener(this)
+        iv_back.setOnClickListener(this)
     }
 
 
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.tv_save ->{
+        when (v?.id) {
+            R.id.tv_save -> {
                 val intent = Intent(this@RecoveryPasswordActivity, LoginActivity::class.java)
                 startActivity(intent)
             }
+            R.id.iv_back -> finish()
+
         }
 
     }

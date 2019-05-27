@@ -19,14 +19,14 @@
             android:padding="16dp"
     >
 
-    <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/civ_profile_pic"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@color/colorBlack"
-    />
+        <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civ_profile_pic"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@color/colorBlack"
+        />
 
         <com.utalli.RobotoRegularTextView
                 android:id="@+id/tv_guide_name"
@@ -57,18 +57,18 @@
                 android:text="4.0"
         />
 
-       <!-- <RatingBar
-                android:id="@+id/ratingbar_star"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:numStars="1"
-                style="?android:attr/ratingBarStyleSmall"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginLeft="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_guide_name"
-                app:layout_constraintLeft_toRightOf="@+id/txt_ratingValue"
+        <!-- <RatingBar
+                 android:id="@+id/ratingbar_star"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:numStars="1"
+                 style="?android:attr/ratingBarStyleSmall"
+                 app:layout_constraintTop_toTopOf="parent"
+                 android:layout_marginLeft="5dp"
+                 app:layout_constraintBottom_toBottomOf="@+id/tv_guide_name"
+                 app:layout_constraintLeft_toRightOf="@+id/txt_ratingValue"
 
-        />-->
+         />-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_main"
@@ -82,56 +82,56 @@
                 app:layout_constraintBottom_toTopOf="@+id/tv_language"
         >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_first"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/vieww"
-        >
-
-            <ImageView
-                    android:id="@+id/iv_single_icon"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/star_icon"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_first"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-            />
-
-            <com.utalli.RobotoRegularTextView
-                    android:id="@+id/tv_guide_charges"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toRightOf="@+id/iv_single_icon"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp"
-                    android:alpha=".8"
-                    android:text="$ 60"
-                    android:maxLength="8"
-                    android:includeFontPadding="false"
-                    app:layout_constraintRight_toLeftOf="@+id/tv_per_day"
-            />
+                    app:layout_constraintRight_toLeftOf="@+id/vieww"
+            >
 
-            <com.utalli.RobotoRegularTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toRightOf="@+id/tv_guide_charges"
-                    android:textSize="10sp"
-                    android:text="/day"
-                    android:textColor="@color/colorBlack"
-                    android:alpha=".8"
-                    android:layout_marginRight="15dp"
-                    android:id="@+id/tv_per_day"
-                    app:layout_constraintBottom_toBottomOf="@+id/iv_single_icon"
-            />
+                <ImageView
+                        android:id="@+id/iv_single_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_single"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.utalli.RobotoRegularTextView
+                        android:id="@+id/tv_guide_charges"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toRightOf="@+id/iv_single_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        android:alpha=".8"
+                        android:text="$ 60"
+                        android:maxLength="8"
+                        android:includeFontPadding="false"
+                        app:layout_constraintRight_toLeftOf="@+id/tv_per_day"
+                />
+
+                <com.utalli.RobotoRegularTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toRightOf="@+id/tv_guide_charges"
+                        android:textSize="10sp"
+                        android:text="/day"
+                        android:textColor="@color/colorBlack"
+                        android:alpha=".8"
+                        android:layout_marginRight="15dp"
+                        android:id="@+id/tv_per_day"
+                        app:layout_constraintBottom_toBottomOf="@+id/iv_single_icon"
+                />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <View
@@ -147,56 +147,56 @@
             />
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_second"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginLeft="10dp"
-                app:layout_constraintLeft_toRightOf="@+id/vieww1"
-        >
-
-            <ImageView
-                    android:id="@+id/iv_group_icon"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/star_icon"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-            />
-
-            <com.utalli.RobotoRegularTextView
-                    android:id="@+id/tv_guide_charges_group"
-                    android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_second"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toRightOf="@+id/iv_group_icon"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginLeft="10dp"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="14sp"
-                    android:text="$ 60"
-                    android:alpha=".8"
-                    android:maxLength="8"
-                    android:includeFontPadding="false"
-                    app:layout_constraintRight_toLeftOf="@+id/tv_per_day_group"
-            />
+                    app:layout_constraintLeft_toRightOf="@+id/vieww1"
+            >
 
-            <com.utalli.RobotoRegularTextView
-                    android:id="@+id/tv_per_day_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toRightOf="@+id/tv_guide_charges_group"
-                    android:textSize="10sp"
-                    android:text="/day in pool"
-                    android:textColor="@color/colorBlack"
-                    android:alpha=".8"
-                    android:layout_marginRight="15dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/iv_group_icon"
-            />
+                <ImageView
+                        android:id="@+id/iv_group_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_group"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.utalli.RobotoRegularTextView
+                        android:id="@+id/tv_guide_charges_group"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toRightOf="@+id/iv_group_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="14sp"
+                        android:text="$ 60"
+                        android:alpha=".8"
+                        android:maxLength="8"
+                        android:includeFontPadding="false"
+                        app:layout_constraintRight_toLeftOf="@+id/tv_per_day_group"
+                />
+
+                <com.utalli.RobotoRegularTextView
+                        android:id="@+id/tv_per_day_group"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toRightOf="@+id/tv_guide_charges_group"
+                        android:textSize="10sp"
+                        android:text="/day in pool"
+                        android:textColor="@color/colorBlack"
+                        android:alpha=".8"
+                        android:layout_marginRight="15dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/iv_group_icon"
+                />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

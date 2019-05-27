@@ -57,12 +57,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 showPassword = !showPassword
             }
             R.id.tv_login_btn ->{
-
-                if(checkValidation()){
+                val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
+                /*if(checkValidation()){
                     val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                     startActivity(intent)
                     finish()
-                }
+                }*/
 
             }
 

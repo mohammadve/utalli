@@ -21,19 +21,20 @@ class RecoveryActivity : AppCompatActivity(), View.OnClickListener {
     private fun initViews() {
 
         tv_send_otp.setOnClickListener(this)
+        iv_back.setOnClickListener(this)
     }
 
 
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.tv_send_otp ->{
-                val intent = Intent(this@RecoveryActivity, RecoveryPasswordActivity::class.java)
+        when (v?.id) {
+            R.id.tv_send_otp -> {
+                val intent = Intent(this@RecoveryActivity, OTPActivity::class.java)
                 startActivity(intent)
             }
+            R.id.iv_back -> finish()
         }
 
     }
-
 
 
 }

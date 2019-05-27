@@ -21,9 +21,7 @@ class SplashActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        Glide.with(this)
-            .load(resources.getDrawable(R.drawable.custom_shape))
-            .into(iv_main)
+
 
         tv_getStarted.setOnClickListener(this)
 

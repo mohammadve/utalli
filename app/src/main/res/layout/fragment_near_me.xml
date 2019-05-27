@@ -6,6 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/coordinate_layout"
+        android:background="@color/color_primary_light"
 >
 
 
@@ -98,47 +99,31 @@
 
                     <ImageView
                             android:id="@+id/iv_notification"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            android:src="@drawable/star_icon"/>
+                            android:src="@drawable/ic_bell"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-         <!--    <com.utalli.RobotoRegularEditText
-                     android:id="@+id/et_search"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:layout_marginTop="10dp"
-                     android:background="@drawable/rounded_rect_white"
-                     app:layout_constraintTop_toBottomOf="@+id/cl_First"
-                     app:layout_constraintLeft_toLeftOf="parent"
-                     app:layout_constraintRight_toRightOf="parent"
-                     app:layout_constraintBottom_toBottomOf="parent"
-                     android:paddingLeft="10dp"
-                     android:paddingTop="10dp"
-                     android:textSize="14sp"
-                     android:drawablePadding="15dp"
-                     android:hint="@string/hint_explore_country_or_place"
-                     android:paddingBottom="10dp"
-                     android:layout_marginLeft="10dp"
-                     android:layout_marginRight="10dp"
-                     android:drawableLeft="@drawable/ic_search_black_24dp"
-             />
--->
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
 
+        <Space
+                android:id="@+id/spacer"
+                android:layout_width="match_parent" android:layout_height="40dp"/>
+
         <Toolbar
                 android:id="@+id/toolbar_nearMe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+
                 app:layout_collapseMode="pin"
                 android:visibility="visible"
                 android:elevation="4dp">
@@ -170,13 +155,13 @@
                         app:layout_constraintLeft_toRightOf="@+id/profile_Pic_toolbar"
                         app:layout_constraintRight_toLeftOf="@+id/iv_notification_toolbar"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:visibility="visible"
                 >
 
-                    <com.utalli.RobotoRegularEditText
-                            android:id="@+id/et_searchSecond_toolbar"
+                    <com.utalli.RobotoRegularTextView
+                            android:id="@+id/tv_searchSecond_toolbar"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
@@ -190,8 +175,6 @@
                             android:drawablePadding="15dp"
                             android:hint="@string/hint_explore_country_or_place"
                             android:paddingBottom="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
                             android:drawableLeft="@drawable/ic_search_black_24dp"
                     />
 
@@ -200,12 +183,12 @@
 
                 <ImageView
                         android:id="@+id/iv_notification_toolbar"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        android:src="@drawable/star_icon"
+                        android:src="@drawable/ic_bell"
                         android:visibility="gone"
                 />
 
@@ -214,46 +197,28 @@
 
 
 
-            <!--  <com.utalli.RobotoRegularEditText
-                      android:id="@+id/et_search"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:background="@drawable/rounded_rect_white"
-                      app:layout_constraintTop_toBottomOf="@+id/toolbar_nearMe"
-                      app:layout_constraintLeft_toLeftOf="parent"
-                      app:layout_constraintRight_toRightOf="parent"
-                      app:layout_constraintBottom_toBottomOf="parent"
-                      android:paddingLeft="10dp"
-                      android:paddingTop="10dp"
-                      android:textSize="14sp"
-                      android:drawablePadding="15dp"
-                      android:hint="@string/hint_explore_country_or_place"
-                      android:paddingBottom="10dp"
-                      android:layout_marginLeft="10dp"
-                      android:layout_marginRight="10dp"
-                      android:drawableLeft="@drawable/ic_search_black_24dp"
-              />-->
-
         </Toolbar>
 
 
     </com.google.android.material.appbar.AppBarLayout>
-    
-    
-    
+
+
     <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fillViewport="true"
+
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            >
+    >
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+        >
 
-    </androidx.recyclerview.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
     </androidx.core.widget.NestedScrollView>
 
