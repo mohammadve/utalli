@@ -39,18 +39,22 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener {
         button_confirm.setOnClickListener(this)
         tv_date_of_arrival.setOnClickListener(this)
         tv_date_of_departure.setOnClickListener(this)
+        tv_arrival_date_change.setOnClickListener(this)
+        tv_departure_date_change.setOnClickListener(this)
         tv_change.setOnClickListener(this)
 
 
-        if(tv_date_of_arrival.text.equals("DD/MM/YYYY")){
+        if(tv_date_of_arrival.text == null && tv_date_of_arrival.text.equals("DD/MM/YYYY")){
             tv_arrival_date_change.visibility = View.GONE
-        } else{
+        }
+        else if(tv_date_of_arrival.text != null && !tv_date_of_arrival.text.equals("DD/MM/YYYY")){
             tv_arrival_date_change.visibility = View.VISIBLE
         }
 
-        if(tv_date_of_departure.text.equals("DD/MM/YYYY")){
+        if(tv_date_of_departure.text == null && tv_date_of_departure.text.equals("DD/MM/YYYY")){
             tv_departure_date_change.visibility = View.GONE
-        } else {
+        }
+        else if(tv_date_of_departure.text != null && !tv_date_of_departure.text.equals("DD/MM/YYYY")) {
             tv_departure_date_change.visibility = View.VISIBLE
         }
 
@@ -79,33 +83,72 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener {
                 finish()
             }
             R.id.tv_date_of_arrival ->{
-            /*     c = Calendar.getInstance()
-                 year = c.get(Calendar.YEAR)
-                 month = c.get(Calendar.MONTH)
-                 day = c.get(Calendar.DAY_OF_MONTH)*/
 
-                val datePickerDialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                val datePickerDialog = DatePickerDialog(this,R.style.DialogTheme, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
-                    tv_date_of_arrival.setText("" + dayOfMonth + "/" + monthOfYear + "/" + year)
+                    tv_date_of_arrival.setText("" + dayOfMonth + "/" + (monthOfYear+1) + "/" + year)
+
+                    if(tv_date_of_arrival.text == null && tv_date_of_arrival.text.equals("DD/MM/YYYY")){
+                        tv_arrival_date_change.visibility = View.GONE
+                    }
+                    else if (tv_date_of_arrival.text != null && !tv_date_of_arrival.text.equals("DD/MM/YYYY")){
+                        tv_arrival_date_change.visibility = View.VISIBLE  //tv_arrival_date_change
+                    }
+
                 }, year, month, day)
-                tv_arrival_date_change.visibility = View.VISIBLE
+
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000)
+
+
+
                 datePickerDialog.show()
 
             }
 
             R.id.tv_date_of_departure ->{
-            /*    c = Calendar.getInstance()
-                year = c.get(Calendar.YEAR)
-                month = c.get(Calendar.MONTH)
-                day = c.get(Calendar.DAY_OF_MONTH)*/
 
-                val datePickerDialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                val datePickerDialog = DatePickerDialog(this,R.style.DialogTheme, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
-                    tv_date_of_departure.setText("" + dayOfMonth + "/" + monthOfYear + "/" + year)
+                    tv_date_of_departure.setText("" + dayOfMonth + "/" + (monthOfYear+1) + "/" + year)
+
+                    if(tv_date_of_departure.text == null && tv_date_of_departure.text.equals("DD/MM/YYYY")){
+                        tv_departure_date_change.visibility = View.GONE
+                    }
+                    else if(tv_date_of_departure.text != null && !tv_date_of_departure.text.equals("DD/MM/YYYY"))
+                    {
+                        tv_departure_date_change.visibility = View.VISIBLE
+                    }
+
+
+
                 }, year, month, day)
-                tv_departure_date_change.visibility = View.VISIBLE
+
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000)
+
+
+
                 datePickerDialog.show()
             }
+
+            R.id.tv_departure_date_change ->{
+                val datePickerDialog = DatePickerDialog(this,R.style.DialogTheme, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+
+                    tv_date_of_departure.setText("" + dayOfMonth + "/" + (monthOfYear+1) + "/" + year)
+                }, year, month, day)
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000)
+                datePickerDialog.show()
+            }
+
+            R.id.tv_arrival_date_change -> {
+                val datePickerDialog = DatePickerDialog(this,R.style.DialogTheme, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+
+                    tv_date_of_arrival.setText("" + dayOfMonth + "/" + (monthOfYear+1) + "/" + year)
+                }, year, month, day)
+
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000)
+                datePickerDialog.show()
+            }
+
 
         }
 

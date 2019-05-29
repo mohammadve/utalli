@@ -14,6 +14,14 @@ class RecoveryActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recovery)
 
+        toolbar_recovery.title = ""
+
+        toolbar_recovery.setNavigationIcon(R.drawable.arrow_back_black)
+        setSupportActionBar(toolbar_recovery)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        toolbar_recovery.setNavigationOnClickListener { finish() }
+
 
         initViews();
     }
@@ -21,7 +29,7 @@ class RecoveryActivity : AppCompatActivity(), View.OnClickListener {
     private fun initViews() {
 
         tv_send_otp.setOnClickListener(this)
-        iv_back.setOnClickListener(this)
+
     }
 
 
@@ -31,7 +39,7 @@ class RecoveryActivity : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(this@RecoveryActivity, OTPActivity::class.java)
                 startActivity(intent)
             }
-            R.id.iv_back -> finish()
+
         }
 
     }

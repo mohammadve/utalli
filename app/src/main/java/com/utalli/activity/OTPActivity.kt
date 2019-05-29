@@ -14,7 +14,22 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_otp)
 
+
+
+        toolbar_otp.title = ""
+
+        toolbar_otp.setNavigationIcon(R.drawable.arrow_back_black)
+        setSupportActionBar(toolbar_otp)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        toolbar_otp.setNavigationOnClickListener { finish() }
+
         tv_verify_btn.setOnClickListener(this)
+
+
+
+
+
 
     }
 

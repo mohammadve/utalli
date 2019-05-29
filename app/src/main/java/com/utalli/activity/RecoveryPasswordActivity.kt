@@ -16,8 +16,16 @@ class RecoveryPasswordActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recovery_password)
 
+        toolbar_recoveryPass.title = ""
 
-        initViews();
+        toolbar_recoveryPass.setNavigationIcon(R.drawable.arrow_back_black)
+        setSupportActionBar(toolbar_recoveryPass)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        toolbar_recoveryPass.setNavigationOnClickListener { finish() }
+
+
+        initViews()
 
     }
 
@@ -28,7 +36,7 @@ class RecoveryPasswordActivity : AppCompatActivity(), View.OnClickListener {
         iv_reTypePassword_toggle.setOnClickListener(this)
 
         tv_save.setOnClickListener(this)
-        iv_back.setOnClickListener(this)
+
     }
 
 
@@ -37,9 +45,6 @@ class RecoveryPasswordActivity : AppCompatActivity(), View.OnClickListener {
             R.id.tv_save -> {
                 val intent = Intent(this@RecoveryPasswordActivity, LoginActivity::class.java)
                 startActivity(intent)
-            }
-            R.id.iv_back ->{
-                finish()
             }
 
             R.id.iv_password_toggle ->{

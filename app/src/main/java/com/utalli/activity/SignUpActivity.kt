@@ -1,32 +1,49 @@
 package com.utalli.activity
 
+import android.app.DatePickerDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.utalli.R
 import com.utalli.helpers.Utils
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import java.util.*
 
 class SignUpActivity : AppCompatActivity(), View.OnClickListener {
+    var c = Calendar.getInstance()
+    var year = c.get(Calendar.YEAR)
+    var month = c.get(Calendar.MONTH)
+    var day = c.get(Calendar.DAY_OF_MONTH)
+    var genderValue : String? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
+        toolbar.title = ""
+        toolbar.setNavigationIcon(R.drawable.arrow_back_black)
+        setSupportActionBar(toolbar)
+        toolbar.setNavigationOnClickListener { finish() }
+
         initView()
     }
 
     private fun initView() {
 
-        toolbar.title = ""
-        toolbar.setNavigationIcon(R.drawable.arrow_back_black)
-        setSupportActionBar(toolbar)
-
         btn_signUp.setOnClickListener(this)
         tv_sign_in.setOnClickListener(this)
+        iv_calendar_icon.setOnClickListener(this)
+
+        cl_first_male.setOnClickListener(this)
+        cl_second_female.setOnClickListener(this)
+        cl_third_other.setOnClickListener(this)
+
 
     }
 
@@ -40,6 +57,46 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
                 finish()
             }
+            R.id.iv_calendar_icon -> {
+                val datePickerDialog = DatePickerDialog(this,R.style.DialogTheme, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+
+                    et_dateOfBirth.setText("" + dayOfMonth + "/" + (monthOfYear+1) + "/" + year)
+                }, year, month, day)
+
+                datePickerDialog.show()
+            }
+            R.id.cl_first_male ->{
+                genderValue = "MALE"
+                cl_first_male.setBackgroundColor(resources.getColor(R.color.color_blue))
+                cl_second_female.setBackgroundColor(resources.getColor(R.color.colorWhite))
+                cl_third_other.setBackgroundColor(resources.getColor(R.color.colorWhite))
+
+                tv_male.setTextColor(Color.parseColor("#ffffff"))
+                tv_female.setTextColor(Color.parseColor("#000000"))
+                tv_other.setTextColor(Color.parseColor("#000000"))
+
+            }
+            R.id.cl_second_female -> {
+                genderValue = "FEMALE"
+                cl_second_female.setBackgroundColor(resources.getColor(R.color.color_blue))
+                cl_first_male.setBackgroundColor(resources.getColor(R.color.colorWhite))
+                cl_third_other.setBackgroundColor(resources.getColor(R.color.colorWhite))
+
+                tv_male.setTextColor(Color.parseColor("#000000"))
+                tv_female.setTextColor(Color.parseColor("#ffffff"))
+                tv_other.setTextColor(Color.parseColor("#000000"))
+
+            }
+            R.id.cl_third_other ->{
+                genderValue = "OTHER"
+                cl_third_other.setBackgroundColor(resources.getColor(R.color.color_blue))
+                cl_first_male.setBackgroundColor(resources.getColor(R.color.colorWhite))
+                cl_second_female.setBackgroundColor(resources.getColor(R.color.colorWhite))
+
+                tv_male.setTextColor(Color.parseColor("#000000"))
+                tv_female.setTextColor(Color.parseColor("#000000"))
+                tv_other.setTextColor(Color.parseColor("#ffffff"))
+            }
 
         }
 
@@ -49,27 +106,15 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
         Utils.hideSoftKeyboard(this)
 
-        if(checkValidations()){
+        //if(checkValidations()){
             val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
             startActivity(intent)
             finish()
 
-        }
+       // }
+        Toast.makeText(this,genderValue,Toast.LENGTH_SHORT).show()
 
 
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item!!.getItemId()){
-            android.R.id.home ->{
-                val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-                finish()
-                return true
-            }
-            else -> return super.onOptionsItemSelected(item)
-        }
     }
 
     private fun checkValidations(): Boolean {

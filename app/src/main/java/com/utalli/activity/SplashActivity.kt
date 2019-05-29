@@ -34,7 +34,6 @@ class SplashActivity : AppCompatActivity(), View.OnClickListener {
                 tv_getStarted.visibility = View.VISIBLE
                 tv_learnMore.visibility = View.VISIBLE
 
-
         }, 2000)
 
 
