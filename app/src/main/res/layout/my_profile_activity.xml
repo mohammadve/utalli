@@ -12,7 +12,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:background="@color/color_primary_light"
     >
 
@@ -120,6 +119,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:singleLine="true"
+                android:textColor="@color/grey"
                 android:textSize="14sp"
                 android:text="@string/text_contact_details"
         />
@@ -140,14 +140,232 @@
         />
 
 
+        <com.utalli.RobotoRegularTextView
+                android:id="@+id/emailId"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_contactDetails"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:singleLine="true"
+                android:textColor="@color/grey"
+                android:textSize="14sp"
+                android:text="@string/text_email_id"
+        />
+
+        <com.utalli.RobotoMediumTextView
+                android:id="@+id/tv_email_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/emailId"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
+                android:text="janicecraw@samplemail.com"
+        />
+
+
+        <com.utalli.RobotoRegularTextView
+                android:id="@+id/address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_email_id"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:singleLine="true"
+                android:textColor="@color/grey"
+                android:textSize="14sp"
+                android:text="@string/text_address"
+        />
+
+        <com.utalli.RobotoMediumTextView
+                android:id="@+id/tv_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/address"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
+                android:text="4848 Willow Greene Drive Montgomery"
+        />
+
+
         <View
-                android:id="@+id/vieww"
+                android:id="@+id/vieww1"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:background="@color/grey_1"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_contactDetails"
+                app:layout_constraintTop_toBottomOf="@+id/tv_address"
+                android:layout_marginTop="16dp"
+        />
+
+        <com.utalli.RobotoRegularTextView
+                android:id="@+id/emergencyContactNumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vieww1"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:singleLine="true"
+                android:textColor="@color/grey"
+                android:textSize="14sp"
+                android:text="@string/text_emergency_contact_number"
+        />
+
+        <com.utalli.RobotoMediumTextView
+                android:id="@+id/tv_emergency_contact_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/emergencyContactNumber"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
+                android:text="+1 3342484232"
+        />
+
+
+
+        <View
+                android:id="@+id/vieww2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/grey_1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_emergency_contact_number"
+                android:layout_marginTop="16dp"
+        />
+
+
+        <com.utalli.RobotoRegularTextView
+                android:id="@+id/appSettings"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vieww2"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:singleLine="true"
+                android:textColor="@color/grey"
+                android:textSize="14sp"
+                android:text="@string/text_app_settings"
+        />
+
+        <ImageView
+                android:id="@+id/iv_right_arrow_appSettings"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/right_arrow"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/appSettings"
+        />
+
+        <com.utalli.RobotoMediumTextView
+                android:id="@+id/tv_appSettings"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/appSettings"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
+                android:text="Notification, Vibration etc."
+        />
+
+
+
+        <View
+                android:id="@+id/vieww3"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/grey_1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_appSettings"
+                android:layout_marginTop="16dp"
+        />
+
+
+        <com.utalli.RobotoRegularTextView
+                android:id="@+id/helpAndSupport"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vieww3"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:singleLine="true"
+                android:textColor="@color/grey"
+                android:textSize="14sp"
+                android:text="@string/text_help_and_support"
+        />
+
+        <ImageView
+                android:id="@+id/iv_right_arrow_helpAndSupport"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/right_arrow"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/helpAndSupport"
+        />
+
+        <com.utalli.RobotoMediumTextView
+                android:id="@+id/tv_help_Support"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/helpAndSupport"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
+                android:text="Help, support and FAQ"
+        />
+
+
+
+        <View
+                android:id="@+id/vieww4"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/grey_1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_help_Support"
                 android:layout_marginTop="16dp"
         />
 
@@ -159,12 +377,14 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vieww4"
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
                 android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
                 android:textColor="@color/color_blue"
                 android:background="@drawable/rounded_rect_white"
-                android:text="LOG OUT"
+                android:text="@string/text_log_out"
         />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,6 +24,7 @@
                 android:fitsSystemWindows="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_collapsingToolbar_items"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fitsSystemWindows="true"
@@ -49,6 +50,7 @@
                     />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/cl_collapsing_hide"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             app:layout_constraintTop_toTopOf="parent"
@@ -123,9 +125,9 @@
                 android:id="@+id/toolbar_nearMe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 app:layout_collapseMode="pin"
                 android:visibility="visible"
+                app:layout_anchor="@id/collapsing_toolbar"
                 android:elevation="4dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -144,7 +146,8 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:src="@color/colorBlack"
-                        android:visibility="gone"
+
+
                 />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -189,13 +192,11 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:src="@drawable/ic_bell"
-                        android:visibility="gone"
+
+
                 />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 
         </Toolbar>
 

@@ -26,7 +26,15 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener {
         civ_profile_image.setImageResource(R.drawable.dummy_icon)
         tv_profileName.setText("Janice Crawford")
         tv_contactDetails.setText("+ 9634324545623546254")
+        tv_email_id.setText("janicecraw@samplemail.com")
+        tv_help_Support.setText("Help, support and FAQ")
+        tv_appSettings.setText("Notification, Vibration etc.")
+        tv_emergency_contact_number.setText("+1 3342484232")
+        tv_address.setText("4848 Willow Greene Drive Montgomery")
 
+
+        iv_right_arrow_helpAndSupport.setOnClickListener(this)
+        iv_right_arrow_appSettings.setOnClickListener(this)
         iv_back_arrow.setOnClickListener(this)
         tv_logout.setOnClickListener(this)
         iv_editProfile_icon.setOnClickListener(this)
@@ -46,8 +54,12 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener {
             R.id.iv_editProfile_icon -> {
 
             }
+            R.id.iv_right_arrow_appSettings ->{
 
+            }
+            R.id.iv_right_arrow_helpAndSupport ->{
 
+            }
 
 
         }

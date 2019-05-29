@@ -55,6 +55,15 @@
         <activity android:name=".activity.NotificationActivity"
         android:screenOrientation="portrait"/>
 
+        <activity android:name=".activity.SearchActivity"
+         android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.GuideProfileDetailsActivity"
+        android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.TripDetailsActivity"
+        android:screenOrientation="portrait"/>
+
 
 
 

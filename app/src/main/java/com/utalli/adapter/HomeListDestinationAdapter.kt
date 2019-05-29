@@ -1,11 +1,13 @@
 package com.utalli.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.utalli.R
+import com.utalli.activity.GuideProfileDetailsActivity
 import kotlinx.android.synthetic.main.item_row_list_destination_home.view.*
 
 
@@ -30,13 +32,19 @@ class HomeListDestinationAdapter (var mcontext : Context) : RecyclerView.Adapter
 
     override fun onBindViewHolder(holder: HomeListDestinationViewHolder, position: Int) {
 
+        holder.itemView.setOnClickListener {
+            var intent = Intent(mcontext,GuideProfileDetailsActivity::class.java)
+            mcontext.startActivity(intent)
+
+        }
+
     }
 
 
 
-     class HomeListDestinationViewHolder(view : View) : RecyclerView.ViewHolder(view) {
+     inner class HomeListDestinationViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
 
-         val ivPlacepic = view.iv_place_pic
+         val ivPlacepic = itemView.iv_place_pic
 
 
     }

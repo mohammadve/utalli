@@ -6,9 +6,7 @@ import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.utalli.R
-import com.utalli.fragment.MessageFragment
-import com.utalli.fragment.MyToursFragment
-import com.utalli.fragment.NearMeFragment
+import com.utalli.fragment.*
 
 
 class HomeActivity : AppCompatActivity(){
@@ -63,10 +61,18 @@ class HomeActivity : AppCompatActivity(){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.frame_container, nearMefragment)
         transaction.commit()
+
         /*NearMeFragment fragment = NearMeFragment.newInstance();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.frame_container, fragment);
         ft.commit();*/
+
+     /*   val demonearFragment = DemoNearMe()
+        val transaction123 = supportFragmentManager.beginTransaction()
+        transaction123.replace(R.id.frame_container, demonearFragment)
+        transaction123.commit()*/
+
+
     }
 
 
