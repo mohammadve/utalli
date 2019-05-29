@@ -64,6 +64,9 @@
         <activity android:name=".activity.TripDetailsActivity"
         android:screenOrientation="portrait"/>
 
+        <activity android:name=".activity.GuideListActivity"
+        android:screenOrientation="portrait"/>
+
 
 
 

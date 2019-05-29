@@ -41,6 +41,7 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener {
         tv_date_of_departure.setOnClickListener(this)
         tv_change.setOnClickListener(this)
 
+
         if(tv_date_of_arrival.text.equals("DD/MM/YYYY")){
             tv_arrival_date_change.visibility = View.GONE
         } else{
@@ -66,7 +67,8 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.button_confirm -> {
-
+              var intent = Intent(this@TripDetailsActivity,GuideListActivity::class.java)
+                startActivity(intent)
             }
             R.id.tv_change ->{
                 var intent = Intent(this@TripDetailsActivity, SearchActivity::class.java)
