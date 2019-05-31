@@ -25,8 +25,6 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener{
         setContentView(R.layout.activity_search)
 
 
-
-
         languageList!!.add("Australia")
         languageList!!.add("Afghanistan")
         languageList!!.add("Albania")

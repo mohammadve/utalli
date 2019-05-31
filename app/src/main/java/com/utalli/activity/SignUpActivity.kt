@@ -4,10 +4,10 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.utalli.R
 import com.utalli.helpers.Utils
 import kotlinx.android.synthetic.main.activity_sign_up.*
@@ -44,11 +44,12 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         cl_second_female.setOnClickListener(this)
         cl_third_other.setOnClickListener(this)
 
-
     }
 
     override fun onClick(v: View?) {
+
         when(v?.id){
+
             R.id.btn_signUp ->{
                 signupUser()
             }
@@ -67,9 +68,10 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.cl_first_male ->{
                 genderValue = "MALE"
-                cl_first_male.setBackgroundColor(resources.getColor(R.color.color_blue))
+                cl_first_male.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.rounded_rect_bottom_blue))
+                //cl_first_male.setBackgroundColor(resources.getColor(R.color.color_blue))
                 cl_second_female.setBackgroundColor(resources.getColor(R.color.colorWhite))
-                cl_third_other.setBackgroundColor(resources.getColor(R.color.colorWhite))
+                cl_third_other.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.rounded_rect_top_white))
 
                 tv_male.setTextColor(Color.parseColor("#ffffff"))
                 tv_female.setTextColor(Color.parseColor("#000000"))
@@ -79,8 +81,8 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             R.id.cl_second_female -> {
                 genderValue = "FEMALE"
                 cl_second_female.setBackgroundColor(resources.getColor(R.color.color_blue))
-                cl_first_male.setBackgroundColor(resources.getColor(R.color.colorWhite))
-                cl_third_other.setBackgroundColor(resources.getColor(R.color.colorWhite))
+                cl_first_male.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.rounded_rect_bottom_white))
+                cl_third_other.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.rounded_rect_top_white))
 
                 tv_male.setTextColor(Color.parseColor("#000000"))
                 tv_female.setTextColor(Color.parseColor("#ffffff"))
@@ -89,8 +91,8 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.cl_third_other ->{
                 genderValue = "OTHER"
-                cl_third_other.setBackgroundColor(resources.getColor(R.color.color_blue))
-                cl_first_male.setBackgroundColor(resources.getColor(R.color.colorWhite))
+                cl_third_other.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.rounded_rect_top_blue))
+                cl_first_male.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.rounded_rect_bottom_white))
                 cl_second_female.setBackgroundColor(resources.getColor(R.color.colorWhite))
 
                 tv_male.setTextColor(Color.parseColor("#000000"))
@@ -113,7 +115,6 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
        // }
         Toast.makeText(this,genderValue,Toast.LENGTH_SHORT).show()
-
 
     }
 

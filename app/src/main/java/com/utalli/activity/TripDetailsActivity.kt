@@ -3,6 +3,7 @@ package com.utalli.activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.DatePicker
 import androidx.appcompat.app.AppCompatActivity
@@ -22,11 +23,21 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener {
     var year = c.get(Calendar.YEAR)
     var month = c.get(Calendar.MONTH)
     var day = c.get(Calendar.DAY_OF_MONTH)
+    var countryName : String?= null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trip_details)
+
+        toolbar.title = ""
+        toolbar.setNavigationIcon(R.drawable.arrow_back_white)
+        setSupportActionBar(toolbar)
+        toolbar.setNavigationOnClickListener { finish() }
+
+        countryName = intent.getStringExtra("countryName")
+
+        Log.e("TAG","Country  Name ===== "+countryName)
 
         initViews()
     }
@@ -35,7 +46,10 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener {
         tv_date_of_arrival!!.text = "DD/MM/YYYY"
         tv_date_of_departure!!.text = "DD/MM/YYYY"
 
-        iv_back_arrow.setOnClickListener(this)
+
+        tv_selected_country_name.text = countryName
+
+
         button_confirm.setOnClickListener(this)
         tv_date_of_arrival.setOnClickListener(this)
         tv_date_of_departure.setOnClickListener(this)

@@ -22,9 +22,8 @@ class SplashActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_splash)
 
 
-
         tv_getStarted.setOnClickListener(this)
-        tv_learnMore.setOnClickListener(this)
+
 
         Handler().postDelayed(Runnable {
 
@@ -47,14 +46,6 @@ class SplashActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
                 finish()
             }
-
-            R.id.tv_learnMore ->{
-                val intent = Intent(this@SplashActivity, TripDetailsActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-                finish()
-            }
-
         }
 
     }

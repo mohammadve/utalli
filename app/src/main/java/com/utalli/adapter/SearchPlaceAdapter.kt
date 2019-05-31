@@ -1,15 +1,22 @@
 package com.utalli.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.utalli.R
 import com.utalli.activity.SearchActivity
+import com.utalli.activity.TripDetailsActivity
+import android.app.Activity
+
+
+
 
 
 class SearchPlaceAdapter(var mcontext: Context, var languageList: ArrayList<String>) :
@@ -41,7 +48,17 @@ class SearchPlaceAdapter(var mcontext: Context, var languageList: ArrayList<Stri
 
 
     override fun onBindViewHolder(holder: SearchPlaceAdapter.SearchViewHolder, position: Int) {
-        holder.bind(languageList[position].toString())
+
+
+        holder.tvlocationName.text = languageList[position]
+
+
+        holder.layoutSearch.setOnClickListener {
+            var intent = Intent(mcontext, TripDetailsActivity::class.java)
+            intent.putExtra("countryName",languageList[position].toString())
+            mcontext.startActivity(intent)
+            (mcontext as Activity).finish()
+        }
 
     }
 
@@ -53,15 +70,14 @@ class SearchPlaceAdapter(var mcontext: Context, var languageList: ArrayList<Stri
 
     class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tvlocationName: TextView
+        var layoutSearch : LinearLayout
 
         init {
             tvlocationName = itemView.findViewById(R.id.tv_locationName)
+            layoutSearch = itemView.findViewById(R.id.layout_search)
         }
 
 
-        fun bind(item: String) {
-            tvlocationName.text = item.toString()
-        }
 
     }
 

@@ -45,6 +45,7 @@ class RecoveryPasswordActivity : AppCompatActivity(), View.OnClickListener {
             R.id.tv_save -> {
                 val intent = Intent(this@RecoveryPasswordActivity, LoginActivity::class.java)
                 startActivity(intent)
+                finish()
             }
 
             R.id.iv_password_toggle ->{

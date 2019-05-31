@@ -14,4 +14,10 @@
         <item name="android:textColorSecondary">@color/grey_3</item>
     </style>
 
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/color_blue</item>
+    </style>
+
+
 </resources>
