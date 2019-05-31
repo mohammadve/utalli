@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.fragment_near_me.*
 import android.view.animation.AnimationUtils.loadAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import com.transitionseverywhere.TransitionManager
 import com.utalli.R
 
 
@@ -47,41 +48,8 @@ class NearMeFragment : Fragment(), View.OnClickListener {
         activity!!.setActionBar(toolbar_nearMe)
         collapsing_toolbar.title = "hello hello"
 
-        // appbar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener())
 
 
-        /*     appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
-                 internal var isShow = false
-                 internal var scrollRange = -1
-                 override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-                     if (scrollRange == -1) {
-                         scrollRange = appBarLayout.getTotalScrollRange()
-                     }
-                     if (scrollRange + verticalOffset == 0) {
-                         if (profile_Pic_toolbar.visibility == View.GONE) {
-                             profile_Pic_toolbar.visibility = View.VISIBLE
-                             iv_notification_toolbar.visibility = View.VISIBLE
-                             spacer.visibility = View.GONE
-                         }
-                         //toolbar_nearMe.title ="ebehbgrhgbrt"
-                         // toolbar_nearMe.visibility = View.VISIBLE
-
-                         isShow = true
-                     } else if (isShow) {
-
-                         if (profile_Pic_toolbar.visibility == View.VISIBLE) {
-                             profile_Pic_toolbar.visibility = View.GONE
-                             iv_notification_toolbar.visibility = View.GONE
-                             spacer.visibility = View.VISIBLE
-                         }
-                         // toolbar_nearMe.setTitle("")
-                         // toolbar_nearMe.visibility = View.GONE
-
-                         isShow = false
-                     }
-                 }
-             })
-        */
 
         appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
@@ -97,16 +65,21 @@ class NearMeFragment : Fragment(), View.OnClickListener {
 
 
                 if (verticalOffset == 0) {
+
+                    TransitionManager.beginDelayedTransition(appBarLayout)
                     profile_Pic_toolbar.visibility = View.GONE
                     iv_notification_toolbar.visibility = View.GONE
-                  /*  val animFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in)
-                    profile_Pic_toolbar.startAnimation(animFadeIn)*/
-                    spacer.visibility = View.VISIBLE
+                    cl_collapsingToolbar_items.visibility=View.VISIBLE
+
+                    /*  val animFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in)
+                      profile_Pic_toolbar.startAnimation(animFadeIn)*/
                 }
                 else if (Math.abs(verticalOffset) == appBarLayout!!.getTotalScrollRange()) {
+
+                    TransitionManager.beginDelayedTransition(appBarLayout)
+                    cl_collapsingToolbar_items.visibility=View.GONE
                     profile_Pic_toolbar.visibility = View.VISIBLE
                     iv_notification_toolbar.visibility = View.VISIBLE
-                    spacer.visibility = View.GONE
                 }
             }
         })

@@ -5,6 +5,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:id="@+id/coordinate_layout"
         android:background="@color/color_primary_light"
 >
@@ -21,7 +22,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                android:fitsSystemWindows="true">
+                android:fitsSystemWindows="true"
+                android:minHeight="?attr/actionBarSize"
+        >
+
+
+            <ImageView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_compass_titlebar"
+                    android:layout_marginTop="42dp"
+                    android:layout_gravity="right|bottom"
+            />
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_collapsingToolbar_items"
@@ -114,91 +128,88 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-
-        <Space
-                android:id="@+id/spacer"
-                android:layout_width="match_parent" android:layout_height="40dp"/>
-
-        <Toolbar
-                android:id="@+id/toolbar_nearMe"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_collapseMode="pin"
-                android:visibility="visible"
-                app:layout_anchor="@id/collapsing_toolbar"
-                android:elevation="4dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_First_tolbar"
+            <Toolbar
+                    android:id="@+id/toolbar_nearMe"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    app:layout_constraintTop_toTopOf="parent"
-            >
-                <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/profile_Pic_toolbar"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:src="@color/colorBlack"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    android:visibility="visible"
 
-
-                />
+                    android:layout_gravity="bottom"
+                    app:layout_anchor="@id/collapsing_toolbar"
+                    android:elevation="4dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_toolbar_search_toolbar"
-                        android:layout_width="0dp"
+                        android:id="@+id/cl_First_tolbar"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintLeft_toRightOf="@+id/profile_Pic_toolbar"
-                        app:layout_constraintRight_toLeftOf="@+id/iv_notification_toolbar"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:visibility="visible"
+                        app:layout_constraintTop_toTopOf="parent"
                 >
-
-                    <com.utalli.RobotoRegularTextView
-                            android:id="@+id/tv_searchSecond_toolbar"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:background="@drawable/rounded_rect_white"
+                    <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/profile_Pic_toolbar"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            android:paddingLeft="10dp"
-                            android:paddingTop="10dp"
-                            android:textSize="14sp"
-                            android:drawablePadding="15dp"
-                            android:hint="@string/hint_explore_country_or_place"
-                            android:paddingBottom="10dp"
-                            android:drawableLeft="@drawable/ic_search_black_24dp"
+                            android:src="@color/colorBlack"
+
+
+                    />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/cl_toolbar_search_toolbar"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintLeft_toRightOf="@+id/profile_Pic_toolbar"
+                            app:layout_constraintRight_toLeftOf="@+id/iv_notification_toolbar"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:visibility="visible"
+                    >
+
+                        <com.utalli.RobotoRegularTextView
+                                android:id="@+id/tv_searchSecond_toolbar"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/rounded_rect_white"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:paddingLeft="10dp"
+                                android:paddingTop="10dp"
+                                android:textSize="14sp"
+                                android:drawablePadding="15dp"
+                                android:hint="@string/hint_explore_country_or_place"
+                                android:paddingBottom="10dp"
+                                android:drawableLeft="@drawable/ic_search_black_24dp"
+                        />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <ImageView
+                            android:id="@+id/iv_notification_toolbar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:src="@drawable/ic_bell"
+
+
                     />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+            </Toolbar>
 
-                <ImageView
-                        android:id="@+id/iv_notification_toolbar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:src="@drawable/ic_bell"
-
-
-                />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </Toolbar>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
 
     </com.google.android.material.appbar.AppBarLayout>
