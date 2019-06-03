@@ -9,7 +9,7 @@
 
 >
 
-    <com.utalli.RobotoRegularTextView
+    <com.utalli.RobotoMediumTextView
             android:id="@+id/tv_notification_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

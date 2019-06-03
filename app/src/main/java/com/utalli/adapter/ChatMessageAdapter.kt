@@ -32,8 +32,6 @@ class ChatMessageAdapter (var mcontext : Context) : RecyclerView.Adapter<ChatMes
 
 
 
-
-
     }
 
 }

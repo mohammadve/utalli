@@ -85,7 +85,7 @@ class HomeActivity : AppCompatActivity(){
 
 
     private fun loadMessageFragment() {
-        val messagefragment = MessageFragment()
+        val messagefragment = ChatMessageFragment()
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.frame_container, messagefragment)
         transaction.commit()
