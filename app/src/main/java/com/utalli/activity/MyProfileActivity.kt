@@ -35,9 +35,10 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener {
 
         iv_right_arrow_helpAndSupport.setOnClickListener(this)
         iv_right_arrow_appSettings.setOnClickListener(this)
-        iv_back_arrow.setOnClickListener(this)
+        iv_backArrow.setOnClickListener(this)
         tv_logout.setOnClickListener(this)
         iv_editProfile_icon.setOnClickListener(this)
+
 
     }
 
@@ -49,18 +50,20 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener {
                 finish()
             }
             R.id.tv_logout ->{
-
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
             }
             R.id.iv_editProfile_icon -> {
 
             }
             R.id.iv_right_arrow_appSettings ->{
-
+                val intent = Intent(this, SettingActivity::class.java)
+                startActivity(intent)
             }
             R.id.iv_right_arrow_helpAndSupport ->{
-
+                val intent = Intent(this, HelpAndSupportActivity::class.java)
+                startActivity(intent)
             }
-
 
         }
     }

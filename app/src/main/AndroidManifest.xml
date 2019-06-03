@@ -40,17 +40,16 @@
         android:screenOrientation="portrait"/>
 
         <activity android:name=".activity.RecoveryPasswordActivity"
-          android:screenOrientation="portrait"
-        />
+          android:screenOrientation="portrait"/>
 
         <activity android:name=".activity.HomeActivity"
-                  android:screenOrientation="portrait"/>
+           android:screenOrientation="portrait"/>
 
         <activity android:name=".activity.PlaceProfileDetailsActivity"
         android:screenOrientation="portrait"/>
 
         <activity android:name=".activity.MyProfileActivity"
-                  android:screenOrientation="portrait"/>
+          android:screenOrientation="portrait"/>
 
         <activity android:name=".activity.NotificationActivity"
         android:screenOrientation="portrait"/>
@@ -66,6 +65,12 @@
 
         <activity android:name=".activity.GuideListActivity"
         android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.SettingActivity"
+         android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.HelpAndSupportActivity"
+          android:screenOrientation="portrait"/>
 
 
 
