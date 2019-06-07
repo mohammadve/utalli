@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.utalli.BuildConfig
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
@@ -90,6 +91,50 @@ class Utils {
         fun showLog(message: String) {
             if (BuildConfig.DEBUG)
                 Log.e("Utalli", "Log message : " + message)
+
+        }
+
+
+        @Throws(ParseException::class)
+        fun formatToYesterdayOrToday(datee: String): String {
+            var dd: Date? = null
+
+            /*  try {
+                  val sdf = SimpleDateFormat("dd/MM/yyyy")
+                  dd = sdf.parse(datee)
+              } catch (ex: ParseException) {
+                  // handle parsing exception if date string was different from the pattern applying into the SimpleDateFormat contructor
+              }*/
+
+            Log.e("TAG", "tvMsgDay date ===== " + datee)  // 03/06/2019
+            Log.e("TAG", "tvMsgDay ddd  ===== " + dd)  //Mon Jun 03 00:00:00 GMT+05:30 2019
+
+
+
+            val tempDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse(datee)
+
+
+            val ttDate = SimpleDateFormat("EEE hh:mma MMM d, yyyy", Locale.ENGLISH).format(tempDate)
+
+            val dateTime = SimpleDateFormat("EEE hh:mma MMM d, yyyy").parse(ttDate)
+
+
+            Log.e("TAG", "tvMsgDay dateTime  ===== " + dateTime)
+            val calendar = Calendar.getInstance()
+            calendar.time = dateTime
+            val today = Calendar.getInstance()
+            val yesterday = Calendar.getInstance()
+            yesterday.add(Calendar.DATE, -1)
+            val timeFormatter = SimpleDateFormat("hh:mm a")
+
+            return if (calendar.get(Calendar.YEAR) === today.get(Calendar.YEAR) && calendar.get(Calendar.DAY_OF_YEAR) === today.get(Calendar.DAY_OF_YEAR)) {
+                "Today " //+ timeFormatter.format(dateTime)
+            } else if (calendar.get(Calendar.YEAR) === yesterday.get(Calendar.YEAR) && calendar.get(Calendar.DAY_OF_YEAR) === yesterday.get(Calendar.DAY_OF_YEAR)) {
+                "Yesterday " //+ timeFormatter.format(dateTime)
+            } else {
+                datee
+            }
+
 
         }
 
