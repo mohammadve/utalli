@@ -371,6 +371,16 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
                 selectedStateAdapter = TripDetailsStateListToVisitAdapter(this, object : StateNotToVisitCallBack {
                     override fun stateNotToVisitCallBack(itemDetails: StateDetailsData) {
 
+                        if(userSelectedStateList.size > 0){
+                            view1.visibility = View.VISIBLE
+                            tv_states_you_want_to_visit.visibility = View.VISIBLE
+                            rv_states_u_want_visit.visibility = View.VISIBLE
+                        } else{
+                            view1.visibility = View.GONE
+                            tv_states_you_want_to_visit.visibility = View.GONE
+                            rv_states_u_want_visit.visibility = View.GONE
+                        }
+
                     }
                 })
 
@@ -381,7 +391,21 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
                 userSelectedStateList.addAll(selecteStatesListNewViewAll)
                 selectedStateAdapter!!.notifyItemInserted(userSelectedStateList.size - 1)
 
+
             }
+
+            if(userSelectedStateList.size > 0){
+                view1.visibility = View.VISIBLE
+                tv_states_you_want_to_visit.visibility = View.VISIBLE
+                rv_states_u_want_visit.visibility = View.VISIBLE
+            } else{
+                view1.visibility = View.GONE
+                tv_states_you_want_to_visit.visibility = View.GONE
+                rv_states_u_want_visit.visibility = View.GONE
+            }
+
+
+
         }
     }
 
