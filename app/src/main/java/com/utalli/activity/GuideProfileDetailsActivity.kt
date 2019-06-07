@@ -74,6 +74,10 @@ class GuideProfileDetailsActivity : AppCompatActivity(), View.OnClickListener {
 
             statusType = "Requested"
 
+            cl_guideStatus_Cancel_Requested.visibility = View.GONE
+            cl_guideStatus_requestPool_hireHim.visibility = View.VISIBLE
+
+
         }
 
       /*  if(statusType.equals("Requested")){

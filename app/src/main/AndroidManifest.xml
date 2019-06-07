@@ -69,8 +69,18 @@
         <activity android:name=".activity.SettingActivity"
          android:screenOrientation="portrait"/>
 
+        <activity android:name=".activity.ViewAllStateActivity"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.ChatActivity"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.PaymentActivity"
+                  android:screenOrientation="portrait"/>
+
         <activity android:name=".activity.HelpAndSupportActivity"
-          android:screenOrientation="portrait"/>
+                  android:screenOrientation="portrait"
+        />
 
 
 

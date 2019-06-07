@@ -4,18 +4,22 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+>
 
 
 
     <LinearLayout
+            android:id="@+id/layout_parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_rect_blue"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:orientation="horizontal"
     >
 
@@ -24,11 +28,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorWhite"
+                android:singleLine="true"
                 android:text="Western Australia"
         />
 
         <ImageView
-                android:id="@+id/iv_icon"
+                android:id="@+id/iv_cancle_icon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="20dp"
@@ -36,15 +41,6 @@
         />
 
     </LinearLayout>
-
-
-
-
-
-
-
-
-
 
 
 

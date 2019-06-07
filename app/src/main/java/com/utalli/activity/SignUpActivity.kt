@@ -114,7 +114,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             finish()
 
        // }
-        Toast.makeText(this,genderValue,Toast.LENGTH_SHORT).show()
+      //  Toast.makeText(this,genderValue,Toast.LENGTH_SHORT).show()
 
     }
 

@@ -12,6 +12,9 @@ import com.utalli.adapter.ChatMessageAdapter
 
 class ChatMessageFragment : Fragment(){
     var chatListAdapter: ChatMessageAdapter? = null
+    var dateTimeList = ArrayList<String>()
+    var mssg = ArrayList<String>()
+    var name = ArrayList<String>()
 
 
 
@@ -23,7 +26,37 @@ class ChatMessageFragment : Fragment(){
         var recyclerView_messageList = view!!.findViewById<RecyclerView>(R.id.recyclerView_messageList)
         recyclerView_messageList.layoutManager = LinearLayoutManager(activity)
 
-        chatListAdapter = activity?.let { ChatMessageAdapter(it) }
+        dateTimeList!!.add("03/06/2019")
+        dateTimeList!!.add("03/06/2019")
+        dateTimeList!!.add("03/06/2019")
+        dateTimeList!!.add("02/06/2019")
+        dateTimeList!!.add("03/06/2019")
+        dateTimeList!!.add("02/06/2019")
+        dateTimeList!!.add("03/06/2019")
+        dateTimeList!!.add("30/06/2019")
+        dateTimeList!!.add("03/06/2019")
+        dateTimeList!!.add("01/06/2019")
+        dateTimeList!!.add("01/06/2019")
+        dateTimeList!!.add("30/05/2019")
+
+       // name
+
+
+        mssg!!.add("XYZ 123")
+        mssg!!.add("XYZ 123")
+        mssg!!.add("XYZ 123")
+        mssg!!.add("XYZ 123")
+        mssg!!.add("XYZ 123")
+        mssg!!.add("XYZ 123")
+        mssg!!.add("XYZ 123")
+        mssg!!.add("XYZ 123")
+        mssg!!.add("XYZ 123")
+        mssg!!.add("XYZ 123")
+        mssg!!.add("XYZ 123")
+        mssg!!.add("XYZ 123")
+
+
+        chatListAdapter = activity?.let { ChatMessageAdapter(it, dateTimeList, mssg) }
         recyclerView_messageList.adapter = chatListAdapter
 
         return view

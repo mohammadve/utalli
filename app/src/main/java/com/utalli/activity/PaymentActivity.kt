@@ -1,16 +1,32 @@
 package com.utalli.activity
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.utalli.R
 
-class HelpAndSupportActivity : AppCompatActivity(){
+class PaymentActivity : AppCompatActivity(), View.OnClickListener{
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_help_and_support)
+        setContentView(R.layout.activity_payment)
+
+
+
     }
+
+
+    override fun onClick(v: View?) {
+
+    }
+
+
+
+
+
+
 
 
 }

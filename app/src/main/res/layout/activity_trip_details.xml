@@ -6,6 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
+
 >
 
     <androidx.appcompat.widget.Toolbar
@@ -20,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="@color/colorWhite"
                 android:text="@string/text_let_s_start_with_your_trip_details"
         />
@@ -34,6 +35,7 @@
             android:layout_height="0dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            android:background="@color/color_primary_light"
            app:layout_constraintBottom_toTopOf="@+id/button_confirm"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
     >
@@ -76,8 +78,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_country_icon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="5dp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -111,7 +113,7 @@
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="5dp"
             android:textColor="@color/color_blue"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:text="@string/text_change"
     />
 
@@ -124,6 +126,7 @@
           app:layout_constraintTop_toBottomOf="@+id/iv_country_icon"
           android:layout_marginTop="10dp"
           android:background="@color/grey_1"
+          android:visibility="gone"
     />
 
     <com.utalli.RobotoRegularTextView
@@ -139,6 +142,7 @@
             android:textSize="14sp"
             android:textColor="@color/grey"
             android:text="@string/text_states_you_want_to_visit"
+            android:visibility="gone"
     />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -151,6 +155,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_states_you_want_to_visit"
+            android:visibility="gone"
     >
 
     </androidx.recyclerview.widget.RecyclerView>
@@ -167,7 +172,7 @@
     />
 
     <com.utalli.RobotoRegularTextView
-            android:id="@+id/tv_states_in_australia"
+            android:id="@+id/tv_states_in_country"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -178,7 +183,7 @@
             app:layout_constraintRight_toRightOf="parent"
             android:textSize="14sp"
             android:textColor="@color/grey"
-            android:text="@string/text_states_in_australia"
+            android:text="@string/text_states_in_country"
     />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -190,7 +195,7 @@
             android:layout_marginTop="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_states_in_australia"
+            app:layout_constraintTop_toBottomOf="@+id/tv_states_in_country"
     >
 
     </androidx.recyclerview.widget.RecyclerView>
@@ -205,8 +210,9 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rv_states_list"
             android:textColor="@color/color_blue"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:text="@string/text_view_all"
+            android:visibility="gone"
     />
 
     <View
@@ -261,7 +267,7 @@
             app:layout_constraintTop_toBottomOf="@+id/date_of_arrival"
             app:layout_constraintRight_toRightOf="parent"
             android:textColor="@color/color_blue"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:text="@string/text_change"
             android:visibility="gone"
     />
@@ -317,7 +323,7 @@
             app:layout_constraintTop_toBottomOf="@+id/date_of_departure"
             app:layout_constraintRight_toRightOf="parent"
             android:textColor="@color/color_blue"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:text="@string/text_change"
             android:visibility="gone"
     />
@@ -340,6 +346,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view5"
@@ -366,7 +373,7 @@
             app:layout_constraintTop_toBottomOf="@+id/nsv_layoutt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:background="@drawable/rounded_rect_blue"
+            android:background="@drawable/rounded_rect_grey"
             android:textColor="@color/colorWhite"
             android:textSize="14sp"
             android:text="Confirm"

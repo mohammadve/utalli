@@ -33,12 +33,11 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener {
         tv_address.setText("4848 Willow Greene Drive Montgomery")
 
 
-        iv_right_arrow_helpAndSupport.setOnClickListener(this)
-        iv_right_arrow_appSettings.setOnClickListener(this)
+        iv_right_arrow_settings.setOnClickListener(this)
+        iv_right_arrow_payment.setOnClickListener(this)
         iv_backArrow.setOnClickListener(this)
         tv_logout.setOnClickListener(this)
         iv_editProfile_icon.setOnClickListener(this)
-
 
     }
 
@@ -56,12 +55,12 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener {
             R.id.iv_editProfile_icon -> {
 
             }
-            R.id.iv_right_arrow_appSettings ->{
-                val intent = Intent(this, SettingActivity::class.java)
+            R.id.iv_right_arrow_payment ->{
+                val intent = Intent(this, PaymentActivity::class.java)
                 startActivity(intent)
             }
-            R.id.iv_right_arrow_helpAndSupport ->{
-                val intent = Intent(this, HelpAndSupportActivity::class.java)
+            R.id.iv_right_arrow_settings ->{
+                val intent = Intent(this, SettingActivity::class.java)
                 startActivity(intent)
             }
 
