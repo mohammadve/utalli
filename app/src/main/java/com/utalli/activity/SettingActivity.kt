@@ -26,15 +26,30 @@ class SettingActivity : AppCompatActivity(), View.OnClickListener{
 
     private fun initView() {
 
-        iv_right_arrow_helpSupport.setOnClickListener(this)
+        tv_helpSupport.setOnClickListener(this)
+        tv_privacyPolicy.setOnClickListener(this)
+        tv_aboutUs.setOnClickListener(this)
     }
 
 
     override fun onClick(v: View?) {
 
         when(v?.id){
-            R.id.iv_right_arrow_helpSupport ->{
+            R.id.tv_helpSupport ->{
                 var intent = Intent(this,HelpAndSupportActivity::class.java)
+                startActivity(intent)
+            }
+
+            R.id.tv_privacyPolicy ->{
+                var intent = Intent(this,WebViewActivity::class.java)
+                intent.putExtra("ScreenType","Privacy Policy")
+                intent.putExtra("Url","https://policies.google.com/")
+                startActivity(intent)
+            }
+            R.id.tv_aboutUs ->{
+                var intent = Intent(this,WebViewActivity::class.java)
+                intent.putExtra("ScreenType","About Us")
+                intent.putExtra("Url","https://about.google/intl/en/")
                 startActivity(intent)
             }
 

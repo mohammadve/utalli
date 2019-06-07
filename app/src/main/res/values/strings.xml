@@ -56,7 +56,6 @@
     <string name="text_email_id">Email ID</string>
     <string name="text_log_out">LOG OUT</string>
     <string name="text_settings_and_help">Settings and help</string>
-    <string name="text_payment">Payment</string>
     <string name="text_emergency_contact_number">Emergency Contact Number</string>
     <string name="text_address">Address</string>
     <string name="text_language_known">Language Known</string>
@@ -82,6 +81,7 @@
     <string name="text_help_and_support">Help and Support</string>
     <string name="text_about_us">About us</string>
     <string name="text_privacy_policy">Privacy policy</string>
+    <string name="text_payment">Payment</string>
 
 
 </resources>
