@@ -64,10 +64,12 @@
                         app:layout_constraintTop_toTopOf="parent"
                         android:background="@android:color/transparent"
                         android:textSize="14sp"
+                        android:imeOptions="actionSearch"
                         android:textCursorDrawable="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:singleLine="true"
                         android:paddingTop="15dp"
+
                         android:paddingBottom="15dp"
                         android:paddingRight="40dp"
                         android:hint="@string/hint_explore_country_or_place"/>

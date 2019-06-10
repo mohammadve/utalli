@@ -2,7 +2,6 @@
     <string name="app_name">Utalii</string>
 
 
-
     <string name="msg_no_internet">No internet connection, please check your internet connection and try again.</string>
     <string name="msg_invalid_name">Please enter valid name</string>
     <string name="msg_invalid_email">Please enter valid email id</string>
@@ -10,7 +9,7 @@
     <string name="msg_empty_mobile_no">Please enter your mobile number</string>
     <string name="msg_empty_pass">Please enter your password</string>
     <string name="msg_invalid_pass">Password must be atleast 6 characters in length</string>
-
+    <string name="text_pools_available">Pools Available</string>
 
     <string name="hint_enter_name">Enter Name</string>
     <string name="hint_email">Email</string>

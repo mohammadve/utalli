@@ -1,6 +1,10 @@
 package com.utalli.fragment
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.location.Location
 import android.os.Bundle
 import android.transition.Transition
 import android.util.Log
@@ -16,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 
 
-
 import com.utalli.activity.MyProfileActivity
 import com.utalli.activity.NotificationActivity
 import com.utalli.activity.SearchActivity
@@ -27,8 +30,13 @@ import kotlinx.android.synthetic.main.fragment_near_me.*
 import android.view.animation.AnimationUtils.loadAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.transitionseverywhere.TransitionManager
 import com.utalli.R
+import android.location.Geocoder
+import com.utalli.helpers.AppPreference
+import java.lang.Exception
+import java.util.*
 
 
 class NearMeFragment : Fragment(), View.OnClickListener {
@@ -54,14 +62,14 @@ class NearMeFragment : Fragment(), View.OnClickListener {
         appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
 
-                Log.e("TAG","vertical offsett === "+verticalOffset)
+                Log.e("TAG", "vertical offsett === " + verticalOffset)
 
 
                 var maxScroll = appBarLayout!!.getTotalScrollRange()
                 var percentage = (Math.abs(verticalOffset)).toFloat() / (maxScroll).toFloat()
 
-                Log.e("TAG","vertical offsett maxScroll === " + maxScroll)
-                Log.e("TAG","vertical offsett percentage === " + percentage)
+                Log.e("TAG", "vertical offsett maxScroll === " + maxScroll)
+                Log.e("TAG", "vertical offsett percentage === " + percentage)
 
 
                 if (verticalOffset == 0) {
@@ -69,22 +77,21 @@ class NearMeFragment : Fragment(), View.OnClickListener {
                     TransitionManager.beginDelayedTransition(appBarLayout)
                     profile_Pic_toolbar.visibility = View.GONE
                     iv_notification_toolbar.visibility = View.GONE
-                    cl_collapsingToolbar_items.visibility=View.VISIBLE
+                    cl_collapsingToolbar_items.visibility = View.VISIBLE
 
                     /*  val animFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in)
                       profile_Pic_toolbar.startAnimation(animFadeIn)*/
-                }
-                else if (Math.abs(verticalOffset) == appBarLayout!!.getTotalScrollRange()) {
+                } else if (Math.abs(verticalOffset) == appBarLayout!!.getTotalScrollRange()) {
 
                     TransitionManager.beginDelayedTransition(appBarLayout)
-                    cl_collapsingToolbar_items.visibility=View.GONE
+                    cl_collapsingToolbar_items.visibility = View.GONE
                     profile_Pic_toolbar.visibility = View.VISIBLE
                     iv_notification_toolbar.visibility = View.VISIBLE
                 }
             }
         })
 
-
+        et_location.text = AppPreference.getInstance(activity!!).getUserLastLocation()
         iv_notification.setOnClickListener(this)
         iv_notification_toolbar.setOnClickListener(this)
         profile_Pic.setOnClickListener(this)
@@ -102,7 +109,81 @@ class NearMeFragment : Fragment(), View.OnClickListener {
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = activity?.let { HomeListGuideAdapter(it) }
 
+        registerReceiver()
+
         return view
+    }
+
+
+    private fun registerReceiver() {
+
+        val filter = IntentFilter()
+
+        filter.addAction("LOCATION_UPDATED")
+        LocalBroadcastManager.getInstance(activity!!).registerReceiver(mReciever, filter)
+
+
+
+    }
+
+
+    var mReciever = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+         /*   if (intent != null && intent!!.hasExtra("location")) {
+                *//*var mLocation = intent.getParcelableExtra("location") as Location
+                if (mLocation != null) {
+
+                   *//**//* val geocoder = Geocoder(context, Locale.getDefault())
+                    var result: String? = null
+
+                    try {
+
+                        var addressList = geocoder.getFromLocation(
+                            mLocation.latitude, mLocation.longitude, 1
+                        )
+
+                        if (addressList != null && addressList.size > 0) {
+
+                            var address = addressList.get(0)
+
+                            result = address.locality + ", " + address.countryName
+
+
+                        }
+
+
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }*//**//*
+
+                    if (et_location != null)
+                        et_location!!.text = AppPreference.getInstance(activity!!).getUserLastLocation()
+
+
+                }*//*
+
+
+            }
+*/
+
+            if (et_location != null)
+                et_location!!.text = AppPreference.getInstance(activity!!).getUserLastLocation()
+
+          //  LocalBroadcastManager.getInstance(activity!!).unregisterReceiver(this)
+
+
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
     }
 
 
@@ -114,10 +195,9 @@ class NearMeFragment : Fragment(), View.OnClickListener {
             R.id.iv_notification_toolbar -> startActivity(Intent(activity, NotificationActivity::class.java))
             R.id.profile_Pic -> startActivity(Intent(activity, MyProfileActivity::class.java))
             R.id.profile_Pic_toolbar -> startActivity(Intent(activity, MyProfileActivity::class.java))
-            R.id.tv_searchSecond_toolbar -> startActivity(Intent(activity,SearchActivity::class.java))
+            R.id.tv_searchSecond_toolbar -> startActivity(Intent(activity, SearchActivity::class.java))
         }
     }
-
 
 
     fun startAlphaAnimation(v: View, duration: Int, visibility: Int) {
