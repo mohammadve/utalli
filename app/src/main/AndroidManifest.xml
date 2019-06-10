@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
 
     <application
@@ -17,80 +19,76 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
+        <activity android:name=".activity.GuidePoolsListActivity">
 
-        <activity android:name=".activity.SplashActivity"
-                  android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".activity.SplashActivity"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <action android:name="android.intent.action.VIEW"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+                android:name=".activity.SignUpActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".activity.LoginActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".activity.RecoveryActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".activity.OTPActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".activity.RecoveryPasswordActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".activity.HomeActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".activity.PlaceProfileDetailsActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".activity.MyProfileActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".activity.NotificationActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".activity.SearchActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".activity.GuideProfileDetailsActivity"
+                android:screenOrientation="portrait">
 
-        <activity android:name=".activity.SignUpActivity"
-        android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.LoginActivity"
-        android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.RecoveryActivity"
-          android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.OTPActivity"
-        android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.RecoveryPasswordActivity"
-          android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.HomeActivity"
-           android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.PlaceProfileDetailsActivity"
-        android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.MyProfileActivity"
-          android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.NotificationActivity"
-        android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.SearchActivity"
-         android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.GuideProfileDetailsActivity"
-        android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.TripDetailsActivity"
-        android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.GuideListActivity"
-        android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.SettingActivity"
-         android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.ViewAllStateActivity"
-                  android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.ChatActivity"
-                  android:screenOrientation="portrait"/>
+        </activity>
+        <activity
+                android:name=".activity.TripDetailsActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".activity.GuideListActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".activity.SettingActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".activity.HelpAndSupportActivity"
+                android:screenOrientation="portrait"/>
 
         <activity android:name=".activity.PaymentActivity"
-                  android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.HelpAndSupportActivity"
                   android:screenOrientation="portrait"
-        />
+        >
+        </activity>
 
-        <activity android:name=".activity.WebViewActivity"
+        <activity android:name=".activity.ChatActivity"
                   android:screenOrientation="portrait"
-        />
-
-
-
-
-
-
+        ></activity>
+        <activity android:name=".activity.ViewAllStateActivity" android:screenOrientation="portrait"/>
 
     </application>
 
