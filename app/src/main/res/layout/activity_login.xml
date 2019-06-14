@@ -88,6 +88,7 @@
                             android:backgroundTint="@color/colorPrimary"
                             android:textCursorDrawable="@color/colorPrimary"
                             android:textSize="14sp"
+                            android:maxLength="12"
                             android:inputType="phone"
                             android:singleLine="true"
                             android:padding="15dp"

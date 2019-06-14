@@ -38,7 +38,7 @@ class ViewAllStateActivity : AppCompatActivity(), View.OnClickListener {
         countryName = intent.getStringExtra("countryName")
         allStateList = getIntent().getSerializableExtra("stateDetailsList") as ArrayList<StateDetailsData>
 
-
+        Log.e("TAG", "ViewAllActivity allStateList send to viewAll == "+allStateList.size)
         toolbarr.title = ""
         toolbarr_title.setText(countryName)
       //  Log.e("TAG", "countryName view All === " + countryName)

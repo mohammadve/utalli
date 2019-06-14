@@ -3,11 +3,11 @@ package com.utalli.network
 class ApiList {
     companion object {
 
-        val BASE_URL = "http://ec2-34-217-28-142.us-west-2.compute.amazonaws.com:8000/"
-        const val SIGNUP_URL = "user/user_register"
-        const val VERIFY_OTP_URL = "user/verify_signup"
-        const val LOGIN_URL = "user/signin"
-        const val FORGOT_PASS_URL = "user/forgot_password"
+        val BASE_URL =  "http://192.168.6.47:5000/api/v1/"
+        const val SIGNUP_URL = "users/register"
+        const val VERIFY_OTP_URL = "users/register"
+        const val LOGIN_URL = "users/login"
+        const val FORGOT_PASS_URL = "users/forgetPassword"
         const val UPDATE_PASS_URL = "user/update_password"
         const val UPDATE_PROFILE_URL = "user/update_profile"
         const val UPDATE_PROFILE_PIC_URL = "user/update_profile_pic"
@@ -19,6 +19,7 @@ class ApiList {
         const val REJECT_VIDEO_CALLING_URL = "contact/reject_calling"
         const val GET_NOTIFICATIONS_URL = "user/notifications"
         const val SEND_NOTIFICATION_URL = "contact/send_message"
+        const val RESET_PASS_URL = "users/resetPassword"
 
 
         var ABOUT_US_URL = BASE_URL + "user/about"

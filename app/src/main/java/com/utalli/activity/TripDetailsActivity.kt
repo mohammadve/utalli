@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -16,6 +17,7 @@ import com.utalli.callBack.StateNotToVisitCallBack
 import com.utalli.callBack.TripDetailsStateListCallBack
 import com.utalli.models.StateDetailsData
 import kotlinx.android.synthetic.main.activity_trip_details.*
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -40,6 +42,12 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
     var tripDetailsStateListAdapter: TripDetailsStateListAdapter? = null
     var selectedStateAdapter: TripDetailsStateListToVisitAdapter? = null
 
+    var arrivalDateStr : String ?=null
+
+    var ddArrivalDate: Date? = null
+    var  ddDepartureDate : Date ?=null
+    var departureDateStr : String ?=null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +61,7 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
         countryName = intent.getStringExtra("countryName")
 
         tv_selected_country_name.text = countryName
-       // tv_states_in_country.text = "States in" + countryName
+
 
 
         button_confirm.setOnClickListener(this)
@@ -65,15 +73,15 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
         tv_view_all.setOnClickListener(this)
 
 
-        if (tv_date_of_arrival.text == null && tv_date_of_arrival.text.equals("DD/MM/YYYY")) {
+        if (tv_date_of_arrival.text.toString().equals("")) {
             tv_arrival_date_change.visibility = View.GONE
-        } else if (tv_date_of_arrival.text != null && !tv_date_of_arrival.text.equals("DD/MM/YYYY")) {
+        } else {
             tv_arrival_date_change.visibility = View.VISIBLE
         }
 
-        if (tv_date_of_departure.text == null && tv_date_of_departure.text.equals("DD/MM/YYYY")) {
+        if (tv_date_of_departure.text.toString().equals("")) {
             tv_departure_date_change.visibility = View.GONE
-        } else if (tv_date_of_departure.text != null && !tv_date_of_departure.text.equals("DD/MM/YYYY")) {
+        } else  {
             tv_departure_date_change.visibility = View.VISIBLE
         }
 
@@ -143,7 +151,6 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
         tripDetailsStateListAdapter?.setStateList(visibleStateList, this)
 
 
-
     }
 
 
@@ -151,8 +158,27 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.button_confirm -> {
-                var intent = Intent(this@TripDetailsActivity, GuideListActivity::class.java)
-                startActivity(intent)
+                if(tv_date_of_arrival.text.toString().equals("")){
+                    Toast.makeText(this,"Please choose arrival date",Toast.LENGTH_SHORT).show()
+                }
+                else if(tv_date_of_departure.text.toString().equals("")){
+                    Toast.makeText(this,"Please choose departure date",Toast.LENGTH_SHORT).show()
+                }
+                else if (ddArrivalDate!!.compareTo(ddDepartureDate) > 0) {
+                    System.out.println("start is after end");
+                    Toast.makeText(this,"Please choose arrival date smaller or equal to departure date",Toast.LENGTH_SHORT).show()
+                }
+           /*     else if (ddArrivalDate!!.compareTo(ddDepartureDate) < 0) {
+                    System.out.println("start is before end");
+                } */
+             /*   else if (ddArrivalDate!!.compareTo(ddArrivalDate) == 0) {
+                    System.out.println("start is equal to end");
+                }*/
+                else {
+                    var intent = Intent(this@TripDetailsActivity, GuideListActivity::class.java)
+                    startActivity(intent)
+                }
+
             }
             R.id.tv_change -> {
                 var intent = Intent(this@TripDetailsActivity, SearchActivity::class.java)
@@ -169,9 +195,13 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
 
                         tv_date_of_arrival.setText("" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year)
 
-                        if (tv_date_of_arrival.text == null && tv_date_of_arrival.text.equals("DD/MM/YYYY")) {
+                        arrivalDateStr =  (""+dayOfMonth + "/" + (monthOfYear + 1) + "/" + year)
+                        var sdf = SimpleDateFormat("dd/MM/yyyy")
+                        ddArrivalDate = sdf.parse(arrivalDateStr)
+
+                        if (tv_date_of_arrival.text.toString().equals("")) {
                             tv_arrival_date_change.visibility = View.GONE
-                        } else if (tv_date_of_arrival.text != null && !tv_date_of_arrival.text.equals("DD/MM/YYYY")) {
+                        } else {
                             tv_arrival_date_change.visibility = View.VISIBLE  //tv_arrival_date_change
                             button_confirm.setBackgroundResource(R.drawable.rounded_rect_blue)
                         }
@@ -185,34 +215,65 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
 
             R.id.tv_date_of_departure -> {
 
-                val datePickerDialog = DatePickerDialog(this, R.style.DialogTheme, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                if(tv_date_of_arrival.text.toString().equals("")){
+                    Toast.makeText(this,"Please choose arrival date first",Toast.LENGTH_SHORT).show()
+                } else {
+
+                    val datePickerDialog = DatePickerDialog(this, R.style.DialogTheme, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
                         tv_date_of_departure.setText("" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year)
+                        departureDateStr = ("" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year)
+                        var sdf = SimpleDateFormat("dd/MM/yyyy")
+                        ddDepartureDate = sdf.parse(departureDateStr)
 
-                        if (tv_date_of_departure.text == null && tv_date_of_departure.text.equals("DD/MM/YYYY")) {
+
+                        if (tv_date_of_departure.text.toString().equals("")) {
                             tv_departure_date_change.visibility = View.GONE
-                        } else if (tv_date_of_departure.text != null && !tv_date_of_departure.text.equals("DD/MM/YYYY")) {
+                        } else{
                             tv_departure_date_change.visibility = View.VISIBLE
                             button_confirm.setBackgroundResource(R.drawable.rounded_rect_blue)
                         }
                     }, year, month, day)
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000)
-                datePickerDialog.show()
+                    datePickerDialog.getDatePicker().setMinDate(ddArrivalDate!!.time)
+                    datePickerDialog.show()
+
+                }
+
+
             }
 
             R.id.tv_departure_date_change -> {
-                val datePickerDialog = DatePickerDialog(this, R.style.DialogTheme, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+
+                if(tv_date_of_arrival.text.toString().equals("")){
+                    Toast.makeText(this,"Please choose arrival date first",Toast.LENGTH_SHORT).show()
+                } else {
+
+                    val datePickerDialog = DatePickerDialog(this, R.style.DialogTheme, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
                         tv_date_of_departure.setText("" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year)
+                        departureDateStr = ("" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year)
+                        var sdf = SimpleDateFormat("dd/MM/yyyy")
+                        ddDepartureDate = sdf.parse(departureDateStr)
+
+                        Log.e("Tag","deptDate === "+arrivalDateStr)
                     }, year, month, day)
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000)
-                datePickerDialog.show()
+
+                     datePickerDialog.getDatePicker().setMinDate(ddArrivalDate!!.time)
+                    datePickerDialog.show()
+
+                }
+
             }
 
             R.id.tv_arrival_date_change -> {
                 val datePickerDialog = DatePickerDialog(this, R.style.DialogTheme, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
                         tv_date_of_arrival.setText("" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year)
+                    arrivalDateStr =  (""+dayOfMonth + "/" + (monthOfYear + 1) + "/" + year)
+
+                    var sdf = SimpleDateFormat("dd/MM/yyyy")
+                    ddArrivalDate = sdf.parse(arrivalDateStr)
+
                     }, year, month, day)
 
                 datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000)
@@ -223,6 +284,7 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
                 intent.putExtra("countryName", countryName)
                // remainingStateList.addAll(visibleStateList)
                 intent.putExtra("stateDetailsList", remainingStateList)
+                Log.e("TAG", "TripDetailsActivity remainingStateList send to viewAll == "+remainingStateList.size)
                 startActivityForResult(intent, 101)
             }
 
@@ -317,7 +379,6 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
                 rv_states_list.visibility = View.VISIBLE
             }
 
-
         }
 
 
@@ -403,8 +464,6 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
                 tv_states_you_want_to_visit.visibility = View.GONE
                 rv_states_u_want_visit.visibility = View.GONE
             }
-
-
 
         }
     }

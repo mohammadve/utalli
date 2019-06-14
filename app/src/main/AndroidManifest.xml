@@ -81,14 +81,23 @@
                 android:screenOrientation="portrait"/>
 
         <activity android:name=".activity.PaymentActivity"
-                  android:screenOrientation="portrait"
-        >
+                  android:screenOrientation="portrait">
         </activity>
 
+        <activity android:name=".activity.WebViewActivity"
+        android:screenOrientation="portrait"/>
+
         <activity android:name=".activity.ChatActivity"
+                  android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name=".activity.ViewAllStateActivity"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.AddPaymentCardActivity"
+                  android:windowSoftInputMode="adjustResize"
                   android:screenOrientation="portrait"
-        ></activity>
-        <activity android:name=".activity.ViewAllStateActivity" android:screenOrientation="portrait"/>
+        />
 
     </application>
 

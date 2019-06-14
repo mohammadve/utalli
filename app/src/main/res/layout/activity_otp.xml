@@ -86,7 +86,6 @@
                     android:maxLength="1"
                     android:hint="0"
                     android:textColorHint="@color/grey"
-                    android:inputType="number"
                     android:backgroundTint="@color/colorPrimary"
                     android:padding="12dp"
                     android:gravity="center"
@@ -107,7 +106,7 @@
                     android:hint="0"
                     android:textColorHint="@color/grey"
                     android:maxLength="1"
-                    android:inputType="number"
+
             />
 
             <com.utalli.RobotoRegularEditText
@@ -125,7 +124,7 @@
                     android:hint="0"
                     android:textColorHint="@color/grey"
                     android:maxLength="1"
-                    android:inputType="number"
+
             />
             <com.utalli.RobotoRegularEditText
                     android:id="@+id/et_code_4"
@@ -142,7 +141,7 @@
                     android:textColorHint="@color/grey"
                     android:maxLength="1"
                     android:gravity="center"
-                    android:inputType="number"
+
             />
 
 

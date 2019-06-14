@@ -38,7 +38,6 @@ class MyToursFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-
         rv_my_tours.setHasFixedSize(true)
         rv_my_tours.layoutManager = LinearLayoutManager(activity)
         rv_my_tours.adapter = MyToursAdapter()

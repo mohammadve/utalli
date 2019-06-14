@@ -13,21 +13,25 @@ interface ApiService {
     @POST(ApiList.SIGNUP_URL)
     @FormUrlEncoded
     fun signupUser(
-        @Field("firstName") firstName: String,
-        @Field("lastName") lastName: String,
-        @Field("credentials") credentials: String,
+        @Field("name") name: String,
         @Field("email") email: String,
-        @Field("password") password: String
+        @Field("mobile_no") mobile_no: String,
+        @Field("password") password: String,
+        @Field("dob") dob:String,
+        @Field("gender") gender:String,
+        @Field("otp") otp:String
+//        @Field("password") password: String
     ): Call<JsonObject>
 
     @POST(ApiList.VERIFY_OTP_URL)
     @FormUrlEncoded
     fun verifySignupUser(
-        @Field("firstName") firstName: String,
-        @Field("lastName") lastName: String,
-        @Field("credentials") credentials: String,
+        @Field("name") name: String,
         @Field("email") email: String,
+        @Field("mobile_no") mobile_no: String,
         @Field("password") password: String,
+        @Field("dob") dob: String,
+        @Field("gender") gender:String,
         @Field("otp") otp: String
 
     ): Call<JsonObject>
@@ -36,7 +40,7 @@ interface ApiService {
     @POST(ApiList.LOGIN_URL)
     @FormUrlEncoded
     fun loginUser(
-        @Field("email") email: String,
+        @Field("mobile_no") mobile_no: String,
         @Field("password") password: String
     ): Call<JsonObject>
 
@@ -44,8 +48,17 @@ interface ApiService {
     @POST(ApiList.FORGOT_PASS_URL)
     @FormUrlEncoded
     fun forgotPassword(
-        @Field("email") email: String
+        @Field("mobile_no") mobile_no: String
     ): Call<JsonObject>
+
+
+    @POST(ApiList.RESET_PASS_URL)
+    @FormUrlEncoded
+    fun resetPassword(
+        @Field("password") password:String,
+        @Field("otp") otp:String,
+        @Field("id") id:Int
+    ):Call<JsonObject>
 
 
     @POST(ApiList.UPDATE_PASS_URL)

@@ -4,21 +4,81 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProviders
 import com.utalli.R
+import com.utalli.fragment.VerifyOTPDialogFragment
 import com.utalli.helpers.Utils
+import com.utalli.models.SignupRequestModel
+import com.utalli.viewModels.SignUpViewModel
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import okhttp3.internal.Util
 import java.util.*
 
-class SignUpActivity : AppCompatActivity(), View.OnClickListener {
+class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialogFragment.OnButtonClick {
+
+
+
+    override fun onDismiss() {
+        bottomSheetDialogFragment = null
+    }
+
+    override fun onResendClick() {
+        bottomSheetDialogFragment!!.dismiss()
+        signupUser()
+    }
+
+    override fun onSubmitClick() {
+        Utils.hideSoftKeyboard(this)
+        bottomSheetDialogFragment!!.dismiss()
+
+        signupViewModel!!.verifyOTP(this, SignupRequestModel(
+            et_name.text.toString(),
+            et_dateOfBirth.text.toString(),
+            genderValue.toString(),
+            et_email_id.text.toString(),
+            et_mobileNumber.text.toString(),
+            et_newPassword.text.toString(),
+            otp
+        )
+        ).observe(this, androidx.lifecycle.Observer {
+
+            Utils.showLog(it.toString()!!)
+
+            if (it.has("status") && it.get("status").asString.equals("1")) {
+
+
+                Utils.showToast(this, getString(R.string.msg_user_registered))
+
+                Handler().postDelayed(Runnable {
+
+                    val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+
+                }, 800)
+
+            } else {
+                Utils.showToast(this, getString(R.string.msg_common_error))
+            }
+        })
+
+    }
+
+
+
     var c = Calendar.getInstance()
     var year = c.get(Calendar.YEAR)
     var month = c.get(Calendar.MONTH)
     var day = c.get(Calendar.DAY_OF_MONTH)
     var genderValue : String? = null
+    var signupViewModel:SignUpViewModel?= null
+    var otp: String = ""
+    var bottomSheetDialogFragment: VerifyOTPDialogFragment? = null
 
 
 
@@ -35,6 +95,8 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun initView() {
+
+        signupViewModel = ViewModelProviders.of(this).get(SignUpViewModel::class.java)
 
         btn_signUp.setOnClickListener(this)
         tv_sign_in.setOnClickListener(this)
@@ -108,17 +170,65 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
         Utils.hideSoftKeyboard(this)
 
-        //if(checkValidations()){
-            val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
+        if(checkValidations()){
 
-       // }
-      //  Toast.makeText(this,genderValue,Toast.LENGTH_SHORT).show()
+            Log.e("TAG","genderValue send to server part signUp === "+genderValue.toString())
+
+            signupViewModel!!.signupUser(this, SignupRequestModel(
+                et_name.text.toString(),
+                et_dateOfBirth.text.toString(),
+                genderValue.toString(),
+                et_email_id.text.toString(),
+                et_mobileNumber.text.toString(),
+                et_newPassword.text.toString(),
+                ""
+            )
+            ).observe(this, androidx.lifecycle.Observer {
+
+             //   Utils.showLog(it.toString())
+                Log.e("TAG","SignUp it.toString() === "+it.toString())
+
+                if(it != null && it.has("status") && it.get("status").asString.equals("1")){
+
+                    if (it.has("otp")){
+
+                        Utils.showToast(this, getString(R.string.msg_otp_sent))
+
+
+                        otp = it.get("otp").asString
+
+
+
+                        if (bottomSheetDialogFragment == null) {
+                            bottomSheetDialogFragment = VerifyOTPDialogFragment.newInstance(otp, this)
+                            bottomSheetDialogFragment!!.show(supportFragmentManager, "VerifyOTPDialogFragment")
+                        }
+
+
+
+                    } else {
+                        Utils.showToast(this, getString(R.string.msg_common_error))
+                    }
+
+                }
+                else {
+                      if(it != null && it.has("message")){
+                          Utils.showToast(this,it.get("message").asString)
+                          Log.e("TAG","message status 0 SignUp  === "+it.get("message").asString)
+                      }
+
+                }
+            })
+
+        }
 
     }
 
     private fun checkValidations(): Boolean {
+
+
+        Log.e("TAG","gender value on validation part signUp ====   "+genderValue.toString())
+
         if (!Utils.isInternetAvailable(this)) {
             Utils.showToast(this, resources.getString(R.string.msg_no_internet))
             return false
@@ -141,6 +251,18 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         }
         else if (et_newPassword.text!!.length < 6) {
             Utils.showToast(this, resources.getString(R.string.msg_invalid_pass))
+            return false
+        }
+        else if(genderValue.toString().equals("") || genderValue!!.isEmpty() || genderValue.toString() == null || genderValue!!.length == 0){
+            Utils.showToast(this, resources.getString(R.string.msg_empty_gender))
+            return false
+        }
+        else if(et_dateOfBirth.text.toString().equals("")){
+            Utils.showToast(this, resources.getString(R.string.msg_empty_dob))
+            return false
+        }
+        else if(!(et_reEnterNew_Password.text.toString()).equals(et_newPassword.text.toString())){
+            Utils.showToast(this, resources.getString(R.string.msg_not_same_pass))
             return false
         }
 
