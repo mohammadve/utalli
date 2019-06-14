@@ -45,6 +45,9 @@ class RecoveryPasswordActivity : AppCompatActivity(), View.OnClickListener {
         idd = intent.getIntExtra("id",0)
         otp = intent.getStringExtra("OTP")
 
+        Log.e("TAG"," otpp RecoveryPasswordActivity == "+otp)
+        Log.e("TAG"," id RecoveryPasswordActivity == "+idd)
+
         iv_password_toggle.setOnClickListener(this)
         iv_reTypePassword_toggle.setOnClickListener(this)
 

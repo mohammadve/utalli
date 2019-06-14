@@ -57,7 +57,7 @@ class SearchPlaceAdapter(var mcontext: Context, var languageList: ArrayList<Stri
             var intent = Intent(mcontext, TripDetailsActivity::class.java)
             intent.putExtra("countryName",languageList[position].toString())
             mcontext.startActivity(intent)
-            (mcontext as Activity).finish()
+           // (mcontext as Activity).finish()
         }
 
     }

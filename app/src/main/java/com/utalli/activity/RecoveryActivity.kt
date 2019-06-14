@@ -68,14 +68,16 @@ class RecoveryActivity : AppCompatActivity(), View.OnClickListener {
                                     if (dataObject.has("id") && dataObject.has("otp")) {
                                         Utils.showToast(this, it.get("message").asString)
                                         idd = dataObject.get("id").asInt
-                                        OTP = (it.get("data") is JsonObject).toString()
+                                        OTP = dataObject.get("otp").asString
 
                                         Handler().postDelayed(Runnable {
                                             val intent = Intent(this, OTPActivity::class.java)
                                             intent.putExtra("id",idd)
                                             intent.putExtra("OTP",OTP)
+                                            Log.e("TAG","OTP recovery activity ==== "+OTP)
+                                            Log.e("TAG","id recovery activity ==== "+idd)
                                             startActivity(intent)
-                                            //  finish()
+                                              finish()
                                         }, 1000)
 
                                     } else {

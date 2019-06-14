@@ -98,13 +98,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                            finish()
 
                        }, 1000)
-
                    }
                    else {
-
                           if (it!= null && it.has("message")){
                               Utils.showToast(this, it.get("message").asString)
-                              Log.e("TAG","message status 0 Login  === "+it.get("reason").asString)
                           }
                    }
 
