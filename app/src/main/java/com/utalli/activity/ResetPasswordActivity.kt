@@ -2,7 +2,6 @@ package com.utalli.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
@@ -12,11 +11,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.utalli.R
 import com.utalli.helpers.Utils
-import com.utalli.viewModels.LoginViewModel
 import com.utalli.viewModels.ResetPasswordViewModel
 import kotlinx.android.synthetic.main.activity_recovery_password.*
 
-class RecoveryPasswordActivity : AppCompatActivity(), View.OnClickListener {
+class ResetPasswordActivity : AppCompatActivity(), View.OnClickListener {
     var showPassword: Boolean = false
     var resetPasswordViewModel : ResetPasswordViewModel ?= null
     var otp: String = ""
@@ -45,8 +43,8 @@ class RecoveryPasswordActivity : AppCompatActivity(), View.OnClickListener {
         idd = intent.getIntExtra("id",0)
         otp = intent.getStringExtra("OTP")
 
-        Log.e("TAG"," otpp RecoveryPasswordActivity == "+otp)
-        Log.e("TAG"," id RecoveryPasswordActivity == "+idd)
+        Log.e("TAG"," otpp ResetPasswordActivity == "+otp)
+        Log.e("TAG"," id ResetPasswordActivity == "+idd)
 
         iv_password_toggle.setOnClickListener(this)
         iv_reTypePassword_toggle.setOnClickListener(this)
@@ -108,7 +106,7 @@ class RecoveryPasswordActivity : AppCompatActivity(), View.OnClickListener {
                       Utils.showToast(this, it.get("message").asString)
 
                    //   Handler().postDelayed(Runnable {
-                          val intent = Intent(this@RecoveryPasswordActivity, LoginActivity::class.java)
+                          val intent = Intent(this@ResetPasswordActivity, LoginActivity::class.java)
                           startActivity(intent)
                           finish()
                    //   }, 2000)

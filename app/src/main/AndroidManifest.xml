@@ -39,13 +39,13 @@
                 android:name=".activity.LoginActivity"
                 android:screenOrientation="portrait"/>
         <activity
-                android:name=".activity.RecoveryActivity"
+                android:name=".activity.ForgetPasswordActivity"
                 android:screenOrientation="portrait"/>
         <activity
                 android:name=".activity.OTPActivity"
                 android:screenOrientation="portrait"/>
         <activity
-                android:name=".activity.RecoveryPasswordActivity"
+                android:name=".activity.ResetPasswordActivity"
                 android:screenOrientation="portrait"/>
         <activity
                 android:name=".activity.HomeActivity"

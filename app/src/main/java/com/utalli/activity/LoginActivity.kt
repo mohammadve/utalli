@@ -10,7 +10,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.google.gson.JsonObject
 import com.utalli.R
 import com.utalli.helpers.AppPreference
 import com.utalli.helpers.Utils
@@ -50,7 +49,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.tv_forgot_pass ->{
-                val intent = Intent(this@LoginActivity,RecoveryActivity::class.java)
+                val intent = Intent(this@LoginActivity,ForgetPasswordActivity::class.java)
                 startActivity(intent)
             }
             R.id.tv_signUp ->{

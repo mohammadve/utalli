@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.JsonObject
 
-class SearchGuideViewModel : ViewModel(){
+class GuideListViewModel : ViewModel(){
 
     private var searchGuideResult: MutableLiveData<JsonObject>? = null
 

@@ -44,7 +44,7 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.tv_verify_btn -> {
-                val intent = Intent(this, RecoveryPasswordActivity::class.java)
+                val intent = Intent(this, ResetPasswordActivity::class.java)
                 intent.putExtra("id",idd)
                 intent.putExtra("OTP", OTP)
                 Log.e("TAG"," otpp otp screen == "+OTP)

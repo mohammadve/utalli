@@ -12,7 +12,7 @@ import com.utalli.network.ApiService
 import retrofit2.Call
 import retrofit2.Response
 
-class GetStateByCountryIdViewModel : ViewModel(){
+class TripDetailsViewModel : ViewModel(){
 
     private var GetstateByCountryIdResult: MutableLiveData<JsonObject>? = null
     var preference: AppPreference? = null

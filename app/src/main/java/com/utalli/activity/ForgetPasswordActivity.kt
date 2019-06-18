@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_recovery.*
 import kotlinx.android.synthetic.main.activity_recovery.et_mobileNumber
 
-class RecoveryActivity : AppCompatActivity(), View.OnClickListener {
+class ForgetPasswordActivity : AppCompatActivity(), View.OnClickListener {
 
     var forgetPassViewModel: ForgetPassViewModel? = null
     var idd: Int = 0;

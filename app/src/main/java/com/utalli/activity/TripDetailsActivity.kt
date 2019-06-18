@@ -12,8 +12,6 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.gson.Gson
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import com.utalli.R
 import com.utalli.adapter.TripDetailsStateListToVisitAdapter
@@ -22,10 +20,8 @@ import com.utalli.callBack.StateNotToVisitCallBack
 import com.utalli.callBack.TripDetailsStateListCallBack
 import com.utalli.helpers.Utils
 import com.utalli.models.IndividualStateDetail
-import com.utalli.models.LocationSearchDataItems
-import com.utalli.models.StateDetailsData
 import com.utalli.models.SubStateData
-import com.utalli.viewModels.GetStateByCountryIdViewModel
+import com.utalli.viewModels.TripDetailsViewModel
 import kotlinx.android.synthetic.main.activity_trip_details.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -63,7 +59,7 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
     var  ddDepartureDate : Date ?=null
     var departureDateStr : String ?=null
 
-    var getStateByCountryIdViewModel : GetStateByCountryIdViewModel?= null
+    var getStateByCountryIdViewModel : TripDetailsViewModel?= null
 
 
 
@@ -91,7 +87,7 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
 
     private fun initViews() {
 
-        getStateByCountryIdViewModel = ViewModelProviders.of(this).get(GetStateByCountryIdViewModel::class.java)
+        getStateByCountryIdViewModel = ViewModelProviders.of(this).get(TripDetailsViewModel::class.java)
 
 
         button_confirm.setOnClickListener(this)

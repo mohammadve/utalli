@@ -76,9 +76,7 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
                             searchPlaceAdapter!!.notifyDataSetChanged()
                         }
                     })
-
                 }
-
             }
 
             override fun afterTextChanged(s: Editable) {
@@ -103,13 +101,7 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
                 if (it.has("data") && it.get("data") is JsonArray) {
 
                     val dataSearch = object : TypeToken<ArrayList<LocationSearchDataItems>>() {}.type
-                    locationSearchDataItems.addAll(
-                        Gson().fromJson<ArrayList<LocationSearchDataItems>>(
-                            it.get("data").toString(),
-                            dataSearch
-                        )
-                    )
-
+                    locationSearchDataItems.addAll(Gson().fromJson<ArrayList<LocationSearchDataItems>>(it.get("data").toString(), dataSearch))
 
                     rv_languageList.adapter!!.notifyDataSetChanged()
                 }
