@@ -33,7 +33,7 @@ class LoginViewModel : ViewModel(){
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                 Utils.hideProgressDialog()
-                Utils.showToast(mContext, mContext.resources.getString(R.string.msg_common_error))
+                Utils.showLog(t.message!!)
             }
 
         })

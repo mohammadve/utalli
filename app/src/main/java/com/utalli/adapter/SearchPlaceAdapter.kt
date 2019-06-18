@@ -11,28 +11,23 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.utalli.R
-import com.utalli.activity.SearchActivity
+
 import com.utalli.activity.TripDetailsActivity
 import android.app.Activity
+import com.utalli.activity.SearchActivity
+import com.utalli.models.LocationSearchDataItems
+
+
+class SearchPlaceAdapter(var mcontext: Context, var languageList: ArrayList<LocationSearchDataItems>) : RecyclerView.Adapter<SearchPlaceAdapter.SearchViewHolder>(){
 
 
 
 
-
-class SearchPlaceAdapter(var mcontext: Context, var languageList: ArrayList<String>) :
-    RecyclerView.Adapter<SearchPlaceAdapter.SearchViewHolder>() {
-
-   // var LocationSearchFilter: SearchActivity.LocationSearchFilter? = null
-
-
-    fun updateSearchList(searchList: ArrayList<String>) {
+    fun updateSearchList(searchList: ArrayList<LocationSearchDataItems>) {
         languageList.clear()
         languageList = ArrayList()
         languageList.addAll(searchList)
-
         notifyDataSetChanged()
-
-
     }
 
 
@@ -50,22 +45,20 @@ class SearchPlaceAdapter(var mcontext: Context, var languageList: ArrayList<Stri
     override fun onBindViewHolder(holder: SearchPlaceAdapter.SearchViewHolder, position: Int) {
 
 
-        holder.tvlocationName.text = languageList[position]
+
+        holder.tvlocationName.text = languageList.get(position).name
 
 
         holder.layoutSearch.setOnClickListener {
             var intent = Intent(mcontext, TripDetailsActivity::class.java)
-            intent.putExtra("countryName",languageList[position].toString())
+            intent.putExtra("countryName",languageList.get(position).name)
+            intent.putExtra("countryId",languageList.get(position).id)
             mcontext.startActivity(intent)
            // (mcontext as Activity).finish()
         }
 
     }
 
-
-   /* override fun getFilter(): SearchActivity.LocationSearchFilter? {
-        return LocationSearchFilter
-    }*/
 
 
     class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

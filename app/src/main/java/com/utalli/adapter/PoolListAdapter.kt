@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.utalli.R
 
 class PoolListAdapter:RecyclerView.Adapter<PoolListAdapter.PoolListViewHolder>()
+
+
+
 {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PoolListViewHolder {
         return PoolListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_pool_list,parent,false))

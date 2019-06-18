@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.utalli.R
 import com.utalli.callBack.TripDetailsStateListCallBack
+import com.utalli.models.IndividualStateDetail
 import com.utalli.models.StateDetailsData
 
 
@@ -18,11 +19,11 @@ import com.utalli.models.StateDetailsData
 
 class TripDetailsStateListAdapter(var mcontext: Context, var itemListener: TripDetailsStateListCallBack, var screenType: String) : RecyclerView.Adapter<TripDetailsStateListAdapter.StateListViewHolder>() {
 
-    var stateList = ArrayList<StateDetailsData>()
+    var stateList = ArrayList<IndividualStateDetail>()
 
 
 
-    fun setStateList(newStateList: ArrayList<StateDetailsData>, mcontext: Context) {
+    fun setStateList(newStateList: ArrayList<IndividualStateDetail>, mcontext: Context) {
         this.stateList = newStateList
         this.mcontext = mcontext
         notifyDataSetChanged()
@@ -45,7 +46,7 @@ class TripDetailsStateListAdapter(var mcontext: Context, var itemListener: TripD
 
         holder.iv_icon.setBackgroundResource(R.drawable.ic_report_black_24dp)
 
-        holder.tv_state_name.setText(stateList[position].stateName)
+        holder.tv_state_name.setText(stateList[position].name)
 
         if (screenType.equals("TripDetailsActivity")) {
             holder.layoutParent.setOnClickListener {

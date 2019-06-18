@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.utalli.R
+import com.utalli.helpers.AppPreference
 import kotlinx.android.synthetic.main.my_profile_activity.*
 
 
@@ -49,8 +50,8 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener {
                 finish()
             }
             R.id.tv_logout ->{
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
+                logout()
+
             }
             R.id.iv_editProfile_icon -> {
 
@@ -65,6 +66,14 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener {
             }
 
         }
+    }
+
+    private fun logout() {
+        AppPreference.getInstance(this).setAuthToken("")
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+        finish()
     }
 
 

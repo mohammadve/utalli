@@ -7,15 +7,25 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import com.google.gson.Gson
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
+import com.google.gson.reflect.TypeToken
 import com.utalli.R
 import com.utalli.adapter.TripDetailsStateListToVisitAdapter
 import com.utalli.adapter.TripDetailsStateListAdapter
 import com.utalli.callBack.StateNotToVisitCallBack
 import com.utalli.callBack.TripDetailsStateListCallBack
+import com.utalli.helpers.Utils
+import com.utalli.models.IndividualStateDetail
+import com.utalli.models.LocationSearchDataItems
 import com.utalli.models.StateDetailsData
+import com.utalli.models.SubStateData
+import com.utalli.viewModels.GetStateByCountryIdViewModel
 import kotlinx.android.synthetic.main.activity_trip_details.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -29,16 +39,21 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
     var year = c.get(Calendar.YEAR)
     var month = c.get(Calendar.MONTH)
     var day = c.get(Calendar.DAY_OF_MONTH)
-    var countryName: String? = null
-    var stateList = ArrayList<StateDetailsData>()
+    var countryName: String =""
+    var countryId: Int ?=null
+    var stateList = ArrayList<IndividualStateDetail>()
 
 
-    var remainingStateList = ArrayList<StateDetailsData>()
-    var visibleStateList = ArrayList<StateDetailsData>()
+    var subStateDataList = ArrayList<SubStateData>()
+    var individualStateDetail = ArrayList<IndividualStateDetail>()
+
+
+    var remainingStateList = ArrayList<IndividualStateDetail>()
+    var visibleStateList = ArrayList<IndividualStateDetail>()
     var itemAddedCount = 0
 
 
-    var userSelectedStateList = ArrayList<StateDetailsData>()
+    var userSelectedStateList = ArrayList<IndividualStateDetail>()
     var tripDetailsStateListAdapter: TripDetailsStateListAdapter? = null
     var selectedStateAdapter: TripDetailsStateListToVisitAdapter? = null
 
@@ -47,6 +62,10 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
     var ddArrivalDate: Date? = null
     var  ddDepartureDate : Date ?=null
     var departureDateStr : String ?=null
+
+    var getStateByCountryIdViewModel : GetStateByCountryIdViewModel?= null
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,9 +78,20 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
         toolbar.setNavigationOnClickListener { finish() }
 
         countryName = intent.getStringExtra("countryName")
+        countryId = intent.getIntExtra("countryId",0)
 
-        tv_selected_country_name.text = countryName
+        //tv_selected_country_name.text = countryName
 
+
+        initViews()
+        getData(countryId!!)
+
+    }
+
+
+    private fun initViews() {
+
+        getStateByCountryIdViewModel = ViewModelProviders.of(this).get(GetStateByCountryIdViewModel::class.java)
 
 
         button_confirm.setOnClickListener(this)
@@ -85,6 +115,99 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
             tv_departure_date_change.visibility = View.VISIBLE
         }
 
+
+
+
+    }
+
+
+    private fun getData(countryId: Int) {
+
+        getStateByCountryIdViewModel!!.getStateByCountry(this, countryId).observe(this, androidx.lifecycle.Observer {
+
+             if(it != null && it.has("status") && it.get("status").asString.equals("1")){
+
+                 if(it.has("data")){
+
+
+                   //  var dataArr=it.getAsJsonArray("data")
+
+                     //var dataObj=dataArr.get(0) as JsonObject
+                     var dataObj= it.getAsJsonObject("data")
+
+                     if(dataObj.has("states")){
+
+                         var stateDataArryList =  object : TypeToken<ArrayList<IndividualStateDetail>>() {}.type
+                         individualStateDetail .addAll(Gson().fromJson<ArrayList<IndividualStateDetail>>(dataObj.get("states").toString(), stateDataArryList))
+
+                     }
+
+
+
+                     tv_selected_country_name.text = countryName
+
+
+                     /*for (i in 0..subStateDataList.size) {
+                         individualStateDetail.addAll(subStateDataList.get(i).states)
+                     }*/
+
+
+
+
+                     if (individualStateDetail.size > 5) {
+                         tv_view_all.visibility = View.VISIBLE
+                     } else {
+                         tv_view_all.visibility = View.GONE
+                     }
+
+                     val layoutManager = FlexboxLayoutManager(this)
+                     layoutManager.flexDirection = FlexDirection.ROW
+                     layoutManager.justifyContent = JustifyContent.SPACE_AROUND
+                     rv_states_list.layoutManager = layoutManager
+
+
+                     tripDetailsStateListAdapter = TripDetailsStateListAdapter(this, this, "TripDetailsActivity")
+                     rv_states_list.adapter = tripDetailsStateListAdapter
+
+
+                     if (individualStateDetail.size > 5) {
+                         visibleStateList = ArrayList(individualStateDetail.subList(0, 4))
+                         remainingStateList = ArrayList(individualStateDetail.subList(4, individualStateDetail.size))
+
+                     } else if (individualStateDetail.size < 5) {
+                         visibleStateList = individualStateDetail
+                         remainingStateList = ArrayList()
+                     }
+
+                     //   tripDetailsStateListAdapter?.setStateList(ArrayList<StateDetailsData>(stateList.subList(0, 4)), this)
+                     tripDetailsStateListAdapter?.setStateList(visibleStateList, this)
+
+
+
+
+                 }
+
+
+
+             }
+
+             else {
+                 Utils.showToast(this, getString(R.string.msg_common_error))
+             }
+
+
+
+
+        })
+
+
+
+
+
+
+
+
+/*
         var data1 = StateDetailsData("1", "Western Australia", false)
         stateList.add(data1)
 
@@ -120,39 +243,13 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
 
         var data12 = StateDetailsData("13", "Gurgaon", false)
         stateList.add(data12)
+*/
 
 
-        if (stateList.size > 5) {
-            tv_view_all.visibility = View.VISIBLE
-        } else {
-            tv_view_all.visibility = View.GONE
-        }
 
-        val layoutManager = FlexboxLayoutManager(this)
-        layoutManager.flexDirection = FlexDirection.ROW
-        layoutManager.justifyContent = JustifyContent.SPACE_AROUND
-        rv_states_list.layoutManager = layoutManager
-
-
-        tripDetailsStateListAdapter = TripDetailsStateListAdapter(this, this, "TripDetailsActivity")
-        rv_states_list.adapter = tripDetailsStateListAdapter
-
-
-        if (stateList.size > 5) {
-            visibleStateList = ArrayList(stateList.subList(0, 4))
-            remainingStateList = ArrayList(stateList.subList(4, stateList.size))
-
-        } else if (stateList.size < 5) {
-            visibleStateList = stateList
-            remainingStateList = ArrayList()
-        }
-
-        //   tripDetailsStateListAdapter?.setStateList(ArrayList<StateDetailsData>(stateList.subList(0, 4)), this)
-        tripDetailsStateListAdapter?.setStateList(visibleStateList, this)
 
 
     }
-
 
 
     override fun onClick(v: View?) {
@@ -165,7 +262,6 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
                     Toast.makeText(this,"Please choose departure date",Toast.LENGTH_SHORT).show()
                 }
                 else if (ddArrivalDate!!.compareTo(ddDepartureDate) > 0) {
-                    System.out.println("start is after end");
                     Toast.makeText(this,"Please choose arrival date smaller or equal to departure date",Toast.LENGTH_SHORT).show()
                 }
            /*     else if (ddArrivalDate!!.compareTo(ddDepartureDate) < 0) {
@@ -293,7 +389,7 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
     }
 
 
-    override fun recyclerViewListClicked(itemDetails: StateDetailsData) {
+    override fun recyclerViewListClicked(itemDetails: IndividualStateDetail) {
 
         if (selectedStateAdapter == null) {
             userSelectedStateList.add(itemDetails)
@@ -306,7 +402,7 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
 
             // data of deleted , state_you_want_to_visit and add items in stateList
             selectedStateAdapter = TripDetailsStateListToVisitAdapter(this, object : StateNotToVisitCallBack {
-                override fun stateNotToVisitCallBack(itemDetails: StateDetailsData) {
+                override fun stateNotToVisitCallBack(itemDetails: IndividualStateDetail) {
 
 
                     if (visibleStateList.size < 4) {
@@ -418,7 +514,7 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
         // view all
         if (data != null && requestCode == 101) {
 
-            var selecteStatesListNewViewAll = data.getSerializableExtra("selectedStates") as ArrayList<StateDetailsData>
+            var selecteStatesListNewViewAll = data.getSerializableExtra("selectedStates") as ArrayList<IndividualStateDetail>
 
 
             if (selectedStateAdapter == null) {
@@ -430,7 +526,7 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
 
                 // data of deleted , state_you_want_to_visit and add items in stateList
                 selectedStateAdapter = TripDetailsStateListToVisitAdapter(this, object : StateNotToVisitCallBack {
-                    override fun stateNotToVisitCallBack(itemDetails: StateDetailsData) {
+                    override fun stateNotToVisitCallBack(itemDetails: IndividualStateDetail) {
 
                         if(userSelectedStateList.size > 0){
                             view1.visibility = View.VISIBLE

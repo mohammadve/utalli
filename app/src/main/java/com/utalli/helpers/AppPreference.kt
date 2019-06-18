@@ -9,6 +9,7 @@ class AppPreference()
     var APP_PREFERENCE = "APP_PREFERENCE"
     var USER_DATA = "USER_DATA"
     var LAST_LOCATION = "LAST_LOCATION"
+    var TOKEN = "TOKEN"
 
     var mPreference: SharedPreferences? = null
 
@@ -17,8 +18,8 @@ class AppPreference()
         this.mContext = mContext
         mPreference = mContext.getSharedPreferences(APP_PREFERENCE, Context.MODE_PRIVATE)
 
-
     }
+
 
     companion object {
         var instance: AppPreference? = null
@@ -30,11 +31,16 @@ class AppPreference()
                 instance = AppPreference(mContext)
 
             return instance as AppPreference
-
-
         }
 
+    }
 
+    fun getAuthToken(): String {
+        return getString(TOKEN)
+    }
+
+    fun setAuthToken(token: String) {
+        setString(TOKEN, token)
     }
 
 

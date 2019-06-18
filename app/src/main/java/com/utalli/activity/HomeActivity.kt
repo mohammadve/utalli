@@ -31,12 +31,12 @@ import java.util.*
 
 class HomeActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener, LocationListener {
+
     override fun onConnected(p0: Bundle?) {
 
         Utils.showLog("Google API client connected")
 
-        if (ActivityCompat.checkSelfPermission(
-                this,
+        if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                 this,

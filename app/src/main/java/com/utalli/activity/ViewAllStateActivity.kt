@@ -12,14 +12,15 @@ import com.google.android.flexbox.JustifyContent
 import com.utalli.R
 import com.utalli.adapter.TripDetailsStateListAdapter
 import com.utalli.callBack.TripDetailsStateListCallBack
+import com.utalli.models.IndividualStateDetail
 import com.utalli.models.StateDetailsData
 import kotlinx.android.synthetic.main.activity_view_all_state.*
 
 
 class ViewAllStateActivity : AppCompatActivity(), View.OnClickListener {
     var tripDetailsStateListAdapter: TripDetailsStateListAdapter? = null
-    var allStateList = ArrayList<StateDetailsData>()
-    var selectedStateList = ArrayList<StateDetailsData>()
+    var allStateList = ArrayList<IndividualStateDetail>()
+    var selectedStateList = ArrayList<IndividualStateDetail>()
     var countryName: String? = null
 
 
@@ -36,7 +37,7 @@ class ViewAllStateActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         countryName = intent.getStringExtra("countryName")
-        allStateList = getIntent().getSerializableExtra("stateDetailsList") as ArrayList<StateDetailsData>
+        allStateList = getIntent().getSerializableExtra("stateDetailsList") as ArrayList<IndividualStateDetail>
 
         Log.e("TAG", "ViewAllActivity allStateList send to viewAll == "+allStateList.size)
         toolbarr.title = ""
@@ -57,7 +58,7 @@ class ViewAllStateActivity : AppCompatActivity(), View.OnClickListener {
         recyclerView_allState.layoutManager = layoutManager
 
         tripDetailsStateListAdapter = TripDetailsStateListAdapter(this, object : TripDetailsStateListCallBack {
-            override fun recyclerViewListClicked(itemDetails: StateDetailsData) {
+            override fun recyclerViewListClicked(itemDetails: IndividualStateDetail) {
                 if (itemDetails.isSelected){
                     selectedStateList.add(itemDetails)
                 }

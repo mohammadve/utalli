@@ -10,7 +10,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.gson.JsonObject
 import com.utalli.R
+import com.utalli.helpers.AppPreference
 import com.utalli.helpers.Utils
 import com.utalli.viewModels.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
@@ -19,6 +21,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     var showPassword: Boolean = false
     var loginViewModel : LoginViewModel?=null
+    var preference: AppPreference? = null
+    var token : String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +36,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun initViews() {
 
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+        preference = AppPreference.getInstance(this)
+
+
 
         tv_login_btn.setOnClickListener(this)
         tv_forgot_pass.setOnClickListener(this)
@@ -71,33 +78,40 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    public fun loginInUser() {
+     fun loginInUser() {
 
-   /*     val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-        startActivity(intent)
-        finish()*/
+
 
         if(checkValidation()){
 
            loginViewModel!!.loginUser(this,et_mobileNumber.text.toString(), et_password.text.toString())
                .observe(this, Observer {
 
-                  // Utils.showLog(it.toString())
-
-              //     Log.e("TAG","Login  it.toString() === "+it.toString())
 
 
                    if (it!= null && it.has("status") && it.get("status").asString.equals("1")) {
 
+                       if (it.has("accessToken")) {
+                           AppPreference.getInstance(this).setAuthToken(it.get("accessToken").asString)
+                          //  token = preference!!.getAuthToken()
+                           Log.e("TAG","accessToken in loginActivity ====   " + preference!!.getAuthToken())
+                       }
+
+
                        Utils.showToast(this, it.get("message").asString)
-                       Log.e("TAG","message status 1 Login  === "+it.get("message"))
+
+
 
                        Handler().postDelayed(Runnable {
                            val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                            startActivity(intent)
                            finish()
+                       }, 3500)
 
-                       }, 1000)
+
+
+
+
                    }
                    else {
                           if (it!= null && it.has("message")){

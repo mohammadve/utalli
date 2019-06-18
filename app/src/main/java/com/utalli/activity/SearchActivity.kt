@@ -20,38 +20,28 @@ import androidx.core.app.ShareCompat.IntentBuilder
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import android.app.Activity
+import android.util.Log
+import androidx.lifecycle.ViewModelProviders
+import com.google.gson.Gson
+import com.google.gson.JsonArray
+import com.google.gson.reflect.TypeToken
 import com.utalli.helpers.Utils
+import com.utalli.models.LocationSearchDataItems
+import com.utalli.viewModels.SearchLocationViewModel
+import org.json.JSONArray
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class SearchActivity : AppCompatActivity(), View.OnClickListener {
-    var languageList = ArrayList<String>()
     var searchPlaceAdapter: SearchPlaceAdapter? = null
-var PLACE_PICKER_REQUEST=121
+    var searchLocationViewModels: SearchLocationViewModel? = null
+    var locationSearchDataItems = ArrayList<LocationSearchDataItems>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-
-
-        languageList!!.add("Australia")
-        languageList!!.add("Afghanistan")
-        languageList!!.add("Albania")
-        languageList!!.add("Armenia")
-        languageList!!.add("Bhutan")
-        languageList!!.add("Greece")
-        languageList!!.add("Iran")
-        languageList!!.add("Iraq")
-        languageList!!.add("Israel")
-        languageList!!.add("Liberia")
-        languageList!!.add("Mongolia")
-        languageList!!.add("North Korea")
-        languageList!!.add("Panama")
-        languageList!!.add("Rwanda")
-        languageList!!.add("Samoa")
-
-
-        rv_languageList.layoutManager = LinearLayoutManager(this)
-        rv_languageList.adapter = SearchPlaceAdapter(this, languageList!!)
 
         initViews()
 
@@ -59,9 +49,17 @@ var PLACE_PICKER_REQUEST=121
 
     private fun initViews() {
 
+        searchLocationViewModels = ViewModelProviders.of(this).get(SearchLocationViewModel::class.java)
 
         iv_back.setOnClickListener(this)
+
         iv_cancel.setOnClickListener(this)
+
+        rv_languageList.setHasFixedSize(true)
+        rv_languageList.layoutManager = LinearLayoutManager(this)
+        searchPlaceAdapter = SearchPlaceAdapter(this, locationSearchDataItems!!)
+        rv_languageList.adapter = searchPlaceAdapter
+
         et_search.addTextChangedListener(object : TextWatcher {
 
             override fun beforeTextChanged(s: CharSequence, i: Int, i1: Int, i2: Int) {
@@ -69,74 +67,60 @@ var PLACE_PICKER_REQUEST=121
             }
 
             override fun onTextChanged(s: CharSequence, i: Int, i1: Int, i2: Int) {
-                // searchPlaceAdapter?.getFilter()?.filter(s.toString())
-
-                if (s != null && s.equals("")) {
-
-
-                    iv_cancel.visibility = View.GONE
-
-                    searchPlaceAdapter!!.updateSearchList(languageList)
+                if (s.toString().trim { it <= ' ' }.length > 2) {
+                    getSearchDetails(s.toString())
                 } else {
-
-
-                    iv_cancel.visibility = View.VISIBLE
-
-                    var tempLocList = ArrayList<String>()
-
-                    for (i in 0..languageList.size - 1) {
-                        if (languageList.get(i).contains(s.toString())) {
-                            tempLocList.add(languageList.get(i))
+                    runOnUiThread(Runnable {
+                        if (locationSearchDataItems != null) {
+                            locationSearchDataItems!!.clear()
+                            searchPlaceAdapter!!.notifyDataSetChanged()
                         }
-                    }
+                    })
 
-                    searchPlaceAdapter?.updateSearchList(tempLocList)
                 }
 
             }
 
-            override fun afterTextChanged(editable: Editable) {
+            override fun afterTextChanged(s: Editable) {
 
             }
         })
 
 
-
-        et_search.setOnEditorActionListener(object : TextView.OnEditorActionListener{
-            override fun onEditorAction(p0: TextView?, actionId: Int, p2: KeyEvent?): Boolean {
+    }
 
 
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    performSearch();
-                    return true;
+    fun getSearchDetails(searchData: String) {
+
+        pb_loader.visibility = View.VISIBLE
+
+        searchLocationViewModels!!.searchLocation(this, searchData).observe(this, androidx.lifecycle.Observer {
+
+            if (it != null && it.has("status") && it.get("status").asString.equals("1")) {
+
+                pb_loader.visibility = View.GONE
+
+                if (it.has("data") && it.get("data") is JsonArray) {
+
+                    val dataSearch = object : TypeToken<ArrayList<LocationSearchDataItems>>() {}.type
+                    locationSearchDataItems.addAll(
+                        Gson().fromJson<ArrayList<LocationSearchDataItems>>(
+                            it.get("data").toString(),
+                            dataSearch
+                        )
+                    )
+
+
+                    rv_languageList.adapter!!.notifyDataSetChanged()
                 }
-                return false;
 
+            } else {
+                pb_loader.visibility = View.GONE
+                Utils.showToast(this, getString(R.string.msg_common_error))
             }
         })
 
-
-
     }
-
-    fun performSearch()
-    {
-     /*   if(!et_search.text.toString().equals(""))
-        {
-            try {
-                val intentBuilder = PlacePicker.IntentBuilder()
-                val intent = intentBuilder.build(this)
-                startActivityForResult(intent, PLACE_PICKER_REQUEST)
-
-            } catch (e: GooglePlayServicesRepairableException) {
-                e.printStackTrace()
-            } catch (e: GooglePlayServicesNotAvailableException) {
-                e.printStackTrace()
-            }
-
-        }*/
-    }
-
 
 
     override fun onClick(v: View?) {
@@ -147,59 +131,6 @@ var PLACE_PICKER_REQUEST=121
         }
     }
 
-
-    inner class LocationSearchFilter(var context: Context) : Filter() {
-
-        override fun performFiltering(constraint: CharSequence?): Filter.FilterResults {
-            var constraint = constraint
-
-
-            constraint = constraint!!.toString().toLowerCase()
-
-            val newFilterResults = Filter.FilterResults()
-
-            if (constraint != null && constraint.length > 0) {
-
-                val auxData = ArrayList<String>()
-
-                for (i in languageList.indices) {
-                    if (languageList[i].toLowerCase().contains(constraint))
-                        auxData.add(languageList[i])
-                }
-
-                newFilterResults.count = auxData.size
-                newFilterResults.values = auxData
-            } else {
-
-                newFilterResults.count = languageList.size
-                newFilterResults.values = languageList
-            }
-
-            return newFilterResults
-        }
-
-        override fun publishResults(constraint: CharSequence, results: Filter.FilterResults) {
-
-            var resultData = ArrayList<String>()
-
-            resultData = results.values as ArrayList<String>
-
-            val adapter = SearchPlaceAdapter(context, resultData)
-            SearchActivity().rv_languageList.adapter = adapter
-
-            //              notifyDataSetChanged();
-        }
-
-
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-
-
-
-    }
 
 }
 

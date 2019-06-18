@@ -1,4 +1,4 @@
-package com.utalli.viewModels
+package com.utalli.models
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
@@ -11,23 +11,21 @@ import com.utalli.network.ApiService
 import retrofit2.Call
 import retrofit2.Response
 
-class ResetPasswordViewModel : ViewModel(){
+class GuideSearchViewModel : ViewModel() {
 
-    private var resetPasswordResult: MutableLiveData<JsonObject>? = null
+    private var guideSearchResult : MutableLiveData<JsonObject>?= null
 
 
+    fun guideSearch(mContext: Context, countryId: Int) : MutableLiveData<JsonObject>{
 
-    fun resetPassword(mContext: Context,  password: String, otp: String, id:Int) : MutableLiveData<JsonObject>{
-
-        resetPasswordResult = MutableLiveData()
+        guideSearchResult = MutableLiveData()
 
         var apiService = ApiClient.getClient().create(ApiService::class.java)
-
-        var call = apiService.resetPassword(password,otp,id)
+        var call = apiService.guidsearch(countryId)
 
         Utils.showProgressDialog(mContext)
 
-        call.enqueue(object : retrofit2.Callback<JsonObject> {
+        call.enqueue(object : retrofit2.Callback<JsonObject>{
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                 Utils.hideProgressDialog()
@@ -35,16 +33,24 @@ class ResetPasswordViewModel : ViewModel(){
             }
 
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                Utils.hideProgressDialog()
-                resetPasswordResult!!.value = response.body()
+              Utils.hideProgressDialog()
+
+                if(response!= null && response.body()!=null){
+                    guideSearchResult!!.value = response.body()
+                }else {
+                    Utils.showToast(mContext, mContext.resources.getString(R.string.msg_common_error))
+                }
             }
 
         })
 
 
-        return resetPasswordResult!!
-
+        return guideSearchResult!!
     }
+
+
+
+
 
 
 

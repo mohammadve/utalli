@@ -8,6 +8,19 @@ class StateDetailsData (
     var stateName : String,
     var isSelected : Boolean
 
+
+   // var data : ArrayList<SubStateData>
+
+
+
+
+
+
+
+
+
+
+
 ): Serializable
 
 

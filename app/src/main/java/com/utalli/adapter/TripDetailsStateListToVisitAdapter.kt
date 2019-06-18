@@ -10,15 +10,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.utalli.R
 import com.utalli.callBack.StateNotToVisitCallBack
+import com.utalli.models.IndividualStateDetail
 import com.utalli.models.StateDetailsData
 
 
 class TripDetailsStateListToVisitAdapter (var mcontext : Context, var  itemListener: StateNotToVisitCallBack) : RecyclerView.Adapter<TripDetailsStateListToVisitAdapter.SelectedStateViewHolder>(){
-    var selectedStateListAdd = ArrayList<StateDetailsData>()
+    var selectedStateListAdd = ArrayList<IndividualStateDetail>()
 
 
 
-    fun setSelectedStateList (newStateList : ArrayList<StateDetailsData>, mcontext: Context){
+    fun setSelectedStateList (newStateList : ArrayList<IndividualStateDetail>, mcontext: Context){
         this.selectedStateListAdd = newStateList
         this.mcontext = mcontext
         notifyDataSetChanged()
@@ -38,7 +39,7 @@ class TripDetailsStateListToVisitAdapter (var mcontext : Context, var  itemListe
     }
 
     override fun onBindViewHolder(holder: SelectedStateViewHolder, position: Int) {
-        holder.tv_state_name.setText(selectedStateListAdd.get(position).stateName)
+        holder.tv_state_name.setText(selectedStateListAdd.get(position).name)
 
         holder.ivCancleIcon.setOnClickListener {
             selectedStateListAdd.get(position).isSelected = false

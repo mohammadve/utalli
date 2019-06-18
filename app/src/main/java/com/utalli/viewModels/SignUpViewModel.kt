@@ -1,6 +1,8 @@
 package com.utalli.viewModels
 
 import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.JsonObject
@@ -9,6 +11,7 @@ import com.utalli.helpers.Utils
 import com.utalli.models.SignupRequestModel
 import com.utalli.network.ApiClient
 import com.utalli.network.ApiService
+import okhttp3.internal.Util
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
@@ -47,6 +50,7 @@ class SignUpViewModel : ViewModel() {
                 if(response!=null && response.body()!=null){
                     signupResult!!.value = response.body()
                 }else {
+                    Log.e("TAG","Result Obtained signUp ==="+response)
                    Utils.showToast(mContext, mContext.resources.getString(R.string.msg_common_error))
                 }
             }
@@ -82,18 +86,28 @@ class SignUpViewModel : ViewModel() {
         )
         Utils.showProgressDialog(mContext)
 
+        Log.e("TAG","call of verifyOTP ===  "+call)
+
 
         call.enqueue(object : retrofit2.Callback<JsonObject> {
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                 Utils.hideProgressDialog()
+                Utils.showLog(t.message!!)
             }
 
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 Utils.hideProgressDialog()
-                if (response != null && response.body() != null)
+                Utils.showToast(mContext, response.body().toString())
+
+                if (response != null && response.body() != null){
                     verifyOTPResult!!.value = response.body()
-                else
+                }
+                else{
+                    Log.e("TAG","Result Obtained verifyOtp ==="+response.body())
                     Utils.showToast(mContext, mContext.resources.getString(R.string.msg_common_error))
+
+                }
+
             }
 
         })

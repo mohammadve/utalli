@@ -48,6 +48,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
         ).observe(this, androidx.lifecycle.Observer {
 
             Utils.showLog(it.toString()!!)
+            Log.e("TAG","it.toString() verify otp  === "+it.toString()!!)
 
             if (it.has("status") && it.get("status").asString.equals("1")) {
 
@@ -123,7 +124,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
             R.id.iv_calendar_icon -> {
                 val datePickerDialog = DatePickerDialog(this,R.style.DialogTheme, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
-                    et_dateOfBirth.setText("" + dayOfMonth + "/" + (monthOfYear+1) + "/" + year)
+                    et_dateOfBirth.setText("" + dayOfMonth + "-" + (monthOfYear+1) + "-" + year)
                 }, year, month, day)
 
                 datePickerDialog.show()
@@ -192,12 +193,10 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
 
                     if (it.has("otp")){
 
-                        Utils.showToast(this, getString(R.string.msg_otp_sent))
-
+                       // Utils.showToast(this, getString(R.string.msg_otp_sent))
+                        Utils.showToast(this, it.get("message").asString)
 
                         otp = it.get("otp").asString
-
-
 
                         if (bottomSheetDialogFragment == null) {
                             bottomSheetDialogFragment = VerifyOTPDialogFragment.newInstance(otp, this)
@@ -227,7 +226,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
     private fun checkValidations(): Boolean {
 
 
-        Log.e("TAG","gender value on validation part signUp ====   "+genderValue.toString())
+        Log.e("TAG","gender value on validation part signUp ====   "+genderValue)
 
         if (!Utils.isInternetAvailable(this)) {
             Utils.showToast(this, resources.getString(R.string.msg_no_internet))
@@ -253,7 +252,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
             Utils.showToast(this, resources.getString(R.string.msg_invalid_pass))
             return false
         }
-        else if(genderValue.toString().equals("") || genderValue!!.isEmpty() || genderValue.toString() == null || genderValue!!.length == 0){
+        else if(genderValue == null){
             Utils.showToast(this, resources.getString(R.string.msg_empty_gender))
             return false
         }

@@ -20,7 +20,6 @@ interface ApiService {
         @Field("dob") dob:String,
         @Field("gender") gender:String,
         @Field("otp") otp:String
-//        @Field("password") password: String
     ): Call<JsonObject>
 
     @POST(ApiList.VERIFY_OTP_URL)
@@ -147,6 +146,33 @@ interface ApiService {
         @Field("message") message: String
 
     ): Call<JsonObject>
+
+
+
+
+    @POST(ApiList.SEARCH_LOCATION)
+    @FormUrlEncoded
+    fun searchLocation(
+        @Field("countryname") countryname:String
+    ): Call<JsonObject>
+
+
+    @POST(ApiList.GET_STATE_BY_COUNTRY)
+    @FormUrlEncoded
+    fun getStateByCountry(
+        @Header("x-access-token") token : String,
+        @Field("contryid") contryid : Int
+    ): Call<JsonObject>
+
+
+    @POST(ApiList.GUIDE_SEARCH)
+    @FormUrlEncoded
+    fun guidsearch(
+        @Field("coutryId") coutryId : Int
+
+    ):Call<JsonObject>
+
+
 
 
 }

@@ -3,7 +3,7 @@ package com.utalli.network
 class ApiList {
     companion object {
 
-        val BASE_URL =  "http://192.168.6.47:5000/api/v1/"
+        val BASE_URL =  "http://172.16.200.38:8000/api/v1/"  // http://192.168.6.47:5000/api/v1/
         const val SIGNUP_URL = "users/register"
         const val VERIFY_OTP_URL = "users/register"
         const val LOGIN_URL = "users/login"
@@ -20,6 +20,10 @@ class ApiList {
         const val GET_NOTIFICATIONS_URL = "user/notifications"
         const val SEND_NOTIFICATION_URL = "contact/send_message"
         const val RESET_PASS_URL = "users/resetPassword"
+
+        const val SEARCH_LOCATION = "deshboard/searchLocation"
+        const val GET_STATE_BY_COUNTRY = "deshboard/getstateBycountry"
+        const val GUIDE_SEARCH = "deshboard/guidsearch"
 
 
         var ABOUT_US_URL = BASE_URL + "user/about"
