@@ -38,20 +38,19 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
 
         signupViewModel!!.verifyOTP(this, SignupRequestModel(
             et_name.text.toString(),
-            et_dateOfBirth.text.toString(),
-            genderValue.toString(),
             et_email_id.text.toString(),
             et_mobileNumber.text.toString(),
             et_newPassword.text.toString(),
+            et_dateOfBirth.text.toString(),
+            genderValue.toString(),
             otp
         )
         ).observe(this, androidx.lifecycle.Observer {
 
-            Utils.showLog(it.toString()!!)
-            Log.e("TAG","it.toString() verify otp  === "+it.toString()!!)
+         //   Utils.showLog(it.toString()!!)
+
 
             if (it.has("status") && it.get("status").asString.equals("1")) {
-
 
                 Utils.showToast(this, getString(R.string.msg_user_registered))
 
@@ -124,7 +123,9 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
             R.id.iv_calendar_icon -> {
                 val datePickerDialog = DatePickerDialog(this,R.style.DialogTheme, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
-                    et_dateOfBirth.setText("" + dayOfMonth + "-" + (monthOfYear+1) + "-" + year)
+                  //  et_dateOfBirth.setText("" + dayOfMonth + "-" + (monthOfYear+1) + "-" + year)
+                    et_dateOfBirth.setText("" + year + "-" + (monthOfYear+1) + "-" + dayOfMonth)
+
                 }, year, month, day)
 
                 datePickerDialog.show()
@@ -177,17 +178,17 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
 
             signupViewModel!!.signupUser(this, SignupRequestModel(
                 et_name.text.toString(),
-                et_dateOfBirth.text.toString(),
-                genderValue.toString(),
                 et_email_id.text.toString(),
                 et_mobileNumber.text.toString(),
                 et_newPassword.text.toString(),
+                et_dateOfBirth.text.toString(),
+                genderValue.toString(),
                 ""
             )
             ).observe(this, androidx.lifecycle.Observer {
 
              //   Utils.showLog(it.toString())
-                Log.e("TAG","SignUp it.toString() === "+it.toString())
+
 
                 if(it != null && it.has("status") && it.get("status").asString.equals("1")){
 
