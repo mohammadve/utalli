@@ -50,7 +50,6 @@ class SignUpViewModel : ViewModel() {
                 if(response!=null && response.body()!=null){
                     signupResult!!.value = response.body()
                 }else {
-                    Log.e("TAG","Result Obtained signUp ==="+response)
                    Utils.showToast(mContext, mContext.resources.getString(R.string.msg_common_error))
                 }
             }
@@ -85,8 +84,6 @@ class SignUpViewModel : ViewModel() {
             signupRequestModel.otp
         )
         Utils.showProgressDialog(mContext)
-
-        Log.e("TAG","call of verifyOTP ===  "+call)
 
 
         call.enqueue(object : retrofit2.Callback<JsonObject> {

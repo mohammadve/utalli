@@ -21,9 +21,12 @@ class ApiList {
         const val SEND_NOTIFICATION_URL = "contact/send_message"
         const val RESET_PASS_URL = "users/resetPassword"
 
+
         const val SEARCH_LOCATION = "deshboard/searchLocation"
         const val GET_STATE_BY_COUNTRY = "deshboard/getstateBycountry"
         const val GUIDE_SEARCH = "deshboard/guidsearch"
+        const val MY_PROFILE_DETAILS = "users/userinformation"
+        const val GUIDE_INFORMATION = "guide/guidinformation"
 
 
         var ABOUT_US_URL = BASE_URL + "user/about"

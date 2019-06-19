@@ -22,6 +22,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     var loginViewModel : LoginViewModel?=null
     var preference: AppPreference? = null
     var token : String = ""
+    var id: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,9 +98,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                        }
 
 
+                       if(it.has("data")){
+                           var dataObject = it.getAsJsonObject("data")
+                           if (dataObject.has("id")){
+                               id = dataObject.get("id").asInt
+
+                               AppPreference.getInstance(this).setId(dataObject.get("id").asInt)
+
+                           }
+                       }
+
+
                        Utils.showToast(this, it.get("message").asString)
-
-
 
                        Handler().postDelayed(Runnable {
                            val intent = Intent(this@LoginActivity, HomeActivity::class.java)

@@ -150,6 +150,7 @@ interface ApiService {
 
 
 
+
     @POST(ApiList.SEARCH_LOCATION)
     @FormUrlEncoded
     fun searchLocation(
@@ -169,9 +170,24 @@ interface ApiService {
     @FormUrlEncoded
     fun guidsearch(
         @Field("coutryId") coutryId : Int
-
     ):Call<JsonObject>
 
+
+    @POST(ApiList.MY_PROFILE_DETAILS)
+    @FormUrlEncoded
+    fun myProfileUser(
+        @Header("x-access-token") token : String,
+      @Field("id") id : Int
+    ):Call<JsonObject>
+
+
+
+    @POST(ApiList.GUIDE_INFORMATION)
+    @FormUrlEncoded
+    fun guideDetails(
+        @Header("x-access-token") token : String,
+        @Field("guidId") guidId:Int
+    ): Call<JsonObject>
 
 
 

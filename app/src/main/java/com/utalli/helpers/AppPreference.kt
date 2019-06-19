@@ -10,6 +10,7 @@ class AppPreference()
     var USER_DATA = "USER_DATA"
     var LAST_LOCATION = "LAST_LOCATION"
     var TOKEN = "TOKEN"
+    var ID = "id"
 
     var mPreference: SharedPreferences? = null
 
@@ -44,6 +45,15 @@ class AppPreference()
     }
 
 
+    fun getId(): Int {
+        return getInt(ID)
+    }
+
+    fun setId(id: Int) {
+        setInt(ID, id)
+    }
+
+
 
     fun getUserLastLocation(): String {
         return getString(LAST_LOCATION)
@@ -61,8 +71,20 @@ class AppPreference()
         editor.putString(key, value)
         editor.apply()
 
+    }
+    fun setInt(key: String, value: Int) {
+        val editor = mPreference!!.edit()
+        editor.putInt(key, value)
+        editor.apply()
 
     }
+    fun getInt(key: String): Int {
+        return mPreference!!.getInt(key, 0)
+    }
+
+
+
+
 
     fun getString(key: String): String {
         return mPreference!!.getString(key, "")

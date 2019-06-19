@@ -47,11 +47,6 @@ class SplashActivity : AppCompatActivity(), View.OnClickListener {
                     finish()
             }
 
-
-
-
-
-
         }, 2000)
 
 

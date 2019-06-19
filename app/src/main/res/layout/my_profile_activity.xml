@@ -132,7 +132,7 @@
                 android:textColor="@color/colorBlack"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:textSize="16sp"
-                android:text="Janice Crawford"
+                android:text=""
         />
 
 
@@ -176,7 +176,7 @@
                 android:layout_marginTop="5dp"
                 android:textColor="@color/colorBlack"
                 android:textSize="16sp"
-                android:text="+ 9634324545623546254"
+                android:text=""
         />
 
 
@@ -208,7 +208,7 @@
                 android:layout_marginTop="5dp"
                 android:textColor="@color/colorBlack"
                 android:textSize="16sp"
-                android:text="janicecraw@samplemail.com"
+                android:text=""
         />
 
 
@@ -240,7 +240,7 @@
                 android:layout_marginTop="5dp"
                 android:textColor="@color/colorBlack"
                 android:textSize="16sp"
-                android:text="4848 Willow Greene Drive Montgomery"
+                android:text=""
         />
 
 
@@ -283,7 +283,7 @@
                 android:layout_marginTop="5dp"
                 android:textColor="@color/colorBlack"
                 android:textSize="16sp"
-                android:text="+1 3342484232"
+                android:text=""
         />
 
 
@@ -338,7 +338,7 @@
                 android:layout_marginTop="5dp"
                 android:textColor="@color/colorBlack"
                 android:textSize="16sp"
-                android:text="XX-5689"
+                android:text=""
         />
 
 
@@ -393,7 +393,7 @@
                 android:layout_marginTop="5dp"
                 android:textColor="@color/colorBlack"
                 android:textSize="16sp"
-                android:text="Notification,Help and Privacy policy etc"
+                android:text=""
         />
 
 
