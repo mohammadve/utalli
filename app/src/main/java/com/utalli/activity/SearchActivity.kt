@@ -68,14 +68,22 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
 
             override fun onTextChanged(s: CharSequence, i: Int, i1: Int, i2: Int) {
                 if (s.toString().trim { it <= ' ' }.length > 2) {
+                    rv_languageList.visibility = View.VISIBLE
+                    iv_cancel.visibility = View.VISIBLE
                     getSearchDetails(s.toString())
                 } else {
-                    runOnUiThread(Runnable {
+                    rv_languageList.visibility = View.GONE
+                    iv_cancel.visibility = View.GONE
+                    cl_no_data_found.visibility=View.GONE
+                    /*runOnUiThread(Runnable {
                         if (locationSearchDataItems != null) {
                             locationSearchDataItems!!.clear()
                             searchPlaceAdapter!!.notifyDataSetChanged()
+
+
+
                         }
-                    })
+                    })*/
                 }
             }
 
@@ -91,24 +99,36 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
     fun getSearchDetails(searchData: String) {
 
         pb_loader.visibility = View.VISIBLE
+        rv_languageList.visibility = View.INVISIBLE
+        cl_no_data_found.visibility = View.INVISIBLE
 
         searchLocationViewModels!!.searchLocation(this, searchData).observe(this, androidx.lifecycle.Observer {
 
             if (it != null && it.has("status") && it.get("status").asString.equals("1")) {
-
+                rv_languageList.visibility = View.VISIBLE
                 pb_loader.visibility = View.GONE
-
+                cl_no_data_found.visibility = View.INVISIBLE
                 if (it.has("data") && it.get("data") is JsonArray) {
 
-                    val dataSearch = object : TypeToken<ArrayList<LocationSearchDataItems>>() {}.type
-                    locationSearchDataItems.addAll(Gson().fromJson<ArrayList<LocationSearchDataItems>>(it.get("data").toString(), dataSearch))
+                    locationSearchDataItems = ArrayList()
 
-                    rv_languageList.adapter!!.notifyDataSetChanged()
+                    val dataSearch = object : TypeToken<ArrayList<LocationSearchDataItems>>() {}.type
+                    locationSearchDataItems.addAll(
+                        Gson().fromJson<ArrayList<LocationSearchDataItems>>(
+                            it.get("data").toString(),
+                            dataSearch
+                        )
+                    )
+                    searchPlaceAdapter = SearchPlaceAdapter(this, locationSearchDataItems!!)
+                    rv_languageList.adapter = searchPlaceAdapter
                 }
 
             } else {
                 pb_loader.visibility = View.GONE
-                Utils.showToast(this, getString(R.string.msg_common_error))
+
+                cl_no_data_found.visibility = View.VISIBLE
+                rv_languageList.visibility = View.INVISIBLE
+                // Utils.showToast(this, getString(R.string.msg_common_error))
             }
         })
 
