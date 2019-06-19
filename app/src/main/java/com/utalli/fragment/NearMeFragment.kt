@@ -129,47 +129,11 @@ class NearMeFragment : Fragment(), View.OnClickListener {
 
     var mReciever = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-         /*   if (intent != null && intent!!.hasExtra("location")) {
-                *//*var mLocation = intent.getParcelableExtra("location") as Location
-                if (mLocation != null) {
 
-                   *//**//* val geocoder = Geocoder(context, Locale.getDefault())
-                    var result: String? = null
-
-                    try {
-
-                        var addressList = geocoder.getFromLocation(
-                            mLocation.latitude, mLocation.longitude, 1
-                        )
-
-                        if (addressList != null && addressList.size > 0) {
-
-                            var address = addressList.get(0)
-
-                            result = address.locality + ", " + address.countryName
-
-
-                        }
-
-
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }*//**//*
-
-                    if (et_location != null)
-                        et_location!!.text = AppPreference.getInstance(activity!!).getUserLastLocation()
-
-
-                }*//*
-
-
-            }
-*/
 
             if (et_location != null)
                 et_location!!.text = AppPreference.getInstance(activity!!).getUserLastLocation()
 
-          //  LocalBroadcastManager.getInstance(activity!!).unregisterReceiver(this)
 
 
         }

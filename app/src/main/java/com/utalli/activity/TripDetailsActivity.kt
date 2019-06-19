@@ -121,75 +121,75 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
 
         getStateByCountryIdViewModel!!.getStateByCountry(this, countryId).observe(this, androidx.lifecycle.Observer {
 
-             if(it != null && it.has("status") && it.get("status").asString.equals("1")){
+            if(it != null && it.has("status") && it.get("status").asString.equals("1")){
 
-                 if(it.has("data")){
-
-
-                   //  var dataArr=it.getAsJsonArray("data")
-
-                     //var dataObj=dataArr.get(0) as JsonObject
-                     var dataObj= it.getAsJsonObject("data")
-
-                     if(dataObj.has("states")){
-
-                         var stateDataArryList =  object : TypeToken<ArrayList<IndividualStateDetail>>() {}.type
-                         individualStateDetail .addAll(Gson().fromJson<ArrayList<IndividualStateDetail>>(dataObj.get("states").toString(), stateDataArryList))
-
-                     }
+                if(it.has("data")){
 
 
+                    //  var dataArr=it.getAsJsonArray("data")
 
-                     tv_selected_country_name.text = countryName
+                    //var dataObj=dataArr.get(0) as JsonObject
+                    var dataObj= it.getAsJsonObject("data")
 
+                    if(dataObj.has("states")){
 
-                     /*for (i in 0..subStateDataList.size) {
-                         individualStateDetail.addAll(subStateDataList.get(i).states)
-                     }*/
+                        var stateDataArryList =  object : TypeToken<ArrayList<IndividualStateDetail>>() {}.type
+                        individualStateDetail .addAll(Gson().fromJson<ArrayList<IndividualStateDetail>>(dataObj.get("states").toString(), stateDataArryList))
+
+                    }
 
 
 
-
-                     if (individualStateDetail.size > 5) {
-                         tv_view_all.visibility = View.VISIBLE
-                     } else {
-                         tv_view_all.visibility = View.GONE
-                     }
-
-                     val layoutManager = FlexboxLayoutManager(this)
-                     layoutManager.flexDirection = FlexDirection.ROW
-                     layoutManager.justifyContent = JustifyContent.SPACE_AROUND
-                     rv_states_list.layoutManager = layoutManager
+                    tv_selected_country_name.text = countryName
 
 
-                     tripDetailsStateListAdapter = TripDetailsStateListAdapter(this, this, "TripDetailsActivity")
-                     rv_states_list.adapter = tripDetailsStateListAdapter
-
-
-                     if (individualStateDetail.size > 5) {
-                         visibleStateList = ArrayList(individualStateDetail.subList(0, 4))
-                         remainingStateList = ArrayList(individualStateDetail.subList(4, individualStateDetail.size))
-
-                     } else if (individualStateDetail.size < 5) {
-                         visibleStateList = individualStateDetail
-                         remainingStateList = ArrayList()
-                     }
-
-                     //   tripDetailsStateListAdapter?.setStateList(ArrayList<StateDetailsData>(stateList.subList(0, 4)), this)
-                     tripDetailsStateListAdapter?.setStateList(visibleStateList, this)
+                    /*for (i in 0..subStateDataList.size) {
+                        individualStateDetail.addAll(subStateDataList.get(i).states)
+                    }*/
 
 
 
 
-                 }
+                    if (individualStateDetail.size > 5) {
+                        tv_view_all.visibility = View.VISIBLE
+                    } else {
+                        tv_view_all.visibility = View.GONE
+                    }
+
+                    val layoutManager = FlexboxLayoutManager(this)
+                    layoutManager.flexDirection = FlexDirection.ROW
+                    layoutManager.justifyContent = JustifyContent.SPACE_AROUND
+                    rv_states_list.layoutManager = layoutManager
+
+
+                    tripDetailsStateListAdapter = TripDetailsStateListAdapter(this, this, "TripDetailsActivity")
+                    rv_states_list.adapter = tripDetailsStateListAdapter
+
+
+                    if (individualStateDetail.size > 5) {
+                        visibleStateList = ArrayList(individualStateDetail.subList(0, 4))
+                        remainingStateList = ArrayList(individualStateDetail.subList(4, individualStateDetail.size))
+
+                    } else if (individualStateDetail.size < 5) {
+                        visibleStateList = individualStateDetail
+                        remainingStateList = ArrayList()
+                    }
+
+                    //   tripDetailsStateListAdapter?.setStateList(ArrayList<StateDetailsData>(stateList.subList(0, 4)), this)
+                    tripDetailsStateListAdapter?.setStateList(visibleStateList, this)
 
 
 
-             }
 
-             else {
-                 Utils.showToast(this, getString(R.string.msg_common_error))
-             }
+                }
+
+
+
+            }
+
+            else {
+                Utils.showToast(this, getString(R.string.msg_common_error))
+            }
 
 
 
@@ -260,12 +260,12 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
                 else if (ddArrivalDate!!.compareTo(ddDepartureDate) > 0) {
                     Toast.makeText(this,"Please choose arrival date smaller or equal to departure date",Toast.LENGTH_SHORT).show()
                 }
-           /*     else if (ddArrivalDate!!.compareTo(ddDepartureDate) < 0) {
-                    System.out.println("start is before end");
-                } */
-             /*   else if (ddArrivalDate!!.compareTo(ddArrivalDate) == 0) {
-                    System.out.println("start is equal to end");
-                }*/
+                /*     else if (ddArrivalDate!!.compareTo(ddDepartureDate) < 0) {
+                         System.out.println("start is before end");
+                     } */
+                /*   else if (ddArrivalDate!!.compareTo(ddArrivalDate) == 0) {
+                       System.out.println("start is equal to end");
+                   }*/
                 else {
                     var intent = Intent(this@TripDetailsActivity, GuideListActivity::class.java)
                     startActivity(intent)
@@ -350,7 +350,7 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
                         Log.e("Tag","deptDate === "+arrivalDateStr)
                     }, year, month, day)
 
-                     datePickerDialog.getDatePicker().setMinDate(ddArrivalDate!!.time)
+                    datePickerDialog.getDatePicker().setMinDate(ddArrivalDate!!.time)
                     datePickerDialog.show()
 
                 }
@@ -360,13 +360,13 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
             R.id.tv_arrival_date_change -> {
                 val datePickerDialog = DatePickerDialog(this, R.style.DialogTheme, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
-                        tv_date_of_arrival.setText("" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year)
+                    tv_date_of_arrival.setText("" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year)
                     arrivalDateStr =  (""+dayOfMonth + "/" + (monthOfYear + 1) + "/" + year)
 
                     var sdf = SimpleDateFormat("dd/MM/yyyy")
                     ddArrivalDate = sdf.parse(arrivalDateStr)
 
-                    }, year, month, day)
+                }, year, month, day)
 
                 datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000)
                 datePickerDialog.show()
@@ -374,7 +374,7 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
             R.id.tv_view_all -> {
                 var intent = Intent(this, ViewAllStateActivity::class.java)
                 intent.putExtra("countryName", countryName)
-               // remainingStateList.addAll(visibleStateList)
+                // remainingStateList.addAll(visibleStateList)
                 intent.putExtra("stateDetailsList", remainingStateList)
                 Log.e("TAG", "TripDetailsActivity remainingStateList send to viewAll == "+remainingStateList.size)
                 startActivityForResult(intent, 101)

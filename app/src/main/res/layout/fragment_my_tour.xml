@@ -37,6 +37,8 @@
                         app:layout_constraintRight_toRightOf="parent"
                         android:background="@android:color/transparent"
                         android:id="@+id/toolbar"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="10dp"
 
 
                 >
@@ -56,7 +58,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:paddingLeft="12dp"
+                            android:paddingLeft="20dp"
                     >
 
                         <com.utalli.RobotoRegularTextView

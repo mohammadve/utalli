@@ -3,22 +3,21 @@
 
 
     <string name="msg_no_internet">No internet connection, please check your internet connection and try again.</string>
-    <string name="msg_invalid_otp">Please enter valid OTP code</string>
     <string name="msg_invalid_name">Please enter valid name</string>
     <string name="msg_invalid_email">Please enter valid email id</string>
     <string name="msg_invalid_mobile_no">Please enter valid mobile number</string>
     <string name="msg_empty_mobile_no">Please enter your mobile number</string>
     <string name="msg_empty_pass">Please enter your password</string>
     <string name="msg_invalid_pass">Password must be atleast 6 characters in length</string>
-    <string name="msg_common_error">Ooppss.. something went wrong, please try again.</string>
-    <string name="msg_otp_sent">OTP has been sent successfully to your mobile number.</string>
-    <string name="msg_user_registered">Your account has been successfully created.</string>
-
-
-    <string name="msg_empty_gender">Please enter your gender</string>
-    <string name="msg_empty_dob">Please enter your date of birth</string>
+    <string name="msg_incomplete_permission">Please allow all permissions requires to select profile image</string>
     <string name="msg_not_same_pass">Password does not match</string>
-
+    <string name="msg_otp_sent">OTP has been sent successfully to your mobile number.</string>
+    <string name="msg_empty_dob">Please enter your date of birth</string>
+    <string name="msg_invalid_otp">Please enter valid OTP code</string>
+    <string name="text_add_card">Add Card</string>
+    <string name="msg_user_registered">Your account has been successfully created.</string>
+    <string name="text_pools_available">Pools Available</string>
+    <string name="msg_common_error">Ooppss.. something went wrong, please try again.</string>
     <string name="hint_enter_name">Enter Name</string>
     <string name="hint_email">Email</string>
     <string name="hint_mobile_number">Mobile Number</string>
@@ -30,7 +29,7 @@
     <string name="hint_enter_your_mobile_number">Enter your mobile number</string>
     <string name="hint_explore_country_or_place">Explore country or place</string>
     <string name="hint_type_message">Type a message</string>
-
+    <string name="msg_empty_gender">Please enter your gender</string>
     <string name="button_sign_up">SIGN UP</string>
 
     <string name="text_sign_up">SIGN UP</string>
@@ -89,8 +88,8 @@
     <string name="text_about_us">About us</string>
     <string name="text_privacy_policy">Privacy policy</string>
     <string name="text_payment">Payment</string>
-    <string name="text_pools_available">Pools Available</string>
-    <string name="text_add_card">Add Card</string>
+    <string name="txt_gallery">Gallery</string>
+    <string name="txt_camera">Camera</string>
 
 
 </resources>
