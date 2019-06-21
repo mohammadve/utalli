@@ -90,6 +90,7 @@
     <string name="text_payment">Payment</string>
     <string name="txt_gallery">Gallery</string>
     <string name="txt_camera">Camera</string>
+    <string name="txt_found_nothing">Found Nothing!</string>
 
 
 </resources>

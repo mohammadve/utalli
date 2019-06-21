@@ -203,43 +203,7 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
 
 
 
-/*
-        var data1 = StateDetailsData("1", "Western Australia", false)
-        stateList.add(data1)
 
-        var data2 = StateDetailsData("2", "Victoria", false)
-        stateList.add(data2)
-
-        var data3 = StateDetailsData("3", "UP", false)
-        stateList.add(data3)
-
-        var data4 = StateDetailsData("4", "Tasmania", false)
-        stateList.add(data4)
-
-        var data5 = StateDetailsData("5", "Queensland", false)
-        stateList.add(data5)
-
-        var data6 = StateDetailsData("6", "Abc", false)
-        stateList.add(data6)
-
-        var data7 = StateDetailsData("7", "New Delhi", false)
-        stateList.add(data7)
-
-        var data8 = StateDetailsData("9", "Goa", false)
-        stateList.add(data8)
-
-        var data9 = StateDetailsData("10", "Delhi", false)
-        stateList.add(data9)
-
-        var data10 = StateDetailsData("11", "Raipur", false)
-        stateList.add(data10)
-
-        var data11 = StateDetailsData("12", "Noida", false)
-        stateList.add(data11)
-
-        var data12 = StateDetailsData("13", "Gurgaon", false)
-        stateList.add(data12)
-*/
 
 
 
