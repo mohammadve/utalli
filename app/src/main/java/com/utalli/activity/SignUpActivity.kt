@@ -104,7 +104,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
 
         btn_signUp.setOnClickListener(this)
         tv_sign_in.setOnClickListener(this)
-        iv_calendar_icon.setOnClickListener(this)
+        et_dateOfBirth.setOnClickListener(this)
 
         cl_first_male.setOnClickListener(this)
         cl_second_female.setOnClickListener(this)
@@ -124,7 +124,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
                 startActivity(intent)
                 finish()
             }
-            R.id.iv_calendar_icon -> {
+            R.id.et_dateOfBirth -> {
                 val datePickerDialog = DatePickerDialog(this,R.style.DialogTheme, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
                   //  et_dateOfBirth.setText("" + dayOfMonth + "-" + (monthOfYear+1) + "-" + year)
