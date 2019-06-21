@@ -22,7 +22,6 @@ import java.util.*
 class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialogFragment.OnButtonClick {
 
 
-
     override fun onDismiss() {
         bottomSheetDialogFragment = null
     }
@@ -36,19 +35,20 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
         Utils.hideSoftKeyboard(this)
         bottomSheetDialogFragment!!.dismiss()
 
-        signupViewModel!!.verifyOTP(this, SignupRequestModel(
-            et_name.text.toString(),
-            et_email_id.text.toString(),
-            et_mobileNumber.text.toString(),
-            et_newPassword.text.toString(),
-            et_dateOfBirth.text.toString(),
-            genderValue.toString(),
-            otp,
-            device_token
-        )
+        signupViewModel!!.verifyOTP(
+            this, SignupRequestModel(
+                et_name.text.toString(),
+                et_email_id.text.toString(),
+                et_mobileNumber.text.toString(),
+                et_newPassword.text.toString(),
+                et_dateOfBirth.text.toString(),
+                genderValue.toString(),
+                otp,
+                device_token
+            )
         ).observe(this, androidx.lifecycle.Observer {
 
-         //   Utils.showLog(it.toString()!!)
+            //   Utils.showLog(it.toString()!!)
 
 
             if (it.has("status") && it.get("status").asString.equals("1")) {
@@ -71,19 +71,17 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
     }
 
 
-
     var c = Calendar.getInstance()
     var year = c.get(Calendar.YEAR)
     var month = c.get(Calendar.MONTH)
     var day = c.get(Calendar.DAY_OF_MONTH)
-    var genderValue : String? = null
-    var signupViewModel:SignUpViewModel?= null
+    var genderValue: String? = null
+    var signupViewModel: SignUpViewModel? = null
     var otp: String = ""
 
     var bottomSheetDialogFragment: VerifyOTPDialogFragment? = null
 
     var device_token = ""
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -114,32 +112,44 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
 
     override fun onClick(v: View?) {
 
-        when(v?.id){
+        when (v?.id) {
 
-            R.id.btn_signUp ->{
+            R.id.btn_signUp -> {
                 signupUser()
             }
-            R.id.tv_sign_in ->{
+            R.id.tv_sign_in -> {
                 val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
             }
             R.id.et_dateOfBirth -> {
-                val datePickerDialog = DatePickerDialog(this,R.style.DialogTheme, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                val datePickerDialog = DatePickerDialog(
+                    this,
+                    R.style.DialogTheme,
+                    DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
-                  //  et_dateOfBirth.setText("" + dayOfMonth + "-" + (monthOfYear+1) + "-" + year)
-                    et_dateOfBirth.setText("" + year + "-" + (monthOfYear+1) + "-" + dayOfMonth)
+                        //  et_dateOfBirth.setText("" + dayOfMonth + "-" + (monthOfYear+1) + "-" + year)
+                        et_dateOfBirth.setText("" + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth)
 
-                }, year, month, day)
+                    },
+                    year,
+                    month,
+                    day
+                )
 
                 datePickerDialog.show()
             }
-            R.id.cl_first_male ->{
+            R.id.cl_first_male -> {
                 genderValue = "MALE"
-                cl_first_male.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.rounded_rect_bottom_blue))
+                cl_first_male.setBackgroundDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.rounded_rect_bottom_blue
+                    )
+                )
                 //cl_first_male.setBackgroundColor(resources.getColor(R.color.color_blue))
                 cl_second_female.setBackgroundColor(resources.getColor(R.color.colorWhite))
-                cl_third_other.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.rounded_rect_top_white))
+                cl_third_other.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.rounded_rect_top_white))
 
                 tv_male.setTextColor(Color.parseColor("#ffffff"))
                 tv_female.setTextColor(Color.parseColor("#000000"))
@@ -149,18 +159,28 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
             R.id.cl_second_female -> {
                 genderValue = "FEMALE"
                 cl_second_female.setBackgroundColor(resources.getColor(R.color.color_blue))
-                cl_first_male.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.rounded_rect_bottom_white))
-                cl_third_other.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.rounded_rect_top_white))
+                cl_first_male.setBackgroundDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.rounded_rect_bottom_white
+                    )
+                )
+                cl_third_other.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.rounded_rect_top_white))
 
                 tv_male.setTextColor(Color.parseColor("#000000"))
                 tv_female.setTextColor(Color.parseColor("#ffffff"))
                 tv_other.setTextColor(Color.parseColor("#000000"))
 
             }
-            R.id.cl_third_other ->{
+            R.id.cl_third_other -> {
                 genderValue = "OTHER"
-                cl_third_other.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.rounded_rect_top_blue))
-                cl_first_male.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.rounded_rect_bottom_white))
+                cl_third_other.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.rounded_rect_top_blue))
+                cl_first_male.setBackgroundDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.rounded_rect_bottom_white
+                    )
+                )
                 cl_second_female.setBackgroundColor(resources.getColor(R.color.colorWhite))
 
                 tv_male.setTextColor(Color.parseColor("#000000"))
@@ -178,51 +198,48 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
 
         Utils.hideSoftKeyboard(this)
 
-        if(checkValidations()){
+        if (checkValidations()) {
 
-            Log.e("TAG","genderValue send to server part signUp === "+genderValue.toString())
+            Log.e("TAG", "genderValue send to server part signUp === " + genderValue.toString())
 
-            signupViewModel!!.signupUser(this, SignupRequestModel(
-                et_name.text.toString(),
-                et_email_id.text.toString(),
-                et_mobileNumber.text.toString(),
-                et_newPassword.text.toString(),
-                et_dateOfBirth.text.toString(),
-                genderValue.toString(),
-                "",
-                device_token
-            )
+            signupViewModel!!.signupUser(
+                this, SignupRequestModel(
+                    et_name.text.toString(),
+                    et_email_id.text.toString(),
+                    et_mobileNumber.text.toString(),
+                    et_newPassword.text.toString(),
+                    et_dateOfBirth.text.toString(),
+                    genderValue.toString(),
+                    "",
+                    device_token
+                )
             ).observe(this, androidx.lifecycle.Observer {
 
-             //   Utils.showLog(it.toString())
+                //   Utils.showLog(it.toString())
 
 
-                if(it != null && it.has("status") && it.get("status").asString.equals("1")){
+                if (it != null && it.has("status") && it.get("status").asString.equals("1")) {
 
-                    if (it.has("otp")){
+                    if (it.has("otp")) {
 
-                       // Utils.showToast(this, getString(R.string.msg_otp_sent))
+                        // Utils.showToast(this, getString(R.string.msg_otp_sent))
                         Utils.showToast(this, it.get("message").asString)
 
                         otp = it.get("otp").asString
 
-                        if (bottomSheetDialogFragment == null) {
-                            bottomSheetDialogFragment = VerifyOTPDialogFragment.newInstance(otp, this)
-                            bottomSheetDialogFragment!!.show(supportFragmentManager, "VerifyOTPDialogFragment")
-                        }
-
+                        bottomSheetDialogFragment = VerifyOTPDialogFragment.newInstance(otp, this)
+                        bottomSheetDialogFragment!!.show(supportFragmentManager, "VerifyOTPDialogFragment")
 
 
                     } else {
                         Utils.showToast(this, getString(R.string.msg_common_error))
                     }
 
-                }
-                else {
-                      if(it != null && it.has("message")){
-                          Utils.showToast(this,it.get("message").asString)
-                          Log.e("TAG","message status 0 SignUp  === "+it.get("message").asString)
-                      }
+                } else {
+                    if (it != null && it.has("message")) {
+                        Utils.showToast(this, it.get("message").asString)
+                        Log.e("TAG", "message status 0 SignUp  === " + it.get("message").asString)
+                    }
 
                 }
             })
@@ -234,41 +251,33 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
     private fun checkValidations(): Boolean {
 
 
-        Log.e("TAG","gender value on validation part signUp ====   "+genderValue)
+        Log.e("TAG", "gender value on validation part signUp ====   " + genderValue)
 
         if (!Utils.isInternetAvailable(this)) {
             Utils.showToast(this, resources.getString(R.string.msg_no_internet))
             return false
-        }
-        else if (et_name.text!!.length < 2) {
+        } else if (et_name.text!!.length < 2) {
             Utils.showToast(this, resources.getString(R.string.msg_invalid_name))
             return false
-        }
-        else if (!Utils.isEmailValid(et_email_id.text.toString())) {
+        } else if (!Utils.isEmailValid(et_email_id.text.toString())) {
             Utils.showToast(this, resources.getString(R.string.msg_invalid_email))
             return false
-        }
-        else if (et_mobileNumber.text!!.length == 0) {
+        } else if (et_mobileNumber.text!!.length == 0) {
             Utils.showToast(this, resources.getString(R.string.msg_empty_mobile_no))
             return false
-        }
-        else if (et_newPassword.text!!.length == 0) {
+        } else if (et_newPassword.text!!.length == 0) {
             Utils.showToast(this, resources.getString(R.string.msg_empty_pass))
             return false
-        }
-        else if (et_newPassword.text!!.length < 6) {
+        } else if (et_newPassword.text!!.length < 6) {
             Utils.showToast(this, resources.getString(R.string.msg_invalid_pass))
             return false
-        }
-        else if(genderValue == null){
+        } else if (genderValue == null) {
             Utils.showToast(this, resources.getString(R.string.msg_empty_gender))
             return false
-        }
-        else if(et_dateOfBirth.text.toString().equals("")){
+        } else if (et_dateOfBirth.text.toString().equals("")) {
             Utils.showToast(this, resources.getString(R.string.msg_empty_dob))
             return false
-        }
-        else if(!(et_reEnterNew_Password.text.toString()).equals(et_newPassword.text.toString())){
+        } else if (!(et_reEnterNew_Password.text.toString()).equals(et_newPassword.text.toString())) {
             Utils.showToast(this, resources.getString(R.string.msg_not_same_pass))
             return false
         }
