@@ -174,7 +174,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
 
     private fun signupUser() {
 
-        device_token = "sdkjfdsjflksdjfklsdjfkljdsfddddddddddddddddssssssssssssdddddddddddd"
+        device_token = "sdkjfdsjflksdjfklsdjfkljdsfddddddddddddddddssssssssssss"
 
         Utils.hideSoftKeyboard(this)
 

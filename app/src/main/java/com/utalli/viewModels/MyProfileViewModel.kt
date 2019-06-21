@@ -97,6 +97,9 @@ class MyProfileViewModel : ViewModel(){
     }
 
 
+  //  fun updateProfile(mContext: Context, name :String,email : String, contactno : String, gender)
+
+
 
 
 
