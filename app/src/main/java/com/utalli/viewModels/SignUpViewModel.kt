@@ -82,7 +82,8 @@ class SignUpViewModel : ViewModel() {
             signupRequestModel.password,
             signupRequestModel.dob,
             signupRequestModel.gender,
-            signupRequestModel.otp
+            signupRequestModel.otp,
+            signupRequestModel.device_token
         )
         Utils.showProgressDialog(mContext)
 

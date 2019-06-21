@@ -32,7 +32,8 @@ interface ApiService {
         @Field("password") password: String,
         @Field("dob") dob: String,
         @Field("gender") gender:String,
-        @Field("otp") otp: String
+        @Field("otp") otp: String,
+        @Field("device_token") device_token : String
     ): Call<JsonObject>
 
 
