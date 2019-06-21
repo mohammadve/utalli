@@ -266,7 +266,7 @@
                     android:layout_marginTop="15dp"
                     android:padding="12dp"
 
-                    android:hint="@string/hint_enter_new_password"/>
+                    android:hint="@string/hint_password"/>
 
             <com.utalli.RobotoRegularEditText
                     android:id="@+id/et_reEnterNew_Password"
@@ -281,7 +281,7 @@
                     android:textSize="14sp"
                     android:layout_marginTop="15dp"
                     android:padding="12dp"
-                    android:hint="@string/hint_re_enter_new_password"/>
+                    android:hint="@string/hint_confirm_password"/>
 
             <com.utalli.RobotoMediumButton
                     android:id="@+id/btn_signUp"

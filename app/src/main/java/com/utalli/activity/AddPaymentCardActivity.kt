@@ -35,7 +35,7 @@ class AddPaymentCardActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_add_payment_card)
 
         toolbar_card.title =""
-        toolbar_card.setNavigationIcon(R.drawable.arrow_back_white)
+        toolbar_card.setNavigationIcon(R.drawable.arrow_back_black)
         setSupportActionBar(toolbar_card)
         toolbar_card.setNavigationOnClickListener { finish() }
 
@@ -112,7 +112,7 @@ class AddPaymentCardActivity : AppCompatActivity(), View.OnClickListener {
             tv_common.text = "Card number"
             ed_editText.hint = "Card number"
 
-            val maxLength = 16
+            val maxLength = 19
             val FilterArray = arrayOfNulls<InputFilter>(1)
             FilterArray[0] = InputFilter.LengthFilter(maxLength)
             ed_editText.setFilters(FilterArray)

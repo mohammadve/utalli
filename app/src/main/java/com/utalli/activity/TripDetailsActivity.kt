@@ -125,7 +125,6 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
 
                 if(it.has("data")){
 
-
                     //  var dataArr=it.getAsJsonArray("data")
 
                     //var dataObj=dataArr.get(0) as JsonObject
@@ -136,17 +135,12 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
                         var stateDataArryList =  object : TypeToken<ArrayList<IndividualStateDetail>>() {}.type
                         individualStateDetail .addAll(Gson().fromJson<ArrayList<IndividualStateDetail>>(dataObj.get("states").toString(), stateDataArryList))
 
+                        Log.e("TAG", "individualStateDetail.size() ====  "+ individualStateDetail.size)
+
                     }
 
 
-
                     tv_selected_country_name.text = countryName
-
-
-                    /*for (i in 0..subStateDataList.size) {
-                        individualStateDetail.addAll(subStateDataList.get(i).states)
-                    }*/
-
 
 
 
@@ -179,10 +173,7 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
                     tripDetailsStateListAdapter?.setStateList(visibleStateList, this)
 
 
-
-
                 }
-
 
 
             }
@@ -190,7 +181,6 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
             else {
                 Utils.showToast(this, getString(R.string.msg_common_error))
             }
-
 
 
 
@@ -364,7 +354,6 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
             selectedStateAdapter = TripDetailsStateListToVisitAdapter(this, object : StateNotToVisitCallBack {
                 override fun stateNotToVisitCallBack(itemDetails: IndividualStateDetail) {
 
-
                     if (visibleStateList.size < 4) {
                         visibleStateList.add(itemDetails)
                         tripDetailsStateListAdapter!!.notifyItemInserted(visibleStateList.size-1)
@@ -392,7 +381,7 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
                         rv_states_u_want_visit.visibility = View.GONE
                     }
 
-                    if(userSelectedStateList.size.equals(stateList.size)){
+                    if(userSelectedStateList.size.equals(individualStateDetail.size)){
                         view2.visibility = View.GONE
                         tv_states_in_country.visibility = View.GONE
                         rv_states_list.visibility = View.GONE
@@ -409,7 +398,7 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
             rv_states_u_want_visit.adapter = selectedStateAdapter
             selectedStateAdapter?.setSelectedStateList(userSelectedStateList, this)
 
-            if(userSelectedStateList.size.equals(stateList.size)){
+            if(userSelectedStateList.size.equals(individualStateDetail.size)){
                 view2.visibility = View.GONE
                 tv_states_in_country.visibility = View.GONE
                 rv_states_list.visibility = View.GONE
@@ -425,7 +414,7 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
             userSelectedStateList.add(itemDetails)
             selectedStateAdapter!!.notifyItemInserted(userSelectedStateList.size - 1)
 
-            if(userSelectedStateList.size.equals(stateList.size)){
+            if(userSelectedStateList.size.equals(individualStateDetail.size)){
                 view2.visibility = View.GONE
                 tv_states_in_country.visibility = View.GONE
                 rv_states_list.visibility = View.GONE

@@ -25,10 +25,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/card_back_gradient"
-            android:paddingTop="25dp"
-            android:paddingBottom="25dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             >
 
             <com.utalli.RobotoRegularTextView
@@ -51,7 +51,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginTop="5dp"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="@color/colorWhite"
                 android:text="1234    5678    4567    7890"
                 />
@@ -63,7 +63,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_card_number"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/cvv"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:textSize="14sp"
                 android:textColor="@color/color_card"
                 android:text="Name on card"
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/tv_card_number"
                 app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:textSize="12sp"
                 android:textColor="@color/color_card"
                 android:text="CVV"
@@ -88,7 +88,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/nameOnCard"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="5dp"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="@color/colorWhite"
                 android:text="Janice Crowford"
                 />
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/nameOnCard"
                 app:layout_constraintRight_toRightOf="parent"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="@color/colorWhite"
                 android:text="436"/>
 
@@ -110,7 +110,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_card_holder_name"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:textSize="14sp"
                 android:textColor="@color/color_card"
                 android:text="Valid through"
@@ -124,7 +124,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginTop="5dp"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="@color/colorWhite"
                 android:text="10/34"
                 />

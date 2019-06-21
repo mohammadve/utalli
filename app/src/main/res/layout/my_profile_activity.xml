@@ -236,6 +236,8 @@
                     android:textColor="@color/colorBlack_2"
                     android:textSize="14sp"
                     android:text="+ 96343245456"
+                    android:enabled="false"
+
             />
 
 
@@ -270,6 +272,9 @@
                     android:textColor="@color/colorBlack_2"
                     android:textSize="14sp"
                     android:text="janicecraw@samplemail.com"
+
+                    android:enabled="false"
+
             />
 
 
@@ -304,6 +309,8 @@
                     android:textColor="@color/colorBlack_2"
                     android:textSize="14sp"
                     android:text="4848 Willow Greene Drive Montgomery"
+
+                    android:enabled="false"
             />
 
 
@@ -334,7 +341,7 @@
                     android:text="@string/text_emergency_contact_number"
             />
 
-            <com.utalli.RobotoRegularTextView
+            <com.utalli.RobotoRegularEditText
                     android:id="@+id/et_emergency_contact_number"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -345,8 +352,10 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="5dp"
                     android:textColor="@color/colorBlack_2"
+                    android:background="@android:color/transparent"
                     android:textSize="14sp"
                     android:text="+1 3342484232"
+                    android:enabled="false"
             />
 
 

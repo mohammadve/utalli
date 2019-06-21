@@ -16,12 +16,12 @@ class LoginViewModel : ViewModel(){
     private var loginResult: MutableLiveData<JsonObject>? = null
 
 
-    fun loginUser(mContext: Context,mobile_no: String, password: String) : MutableLiveData<JsonObject>{
+    fun loginUser(mContext: Context,mobile_no: String, password: String, device_token:String) : MutableLiveData<JsonObject>{
         loginResult = MutableLiveData()
 
         var apiService = ApiClient.getClient().create(ApiService::class.java)
 
-        var call = apiService.loginUser(mobile_no, password)
+        var call = apiService.loginUser(mobile_no, password, device_token)
         Utils.showProgressDialog(mContext)
 
         call.enqueue(object : retrofit2.Callback<JsonObject>{

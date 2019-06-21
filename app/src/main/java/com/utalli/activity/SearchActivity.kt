@@ -79,9 +79,6 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
                         if (locationSearchDataItems != null) {
                             locationSearchDataItems!!.clear()
                             searchPlaceAdapter!!.notifyDataSetChanged()
-
-
-
                         }
                     })*/
                 }
@@ -113,12 +110,7 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
                     locationSearchDataItems = ArrayList()
 
                     val dataSearch = object : TypeToken<ArrayList<LocationSearchDataItems>>() {}.type
-                    locationSearchDataItems.addAll(
-                        Gson().fromJson<ArrayList<LocationSearchDataItems>>(
-                            it.get("data").toString(),
-                            dataSearch
-                        )
-                    )
+                    locationSearchDataItems.addAll(Gson().fromJson<ArrayList<LocationSearchDataItems>>(it.get("data").toString(), dataSearch))
                     searchPlaceAdapter = SearchPlaceAdapter(this, locationSearchDataItems!!)
                     rv_languageList.adapter = searchPlaceAdapter
                 }

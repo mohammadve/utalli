@@ -2,6 +2,10 @@ package com.utalli.helpers
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.utalli.models.UserModel
+import java.lang.Exception
 
 class AppPreference()
 {
@@ -102,6 +106,23 @@ class AppPreference()
     fun getBoolean(key: String): Boolean {
         return mPreference!!.getBoolean(key, false)
     }
+
+
+
+    fun getUserData(): UserModel? {
+        try {
+            val type = object : TypeToken<UserModel>() {}.type
+            var user = Gson().fromJson<UserModel>(getString(USER_DATA), type)
+            return user
+        } catch (e: Exception) {
+            return null
+        }
+    }
+
+    fun setUserData(userData: String) {
+        setString(USER_DATA, userData)
+    }
+
 
 
 }

@@ -16,23 +16,31 @@
     <string name="msg_invalid_otp">Please enter valid OTP code</string>
     <string name="text_add_card">Add Card</string>
     <string name="msg_user_registered">Your account has been successfully created.</string>
-    <string name="text_pools_available">Pools Available</string>
+    <string name="msg_empty_gender">Please enter your gender</string>
     <string name="msg_common_error">Ooppss.. something went wrong, please try again.</string>
+
+
     <string name="hint_enter_name">Enter Name</string>
     <string name="hint_email">Email</string>
     <string name="hint_mobile_number">Mobile Number</string>
     <string name="hint_enter_new_password">Enter new password</string>
     <string name="hint_re_enter_new_password">Re enter new password</string>
     <string name="hint_password">Password</string>
-    <string name="hint_retype_password">Retype password</string>
+    <string name="hint_confirm_password">Confirm Password</string>
     <string name="hint_enter_password">Enter password</string>
     <string name="hint_enter_your_mobile_number">Enter your mobile number</string>
     <string name="hint_explore_country_or_place">Explore country or place</string>
     <string name="hint_type_message">Type a message</string>
-    <string name="msg_empty_gender">Please enter your gender</string>
+
+
+
+
     <string name="button_sign_up">SIGN UP</string>
 
+
+
     <string name="text_sign_up">SIGN UP</string>
+    <string name="text_pools_available">Pools Available</string>
     <string name="text_enter_your_personal_details">Enter your personal details</string>
     <string name="text_already_have_an_account">already have an account</string>
     <string name="text_sign_in">SIGN IN</string>
