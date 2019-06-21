@@ -3,6 +3,8 @@ package com.utalli.fragment
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +27,9 @@ class VerifyOTPDialogFragment() : BottomSheetDialogFragment(){
         OTP = arguments!!.get("otp") as String
 
         var btnVerify = view.findViewById<Button>(R.id.btn_verify)
+
+
+
 
         btnVerify.setOnClickListener(View.OnClickListener {
             if (checkValidations()) {
@@ -69,13 +74,15 @@ class VerifyOTPDialogFragment() : BottomSheetDialogFragment(){
 
 
     fun checkValidations(): Boolean {
+
         if (!Utils.isInternetAvailable(context)) {
             Utils.showToast(context!!, resources.getString(R.string.msg_no_internet))
             return false
         } else if (et_code_1.text!!.length == 0 || et_code_2.text!!.length == 0 || et_code_3.text!!.length == 0 || et_code_4.text!!.length == 0) {
             Utils.showToast(context!!, resources.getString(R.string.msg_invalid_otp))
             return false
-        } else if (!OTP.equals(et_code_1.text!!.toString() + et_code_2.text!!.toString() + et_code_3.text!!.toString() + et_code_4.text!!.toString())) {
+        }
+        else if (!OTP.equals(et_code_1.text!!.toString() + et_code_2.text!!.toString() + et_code_3.text!!.toString() + et_code_4.text!!.toString())) {
             Utils.showToast(context!!, resources.getString(R.string.msg_invalid_otp))
             return false
         }

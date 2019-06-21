@@ -27,10 +27,19 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.gson.JsonObject
+import com.utalli.helpers.AppPreference
 import com.utalli.helpers.RealPathUtil
 import com.utalli.helpers.Utils
+import com.utalli.models.UserModel
+import com.utalli.viewModels.MyProfileViewModel
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -39,10 +48,61 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
-    override fun onMenuItemClick(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
-            R.id.item_camera -> {
 
+    var outputFileUri: Uri? = null
+    val CAMERA_REQUEST = 101
+    val GALLERY_REQUEST = 102
+    var imageFilePath: String = ""
+    var user : UserModel ?= null
+    var myProfileViewModel : MyProfileViewModel?= null
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.my_profile_activity)
+
+        initViews()
+
+    }
+
+    private fun initViews() {
+
+        user = AppPreference.getInstance(this).getUserData() as UserModel
+
+        myProfileViewModel = ViewModelProviders.of(this).get(MyProfileViewModel::class.java)
+
+        iv_profile_image.setImageResource(R.drawable.dummy_icon)
+
+        iv_image_picker.setOnClickListener(this)
+        tv_settings.setOnClickListener(this)
+        tv_payment.setOnClickListener(this)
+        iv_backArrow.setOnClickListener(this)
+        tv_logout.setOnClickListener(this)
+        iv_editProfile_icon.setOnClickListener(this)
+
+
+        if(user != null){
+            et_user_name.setText(user!!.u_name)
+            et_user_number.setText(user!!.mobile_no)
+            et_email_id.setText(user!!.u_email)
+            et_address.setText(user!!.u_address)
+            et_emergency_contact_number.setText(user!!.emry_contact)
+            tv_payment.setText(user!!.payment)
+        }
+        else{
+            logout()
+        }
+
+
+    }
+
+
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+
+        when (item!!.itemId) {
+
+            R.id.item_camera -> {
                 val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
 
                 if (cameraIntent.resolveActivity(getPackageManager()) != null) {
@@ -54,11 +114,7 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
                         // Error occurred while creating the File
                     }
                     if (photoFile != null) {
-                        outputFileUri = FileProvider.getUriForFile(
-                            this,
-                            getPackageName() + ".provider",
-                            photoFile
-                        )
+                        outputFileUri = FileProvider.getUriForFile(this,getPackageName() + ".provider", photoFile)
                         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
                         startActivityForResult(cameraIntent, CAMERA_REQUEST)
                     }
@@ -74,11 +130,8 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
                     galleryIntent.type = "image/*"
                     startActivityForResult(galleryIntent, GALLERY_REQUEST)
                 } catch (e: Exception) {
-
                     Utils.showToast(this, "No Gallery Found..")
-
                 }
-
 
                 return true
             }
@@ -86,31 +139,7 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
         return false
     }
 
-    var outputFileUri: Uri? = null
-    val CAMERA_REQUEST = 101
-    val GALLERY_REQUEST = 102
-    var imageFilePath: String = ""
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.my_profile_activity)
 
-        initViews()
-
-    }
-
-    private fun initViews() {
-
-        iv_profile_image.setImageResource(R.drawable.dummy_icon)
-
-        iv_image_picker.setOnClickListener(this)
-        tv_settings.setOnClickListener(this)
-        tv_payment.setOnClickListener(this)
-        iv_backArrow.setOnClickListener(this)
-        tv_logout.setOnClickListener(this)
-        iv_editProfile_icon.setOnClickListener(this)
-
-
-    }
 
     fun openImagePickerMenu() {
         var popUpMenu = PopupMenu(this, iv_image_picker)
@@ -140,25 +169,24 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
         when (v?.id) {
             R.id.iv_image_picker -> {
 
-
-                if (checkPermission())
+                if (checkPermission()){
                     openImagePickerMenu()
+                }
                 else {
                     requestPermission()
                 }
-
-
             }
+
             R.id.iv_backArrow -> {
                 finish()
             }
+
             R.id.tv_logout -> {
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
+                 logout()
             }
+
+
             R.id.iv_editProfile_icon -> {
-
-
                 if (tv_txt_save.visibility == View.VISIBLE) {
 
                     changeViewsEditProperty(false)
@@ -168,41 +196,60 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
                     changeViewsEditProperty(true)
                     TransitionManager.beginDelayedTransition(cl_edit)
                     tv_txt_save.visibility = View.VISIBLE
+
+                    uploadProileData()
                 }
 
-
             }
+
             R.id.tv_payment -> {
                 val intent = Intent(this, PaymentActivity::class.java)
                 startActivity(intent)
             }
+
             R.id.tv_settings -> {
                 val intent = Intent(this, SettingActivity::class.java)
                 startActivity(intent)
             }
-
         }
     }
+
+
+
+
+
+     fun uploadProileData() {
+/*         myProfileViewModel!!.updateProfilePic(this, image).observe(this, androidx.lifecycle.Observer {
+
+             if(it != null && it.has("status") && it.get("status").asString.equals("1")){
+
+                 Utils.showToast(this, it.get("message").asString)
+
+                 if(it.has("data") && it.get("data") is JsonObject){
+
+                     // AppPreference.getInstance(this).setUserData(it.get("data").toString())
+                 }
+             }
+
+         })*/
+
+
+
+
+     }
 
 
     fun requestPermission() {
 
         var permissions = arrayOf(CAMERA, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE)
-
-
         ActivityCompat.requestPermissions(this, permissions, 123);
-
-
     }
 
 
     fun checkPermission(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-            if ((ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.CAMERA
-                ) == PackageManager.PERMISSION_GRANTED) && (ContextCompat.checkSelfPermission(
+            if ((ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) && (ContextCompat.checkSelfPermission(
                     this,
                     Manifest.permission.READ_EXTERNAL_STORAGE
                 ) == PackageManager.PERMISSION_GRANTED) && (ContextCompat.checkSelfPermission(
@@ -231,6 +278,9 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
             et_email_id.isEnabled = true
             et_address.isEnabled = true
             et_emergency_contact_number.isEnabled = true
+
+            uploadProileData()
+
         } else {
             et_user_name.isEnabled = false
             et_user_number.isEnabled = false
@@ -253,15 +303,12 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
                 val compressedImage = compressImage(imageFilePath)
 
 
-
-
-
                 Glide.with(this)
                     .load(compressedImage)
                     .apply(RequestOptions().placeholder(R.drawable.dummy_icon).error(R.drawable.dummy_icon))
                     .into(iv_profile_image)
 
-                //uploadImage(compressedImage)
+                uploadImage(compressedImage)
 
 
             } catch (e: IOException) {
@@ -281,13 +328,43 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
                     .apply(RequestOptions().placeholder(R.drawable.dummy_icon).error(R.drawable.dummy_icon))
                     .into(iv_profile_image)
 
-                // uploadImage(compressedImage)
+                 uploadImage(compressedImage)
 
             } catch (e: IOException) {
                 e.printStackTrace()
             }
         }
     }
+
+
+
+     fun uploadImage(imageUri: String) {
+
+         var file = File(imageUri)
+         var requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file)
+         var image = MultipartBody.Part.createFormData("profilePic", file.name,requestFile)
+
+         myProfileViewModel!!.updateProfilePic(this, image).observe(this, androidx.lifecycle.Observer {
+
+             if(it != null && it.has("status") && it.get("status").asString.equals("1")){
+
+                 Utils.showToast(this, it.get("message").asString)
+
+                 if(it.has("data") && it.get("data") is JsonObject){
+
+                    // AppPreference.getInstance(this).setUserData(it.get("data").toString())
+                 }
+             }
+
+         })
+
+
+
+    }
+
+
+
+
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -304,7 +381,6 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
             } else {
                 Utils.showToast(this, getString(R.string.msg_incomplete_permission))
             }
-
         }
 
 
@@ -478,34 +554,38 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
     }
 
     fun getFilename(): String {
-        var file = File(
-            Environment.getExternalStorageDirectory().getPath(),
-            resources.getString(R.string.app_name) + "/Images"
-        );
+        var file = File(Environment.getExternalStorageDirectory().getPath(), resources.getString(R.string.app_name) + "/Images")
         if (!file.exists()) {
-            file.mkdirs();
+            file.mkdirs()
         }
-        var uriSting = (file.getAbsolutePath() + "/" + System.currentTimeMillis() + ".jpg");
-        return uriSting;
-
+        var uriSting = (file.getAbsolutePath() + "/" + System.currentTimeMillis() + ".jpg")
+        return uriSting
     }
-    private fun createImageFile(): File {
-        var timeStamp =
-            SimpleDateFormat(
-                "yyyyMMdd_HHmmss",
-                Locale.getDefault()
-            ).format(Date());
-        var imageFileName = "IMG_" + timeStamp + "_";
-        var storageDir =
-            getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        var image = File.createTempFile(
-            imageFileName,  /* prefix */
-            ".jpg",         /* suffix */
-            storageDir      /* directory */
-        );
 
+
+    private fun createImageFile(): File {
+        var timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date());
+        var imageFileName = "IMG_" + timeStamp + "_";
+        var storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+      //  var storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        var image = File.createTempFile(imageFileName,  /* prefix */".jpg",         /* suffix */storageDir      /* directory */);
         imageFilePath = image.getAbsolutePath();
         return image;
     }
+
+
+
+
+     fun logout() {
+        AppPreference.getInstance(this).setUserData("")
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+        finish()
+    }
+
+
+
+
 
 }

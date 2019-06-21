@@ -27,6 +27,7 @@ class ApiList {
         const val GUIDE_SEARCH = "deshboard/guidsearch"
         const val MY_PROFILE_DETAILS = "users/userinformation"
         const val GUIDE_INFORMATION = "guide/guidinformation"
+        const val UPDATE_USER_PROFILE_IMAGE = "UpdateuserProfileimage"
 
 
         var ABOUT_US_URL = BASE_URL + "user/about"

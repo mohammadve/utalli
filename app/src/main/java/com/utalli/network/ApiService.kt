@@ -19,7 +19,8 @@ interface ApiService {
         @Field("password") password: String,
         @Field("dob") dob:String,
         @Field("gender") gender:String,
-        @Field("otp") otp:String
+        @Field("otp") otp:String,
+        @Field("device_token") device_token : String
     ): Call<JsonObject>
 
     @POST(ApiList.VERIFY_OTP_URL)
@@ -32,15 +33,16 @@ interface ApiService {
         @Field("dob") dob: String,
         @Field("gender") gender:String,
         @Field("otp") otp: String
-
     ): Call<JsonObject>
 
 
-    @POST(ApiList.LOGIN_URL)
+    @POST(ApiList.LOGIN_URL) // + "{id}"
     @FormUrlEncoded
     fun loginUser(
+       /* @Path ("id") id : String,*/
         @Field("mobile_no") mobile_no: String,
-        @Field("password") password: String
+        @Field("password") password: String,
+        @Field("device_token") device_token : String
     ): Call<JsonObject>
 
 
@@ -68,19 +70,19 @@ interface ApiService {
     ): Call<JsonObject>
 
 
-    @POST(ApiList.UPDATE_PROFILE_URL)
+  /*  @POST(ApiList.UPDATE_PROFILE_URL)
     @FormUrlEncoded
     fun updateProfile(
         @Header("x-auth") token: String, @FieldMap params: HashMap<String, String>
-    ): Call<JsonObject>
+    ): Call<JsonObject>*/
 
-    @Multipart
+/*    @Multipart
     @POST(ApiList.UPDATE_PROFILE_PIC_URL)
     fun updateProfilePic(
         @Header("x-auth") token: String,
         @Part("user_id") userId: RequestBody,
         @Part profilePic: MultipartBody.Part
-    ): Call<JsonObject>
+    ): Call<JsonObject>*/
 
 
     @GET(ApiList.GET_CREDENTIALS_URL)
@@ -149,6 +151,13 @@ interface ApiService {
 
 
 
+ /*   @GET(ApiList.SEND_NOTIFICATION_URL + "{id}" )
+    fun sendNotification(
+        @Path("id") id: Int,
+        @Header ("x-auth-token") token : String
+    ): Call<JsonObject>*/
+
+
 
 
     @POST(ApiList.SEARCH_LOCATION)
@@ -188,6 +197,14 @@ interface ApiService {
         @Header("x-access-token") token : String,
         @Field("guidId") guidId:Int
     ): Call<JsonObject>
+
+    @Multipart
+    @POST(ApiList.UPDATE_USER_PROFILE_IMAGE)
+    fun updateProfilePic(
+        @Part("id") id: RequestBody,
+        @Part profilePic: MultipartBody.Part
+    ):Call<JsonObject>
+
 
 
 

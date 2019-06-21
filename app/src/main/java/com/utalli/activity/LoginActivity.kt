@@ -10,9 +10,11 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.gson.JsonObject
 import com.utalli.R
 import com.utalli.helpers.AppPreference
 import com.utalli.helpers.Utils
+import com.utalli.models.UserModel
 import com.utalli.viewModels.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -21,8 +23,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     var showPassword: Boolean = false
     var loginViewModel : LoginViewModel?=null
     var preference: AppPreference? = null
-    var token : String = ""
-    var id: Int = 0
+    var device_token = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,34 +81,34 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
      fun loginInUser() {
 
+         device_token = "sdkjfdsjflksdjfklsdjfkljdsfddddddddddddddddssssssssssssdddddddddddd"
 
 
         if(checkValidation()){
 
-           loginViewModel!!.loginUser(this,et_mobileNumber.text.toString(), et_password.text.toString())
+           loginViewModel!!.loginUser(this,et_mobileNumber.text.toString(), et_password.text.toString(), device_token)
                .observe(this, Observer {
-
 
 
                    if (it!= null && it.has("status") && it.get("status").asString.equals("1")) {
 
                        if (it.has("accessToken")) {
                            AppPreference.getInstance(this).setAuthToken(it.get("accessToken").asString)
-                          //  token = preference!!.getAuthToken()
-                           Log.e("TAG","accessToken in loginActivity ====   " + preference!!.getAuthToken())
                        }
 
 
-                       if(it.has("data")){
+                       if(it.has("data") && it.get("data") is JsonObject){
                            var dataObject = it.getAsJsonObject("data")
                            if (dataObject.has("id")){
-                               id = dataObject.get("id").asInt
-
                                AppPreference.getInstance(this).setId(dataObject.get("id").asInt)
-
                            }
-                       }
 
+
+
+                           AppPreference.getInstance(this).setUserData(it.get("data").toString())
+                           var user = AppPreference.getInstance(this).getUserData() as UserModel
+
+                       }
 
                        Utils.showToast(this, it.get("message").asString)
 
@@ -117,10 +118,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                            finish()
                        }, 3500)
 
-
-
-
-
                    }
                    else {
                           if (it!= null && it.has("message")){
@@ -129,8 +126,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                    }
 
                })
-
-
 
         }
 

@@ -14,6 +14,8 @@ import kotlinx.android.synthetic.main.activity_payment_new.*
 import link.fls.swipestack.SwipeStack
 import java.util.ArrayList
 
+
+
 class PaymentActivity : AppCompatActivity(), View.OnClickListener {
 
     var currentPosition: Int? = 0
@@ -59,13 +61,17 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener {
         cardStack!!.setListener(object : SwipeStack.SwipeStackListener {
 
             override fun onViewSwipedToLeft(position: Int) {
-                Log.e("TAG", "swipe left == ")
-                currentPosition = position - 1
+
+                val leftSwipedElement = cardsAdapter!!.getItem(position)
+                Log.e("TAG", "leftSwipedElement == "+leftSwipedElement.toString())
+               // currentPosition = position - 1
             }
 
             override fun onViewSwipedToRight(position: Int) {
-                Log.e("TAG", "swipe right == ")
-                currentPosition = position + 1
+
+                val rigthSwipedElement = cardsAdapter!!.getItem(position)
+                Log.e("TAG", "RigthSwipedElement  == "+rigthSwipedElement.toString())
+                //currentPosition = position + 1
             }
 
             override fun onStackEmpty() {

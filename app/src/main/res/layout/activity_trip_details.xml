@@ -114,7 +114,7 @@
                         app:layout_constraintRight_toRightOf="parent"
                         android:layout_marginTop="5dp"
                         android:textColor="@color/color_blue"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:text="@string/text_change"
                 />
 
@@ -211,7 +211,7 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/rv_states_list"
                         android:textColor="@color/color_blue"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:text="@string/text_view_all"
                         android:visibility="gone"
                 />
@@ -254,7 +254,7 @@
                         android:layout_marginRight="15dp"
                         android:layout_marginTop="5dp"
                         android:textColor="@color/colorBlack"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:hint="DD/MM/YYYY"
 
                 />
@@ -268,7 +268,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/date_of_arrival"
                         app:layout_constraintRight_toRightOf="parent"
                         android:textColor="@color/color_blue"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:text="@string/text_change"
                         android:visibility="gone"
                 />
@@ -311,7 +311,7 @@
                         android:layout_marginRight="15dp"
                         android:layout_marginTop="5dp"
                         android:textColor="@color/colorBlack"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:hint="DD/MM/YYYY"
                 />
 
@@ -324,7 +324,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/date_of_departure"
                         app:layout_constraintRight_toRightOf="parent"
                         android:textColor="@color/color_blue"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:text="@string/text_change"
                         android:visibility="gone"
                 />
@@ -351,6 +351,7 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/view5"
+                        android:textSize="12sp"
                         android:text="@string/text_descpp_trip_details"
                 />
 

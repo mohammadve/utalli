@@ -43,7 +43,8 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
             et_newPassword.text.toString(),
             et_dateOfBirth.text.toString(),
             genderValue.toString(),
-            otp
+            otp,
+            device_token
         )
         ).observe(this, androidx.lifecycle.Observer {
 
@@ -78,7 +79,10 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
     var genderValue : String? = null
     var signupViewModel:SignUpViewModel?= null
     var otp: String = ""
+
     var bottomSheetDialogFragment: VerifyOTPDialogFragment? = null
+
+    var device_token = ""
 
 
 
@@ -170,6 +174,8 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
 
     private fun signupUser() {
 
+        device_token = "sdkjfdsjflksdjfklsdjfkljdsfddddddddddddddddssssssssssssdddddddddddd"
+
         Utils.hideSoftKeyboard(this)
 
         if(checkValidations()){
@@ -183,7 +189,8 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
                 et_newPassword.text.toString(),
                 et_dateOfBirth.text.toString(),
                 genderValue.toString(),
-                ""
+                "",
+                device_token
             )
             ).observe(this, androidx.lifecycle.Observer {
 
