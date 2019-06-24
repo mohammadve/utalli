@@ -1,14 +1,21 @@
 package com.utalli.fragment
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.utalli.R
 import com.utalli.adapter.ChatMessageAdapter
+import com.utalli.helpers.AppPreference
+import kotlinx.android.synthetic.main.fragment_chat_message.*
 
 class ChatMessageFragment : Fragment(){
     var chatListAdapter: ChatMessageAdapter? = null
@@ -59,11 +66,41 @@ class ChatMessageFragment : Fragment(){
         chatListAdapter = activity?.let { ChatMessageAdapter(it, dateTimeList, mssg) }
         recyclerView_messageList.adapter = chatListAdapter
 
+
+        registerReceiver()
+
         return view
     }
 
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        et_location.text = AppPreference.getInstance(activity!!).getUserLastLocation()
+    }
 
+    private fun registerReceiver() {
+
+        val filter = IntentFilter()
+
+        filter.addAction("LOCATION_UPDATED")
+        LocalBroadcastManager.getInstance(activity!!).registerReceiver(mReciever, filter)
+
+
+
+    }
+
+
+    var mReciever = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+
+
+            if (et_location != null)
+                et_location!!.text = AppPreference.getInstance(activity!!).getUserLastLocation()
+
+
+
+        }
+    }
 
 
 

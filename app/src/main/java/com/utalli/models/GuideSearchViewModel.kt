@@ -16,12 +16,12 @@ class GuideSearchViewModel : ViewModel() {
     private var guideSearchResult : MutableLiveData<JsonObject>?= null
 
 
-    fun guideSearch(mContext: Context, countryId: Int) : MutableLiveData<JsonObject>{
+    fun guideSearch(mContext: Context, countryId: Int, stateArray: IntArray) : MutableLiveData<JsonObject>{
 
         guideSearchResult = MutableLiveData()
 
         var apiService = ApiClient.getClient().create(ApiService::class.java)
-        var call = apiService.guidsearch(countryId)
+        var call = apiService.guideSearch(countryId,stateArray)
 
         Utils.showProgressDialog(mContext)
 

@@ -17,10 +17,10 @@ interface ApiService {
         @Field("email") email: String,
         @Field("mobile_no") mobile_no: String,
         @Field("password") password: String,
-        @Field("dob") dob:String,
-        @Field("gender") gender:String,
-        @Field("otp") otp:String,
-        @Field("device_token") device_token : String
+        @Field("dob") dob: String,
+        @Field("gender") gender: String,
+        @Field("otp") otp: String,
+        @Field("device_token") device_token: String
     ): Call<JsonObject>
 
     @POST(ApiList.VERIFY_OTP_URL)
@@ -31,19 +31,19 @@ interface ApiService {
         @Field("mobile_no") mobile_no: String,
         @Field("password") password: String,
         @Field("dob") dob: String,
-        @Field("gender") gender:String,
+        @Field("gender") gender: String,
         @Field("otp") otp: String,
-        @Field("device_token") device_token : String
+        @Field("device_token") device_token: String
     ): Call<JsonObject>
 
 
     @POST(ApiList.LOGIN_URL) // + "{id}"
     @FormUrlEncoded
     fun loginUser(
-       /* @Path ("id") id : String,*/
+        /* @Path ("id") id : String,*/
         @Field("mobile_no") mobile_no: String,
         @Field("password") password: String,
-        @Field("device_token") device_token : String
+        @Field("device_token") device_token: String
     ): Call<JsonObject>
 
 
@@ -57,10 +57,10 @@ interface ApiService {
     @POST(ApiList.RESET_PASS_URL)
     @FormUrlEncoded
     fun resetPassword(
-        @Field("password") password:String,
-        @Field("otp") otp:String,
-        @Field("id") id:Int
-    ):Call<JsonObject>
+        @Field("password") password: String,
+        @Field("otp") otp: String,
+        @Field("id") id: Int
+    ): Call<JsonObject>
 
 
     @POST(ApiList.UPDATE_PASS_URL)
@@ -71,11 +71,11 @@ interface ApiService {
     ): Call<JsonObject>
 
 
-  /*  @POST(ApiList.UPDATE_PROFILE_URL)
-    @FormUrlEncoded
-    fun updateProfile(
-        @Header("x-auth") token: String, @FieldMap params: HashMap<String, String>
-    ): Call<JsonObject>*/
+    /*  @POST(ApiList.UPDATE_PROFILE_URL)
+      @FormUrlEncoded
+      fun updateProfile(
+          @Header("x-auth") token: String, @FieldMap params: HashMap<String, String>
+      ): Call<JsonObject>*/
 
 /*    @Multipart
     @POST(ApiList.UPDATE_PROFILE_PIC_URL)
@@ -151,52 +151,49 @@ interface ApiService {
     ): Call<JsonObject>
 
 
-
- /*   @GET(ApiList.SEND_NOTIFICATION_URL + "{id}" )
-    fun sendNotification(
-        @Path("id") id: Int,
-        @Header ("x-auth-token") token : String
-    ): Call<JsonObject>*/
-
-
+    /*   @GET(ApiList.SEND_NOTIFICATION_URL + "{id}" )
+       fun sendNotification(
+           @Path("id") id: Int,
+           @Header ("x-auth-token") token : String
+       ): Call<JsonObject>*/
 
 
     @POST(ApiList.SEARCH_LOCATION)
     @FormUrlEncoded
     fun searchLocation(
-        @Field("countryname") countryname:String
+        @Field("countryname") countryname: String
     ): Call<JsonObject>
 
 
     @POST(ApiList.GET_STATE_BY_COUNTRY)
     @FormUrlEncoded
     fun getStateByCountry(
-        @Header("x-access-token") token : String,
-        @Field("contryid") contryid : Int
+        @Header("x-access-token") token: String,
+        @Field("contryid") contryid: Int
     ): Call<JsonObject>
 
 
     @POST(ApiList.GUIDE_SEARCH)
     @FormUrlEncoded
-    fun guidsearch(
-        @Field("coutryId") coutryId : Int
-    ):Call<JsonObject>
+    fun guideSearch(
+        @Field("coutryId") countryId: Int,
+        @Field("stateId") stateList: IntArray
+    ): Call<JsonObject>
 
 
     @POST(ApiList.MY_PROFILE_DETAILS)
     @FormUrlEncoded
     fun myProfileUser(
-        @Header("x-access-token") token : String,
-      @Field("id") id : Int
-    ):Call<JsonObject>
-
+        @Header("x-access-token") token: String,
+        @Field("id") id: Int
+    ): Call<JsonObject>
 
 
     @POST(ApiList.GUIDE_INFORMATION)
     @FormUrlEncoded
     fun guideDetails(
-        @Header("x-access-token") token : String,
-        @Field("guidId") guidId:Int
+        @Header("x-access-token") token: String,
+        @Field("guidId") guidId: Int
     ): Call<JsonObject>
 
     @Multipart
@@ -204,9 +201,7 @@ interface ApiService {
     fun updateProfilePic(
         @Part("id") id: RequestBody,
         @Part profilePic: MultipartBody.Part
-    ):Call<JsonObject>
-
-
+    ): Call<JsonObject>
 
 
 }

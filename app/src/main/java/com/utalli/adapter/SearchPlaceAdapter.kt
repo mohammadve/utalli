@@ -18,9 +18,8 @@ import com.utalli.activity.SearchActivity
 import com.utalli.models.LocationSearchDataItems
 
 
-class SearchPlaceAdapter(var mcontext: Context, var languageList: ArrayList<LocationSearchDataItems>) : RecyclerView.Adapter<SearchPlaceAdapter.SearchViewHolder>(){
-
-
+class SearchPlaceAdapter(var mcontext: Context, var languageList: ArrayList<LocationSearchDataItems>) :
+    RecyclerView.Adapter<SearchPlaceAdapter.SearchViewHolder>() {
 
 
     fun updateSearchList(searchList: ArrayList<LocationSearchDataItems>) {
@@ -45,31 +44,29 @@ class SearchPlaceAdapter(var mcontext: Context, var languageList: ArrayList<Loca
     override fun onBindViewHolder(holder: SearchPlaceAdapter.SearchViewHolder, position: Int) {
 
 
-
         holder.tvlocationName.text = languageList.get(position).name
 
 
         holder.layoutSearch.setOnClickListener {
             var intent = Intent(mcontext, TripDetailsActivity::class.java)
-            intent.putExtra("countryName",languageList.get(position).name)
-            intent.putExtra("countryId",languageList.get(position).id)
+            //intent.putExtra("countryName",languageList.get(position).name)
+            //intent.putExtra("countryId",languageList.get(position).id)
+            intent.putExtra("selectedCountry", languageList.get(position))
             mcontext.startActivity(intent)
-           // (mcontext as Activity).finish()
+            // (mcontext as Activity).finish()
         }
 
     }
 
 
-
     class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tvlocationName: TextView
-        var layoutSearch : LinearLayout
+        var layoutSearch: LinearLayout
 
         init {
             tvlocationName = itemView.findViewById(R.id.tv_locationName)
             layoutSearch = itemView.findViewById(R.id.layout_search)
         }
-
 
 
     }

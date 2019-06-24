@@ -5,26 +5,28 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.utalli.R
 import com.utalli.activity.GuideProfileDetailsActivity
+import com.utalli.models.GuideListModel
 
-class GuideListAdapter(var mcontext : Context) : RecyclerView.Adapter<GuideListAdapter.GuideViewHolder>(){
-
-
-
+class GuideListAdapter(var mcontext: Context, var guidesList: List<GuideListModel>) :
+    RecyclerView.Adapter<GuideListAdapter.GuideViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GuideListAdapter.GuideViewHolder {
-        var view = LayoutInflater.from(parent.context).inflate(R.layout.item_row_list_guides,parent,false)
+        var view = LayoutInflater.from(parent.context).inflate(R.layout.item_row_list_guides, parent, false)
         return GuideViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return 20
+        return guidesList.size
     }
 
     override fun onBindViewHolder(holder: GuideListAdapter.GuideViewHolder, position: Int) {
+
+        holder.bind(guidesList.get(position))
 
         holder.itemView.setOnClickListener {
             var intent = Intent(mcontext, GuideProfileDetailsActivity::class.java)
@@ -34,11 +36,32 @@ class GuideListAdapter(var mcontext : Context) : RecyclerView.Adapter<GuideListA
     }
 
 
-    inner class GuideViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
+    inner class GuideViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        var tvGuideName: TextView
+        var tvRatingValue: TextView
+        var tvLanguages: TextView
+        var tvGuideCharges: TextView
+        var tvGuideChargesGroup: TextView
 
         init {
+            tvGuideName = view.findViewById(R.id.tv_guide_name)
+            tvRatingValue = view.findViewById(R.id.txt_ratingValue)
+            tvLanguages = view.findViewById(R.id.tv_languages)
+            tvGuideCharges = view.findViewById(R.id.tv_guide_charges)
+            tvGuideChargesGroup = view.findViewById(R.id.tv_guide_charges_group)
+        }
+
+
+        fun bind(guideItem: GuideListModel) {
+            tvGuideName.text = guideItem.guide_info.name
+            tvRatingValue.text = guideItem.guide_info.guiderating
+            tvLanguages.text = guideItem.guide_info.lang
+            tvGuideCharges.text = "$ " + guideItem.guide_info.guide_private_price
+            tvGuideChargesGroup.text = "$ " + guideItem.guide_info.guide_pool_price
 
         }
+
 
     }
 
