@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Utalii</string>
 
+    <string name="default_notification_channel_id">123</string>
 
     <string name="msg_no_internet">No internet connection, please check your internet connection and try again.</string>
     <string name="msg_invalid_name">Please enter valid name</string>
