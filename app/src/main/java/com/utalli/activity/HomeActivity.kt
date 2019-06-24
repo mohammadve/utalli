@@ -25,6 +25,9 @@ import android.content.DialogInterface
 import android.location.Geocoder
 import androidx.appcompat.app.AlertDialog
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.FirebaseApp
+import com.google.firebase.iid.FirebaseInstanceId
 import com.utalli.helpers.AppPreference
 import java.util.*
 
@@ -36,7 +39,8 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
 
         Utils.showLog("Google API client connected")
 
-        if (ActivityCompat.checkSelfPermission(this,
+        if (ActivityCompat.checkSelfPermission(
+                this,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                 this,
@@ -134,6 +138,27 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
     }
 
     private fun initViews() {
+
+
+        FirebaseApp.initializeApp(applicationContext)
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Utils.showLog(task.exception!!.message!!)
+                    return@OnCompleteListener
+                }
+
+                // Get new Instance ID token
+                val token = task.result?.token
+                if (token != null) {
+                    Utils.showLog("Device token :" + token)
+                    //sendTokenToServer(token)
+                }
+            })
+
+
+
+
 
         permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
         permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
