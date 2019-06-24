@@ -8,13 +8,11 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.google.gson.JsonObject
 import com.utalli.R
 import com.utalli.helpers.Utils
 import com.utalli.viewModels.ForgetPassViewModel
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_recovery.*
-import kotlinx.android.synthetic.main.activity_recovery.et_mobileNumber
+import kotlinx.android.synthetic.main.activity_forget_pass.*
+import kotlinx.android.synthetic.main.activity_forget_pass.et_mobileNumber
 
 class ForgetPasswordActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -25,7 +23,7 @@ class ForgetPasswordActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_recovery)
+        setContentView(R.layout.activity_forget_pass)
 
         toolbar_recovery.title = ""
 
@@ -72,6 +70,7 @@ class ForgetPasswordActivity : AppCompatActivity(), View.OnClickListener {
 
                                         Handler().postDelayed(Runnable {
                                             val intent = Intent(this, OTPActivity::class.java)
+                                            intent.putExtra("mobileNumber",et_mobileNumber.text.toString())
                                             intent.putExtra("id",idd)
                                             intent.putExtra("OTP",OTP)
                                             Log.e("TAG","OTP recovery activity ==== "+OTP)
@@ -83,7 +82,6 @@ class ForgetPasswordActivity : AppCompatActivity(), View.OnClickListener {
                                     } else {
 
                                         Utils.showToast(this, getString(R.string.msg_common_error))
-
                                     }
 
 

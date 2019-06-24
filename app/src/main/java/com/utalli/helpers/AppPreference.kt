@@ -15,6 +15,7 @@ class AppPreference()
     var LAST_LOCATION = "LAST_LOCATION"
     var TOKEN = "TOKEN"
     var ID = "id"
+    var PROFILE_PIC = "PROFILE_PIC"
 
     var mPreference: SharedPreferences? = null
 
@@ -76,6 +77,9 @@ class AppPreference()
         editor.apply()
 
     }
+
+
+
     fun setInt(key: String, value: Int) {
         val editor = mPreference!!.edit()
         editor.putInt(key, value)
@@ -106,6 +110,12 @@ class AppPreference()
     fun getBoolean(key: String): Boolean {
         return mPreference!!.getBoolean(key, false)
     }
+
+
+
+
+
+
 
 
 

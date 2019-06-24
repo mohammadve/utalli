@@ -31,10 +31,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.utalli.helpers.AppPreference
 import com.utalli.helpers.RealPathUtil
 import com.utalli.helpers.Utils
+import com.utalli.models.UpdateProfileRequestModel
 import com.utalli.models.UserModel
 import com.utalli.viewModels.MyProfileViewModel
 import okhttp3.MediaType
@@ -54,6 +56,7 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
     val GALLERY_REQUEST = 102
     var imageFilePath: String = ""
     var user : UserModel ?= null
+    var id: Int = 0
     var myProfileViewModel : MyProfileViewModel?= null
 
 
@@ -68,6 +71,7 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
     private fun initViews() {
 
         user = AppPreference.getInstance(this).getUserData() as UserModel
+        id = AppPreference.getInstance(this).getId() as Int
 
         myProfileViewModel = ViewModelProviders.of(this).get(MyProfileViewModel::class.java)
 
@@ -79,6 +83,7 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
         iv_backArrow.setOnClickListener(this)
         tv_logout.setOnClickListener(this)
         iv_editProfile_icon.setOnClickListener(this)
+        tv_txt_save.setOnClickListener(this)
 
 
         if(user != null){
@@ -88,6 +93,14 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
             et_address.setText(user!!.u_address)
             et_emergency_contact_number.setText(user!!.emry_contact)
             tv_payment.setText(user!!.payment)
+            Glide.with(this)
+                .load(user!!.profile_img)
+                .apply(RequestOptions().placeholder(R.drawable.dummy_icon).error(R.drawable.dummy_icon))
+                .into(iv_profile_image)
+
+
+            Log.e("TAG","iddddddd profile 1======  " +id)
+
         }
         else{
             logout()
@@ -196,11 +209,15 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
                     changeViewsEditProperty(true)
                     TransitionManager.beginDelayedTransition(cl_edit)
                     tv_txt_save.visibility = View.VISIBLE
-
-                    uploadProileData()
                 }
 
             }
+
+            R.id.tv_txt_save ->{
+                uploadProileData()
+            }
+
+
 
             R.id.tv_payment -> {
                 val intent = Intent(this, PaymentActivity::class.java)
@@ -216,29 +233,6 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
 
 
 
-
-
-     fun uploadProileData() {
-/*         myProfileViewModel!!.updateProfilePic(this, image).observe(this, androidx.lifecycle.Observer {
-
-             if(it != null && it.has("status") && it.get("status").asString.equals("1")){
-
-                 Utils.showToast(this, it.get("message").asString)
-
-                 if(it.has("data") && it.get("data") is JsonObject){
-
-                     // AppPreference.getInstance(this).setUserData(it.get("data").toString())
-                 }
-             }
-
-         })*/
-
-       //  myProfileViewModel.
-
-
-
-
-     }
 
 
     fun requestPermission() {
@@ -281,8 +275,6 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
             et_address.isEnabled = true
             et_emergency_contact_number.isEnabled = true
 
-            uploadProileData()
-
         } else {
             et_user_name.isEnabled = false
             et_user_number.isEnabled = false
@@ -290,7 +282,6 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
             et_address.isEnabled = false
             et_emergency_contact_number.isEnabled = false
         }
-
 
     }
 
@@ -344,9 +335,9 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
 
          var file = File(imageUri)
          var requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file)
-         var image = MultipartBody.Part.createFormData("profilePic", file.name,requestFile)
+         var img = MultipartBody.Part.createFormData("image", file.name,requestFile)
 
-         myProfileViewModel!!.updateProfilePic(this, image).observe(this, androidx.lifecycle.Observer {
+         myProfileViewModel!!.updateProfilePic(this, img).observe(this, androidx.lifecycle.Observer {
 
              if(it != null && it.has("status") && it.get("status").asString.equals("1")){
 
@@ -354,13 +345,60 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
 
                  if(it.has("data") && it.get("data") is JsonObject){
 
-                    // AppPreference.getInstance(this).setUserData(it.get("data").toString())
+                     var dataObj = it.getAsJsonObject("data")
+
+                     if(dataObj.has("profile_img")){
+
+                         user!!.profile_img = dataObj.get("profile_img").asString
+
+                         AppPreference.getInstance(this).setUserData(Gson().toJson(user))
+
+                         Glide.with(this)
+                             .load(user!!.profile_img)
+                             .apply(RequestOptions().placeholder(R.drawable.dummy_icon).error(R.drawable.dummy_icon))
+                             .into(iv_profile_image)
+
+                     }
+
                  }
              }
 
          })
 
 
+    }
+
+
+
+    fun uploadProileData() {
+
+        myProfileViewModel!!.updateProfile(this, UpdateProfileRequestModel(
+            et_user_name.text.toString(),
+            et_email_id.text.toString(),
+            et_user_number.text.toString(),
+            user!!.dob,
+            user!!.gender,
+            "2345",
+            //tv_payment.text.toString(),
+            et_emergency_contact_number.text.toString(),
+            et_address.text.toString(),
+            id
+
+        )).observe(this, androidx.lifecycle.Observer {
+
+
+            if(it != null && it.has("status") && it.get("status").asString.equals("1")){
+
+                Utils.showToast(this, it.get("message").asString)
+
+                if(it.has("data") && it.get("data") is JsonObject){
+
+                    AppPreference.getInstance(this).setUserData(it.get("data").toString())
+                }
+
+            }
+
+        })
 
     }
 
@@ -580,6 +618,8 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
 
      fun logout() {
         AppPreference.getInstance(this).setUserData("")
+         AppPreference.getInstance(this).setId(0)
+         AppPreference.getInstance(this).setAuthToken("")
         val intent = Intent(this, LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)

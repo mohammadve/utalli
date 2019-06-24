@@ -68,10 +68,12 @@
                     android:backgroundTint="@color/colorPrimary"
                     android:layout_marginTop="20dp"
                     android:textColorHint="@color/grey"
+                    android:textCursorDrawable="@drawable/cursor_drawable"
                     android:inputType="textPersonName"
                     android:singleLine="true"
                     android:textSize="14sp"
                     android:padding="12dp"
+                    android:maxLength="70"
                     android:hint="@string/hint_enter_name"/>
 
              //  male// female// other
@@ -231,9 +233,11 @@
                     android:singleLine="true"
                     android:inputType="textEmailAddress"
                     android:textColorHint="@color/grey"
+                    android:textCursorDrawable="@drawable/cursor_drawable"
                     android:textSize="14sp"
                     android:layout_marginTop="15dp"
                     android:padding="12dp"
+                    android:maxLength="254"
                     android:hint="@string/hint_email"/>
 
             <com.utalli.RobotoRegularEditText
@@ -246,10 +250,12 @@
                     android:backgroundTint="@color/colorPrimary"
                     android:singleLine="true"
                     android:textColorHint="@color/grey"
+                    android:textCursorDrawable="@drawable/cursor_drawable"
                     android:textSize="14sp"
                     android:inputType="phone"
                     android:layout_marginTop="15dp"
                     android:padding="12dp"
+                    android:maxLength="15"
                     android:hint="@string/hint_mobile_number"/>
 
             <com.utalli.RobotoRegularEditText
@@ -260,12 +266,12 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     android:backgroundTint="@color/colorPrimary"
+                    android:textCursorDrawable="@drawable/cursor_drawable"
                     android:singleLine="true"
                     android:textColorHint="@color/grey"
                     android:textSize="14sp"
                     android:layout_marginTop="15dp"
                     android:padding="12dp"
-
                     android:hint="@string/hint_password"/>
 
             <com.utalli.RobotoRegularEditText
@@ -278,6 +284,7 @@
                     android:backgroundTint="@color/colorPrimary"
                     android:singleLine="true"
                     android:textColorHint="@color/grey"
+                    android:textCursorDrawable="@drawable/cursor_drawable"
                     android:textSize="14sp"
                     android:layout_marginTop="15dp"
                     android:padding="12dp"

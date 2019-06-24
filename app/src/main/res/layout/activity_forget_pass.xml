@@ -88,9 +88,10 @@
                     app:layout_constraintRight_toRightOf="parent"
                     android:layout_marginTop="30dp"
                     android:backgroundTint="@color/colorPrimary"
-                    android:textCursorDrawable="@color/colorPrimary"
+                    android:textCursorDrawable="@drawable/cursor_drawable"
                     android:textSize="14sp"
                     android:inputType="phone"
+                    android:maxLength="15"
                     android:padding="15dp"
                     android:hint="@string/hint_enter_your_mobile_number"/>
 

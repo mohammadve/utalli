@@ -11,5 +11,4 @@ class SignupRequestModel(
     var device_token: String
 
 
-
 )

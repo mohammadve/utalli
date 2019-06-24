@@ -1,7 +1,7 @@
 package com.utalli.models
 
 class UserModel (
-    var _id: String,
+    var _id: Int,
     var u_name: String,
     var mobile_no: String,
     var verification_code: String,

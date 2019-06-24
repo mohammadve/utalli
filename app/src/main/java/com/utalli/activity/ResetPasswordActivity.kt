@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.utalli.R
 import com.utalli.helpers.Utils
 import com.utalli.viewModels.ResetPasswordViewModel
-import kotlinx.android.synthetic.main.activity_recovery_password.*
+import kotlinx.android.synthetic.main.activity_reset_password.*
 
 class ResetPasswordActivity : AppCompatActivity(), View.OnClickListener {
     var showPassword: Boolean = false
@@ -24,7 +24,7 @@ class ResetPasswordActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_recovery_password)
+        setContentView(R.layout.activity_reset_password)
 
         toolbar_recoveryPass.title = ""
         toolbar_recoveryPass.setNavigationIcon(R.drawable.arrow_back_black)
