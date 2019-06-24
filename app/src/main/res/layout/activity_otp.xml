@@ -74,12 +74,12 @@
                     android:text="@string/text_we_have_send_an_otp"/>
 
             <com.utalli.RobotoRegularEditText
-                    android:id="@+id/et_code_1"
+                    android:id="@+id/et_otp_1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@+id/tv_send_otp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/et_code_2"
+                    app:layout_constraintRight_toLeftOf="@+id/et_otp_2"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="16dp"
@@ -92,12 +92,12 @@
             />
 
             <com.utalli.RobotoRegularEditText
-                    android:id="@+id/et_code_2"
+                    android:id="@+id/et_otp_2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@+id/et_code_1"
-                    app:layout_constraintLeft_toRightOf="@+id/et_code_1"
-                    app:layout_constraintRight_toLeftOf="@+id/et_code_3"
+                    app:layout_constraintTop_toTopOf="@+id/et_otp_1"
+                    app:layout_constraintLeft_toRightOf="@+id/et_otp_1"
+                    app:layout_constraintRight_toLeftOf="@+id/et_otp_3"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:backgroundTint="@color/colorPrimary"
@@ -110,12 +110,12 @@
             />
 
             <com.utalli.RobotoRegularEditText
-                    android:id="@+id/et_code_3"
+                    android:id="@+id/et_otp_3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@+id/et_code_1"
-                    app:layout_constraintLeft_toRightOf="@+id/et_code_2"
-                    app:layout_constraintRight_toLeftOf="@+id/et_code_4"
+                    app:layout_constraintTop_toTopOf="@+id/et_otp_1"
+                    app:layout_constraintLeft_toRightOf="@+id/et_otp_2"
+                    app:layout_constraintRight_toLeftOf="@+id/et_otp_4"
                     android:layout_marginLeft="16dp"
                     android:gravity="center"
                     android:layout_marginRight="16dp"
@@ -127,11 +127,11 @@
 
             />
             <com.utalli.RobotoRegularEditText
-                    android:id="@+id/et_code_4"
+                    android:id="@+id/et_otp_4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@+id/et_code_1"
-                    app:layout_constraintLeft_toRightOf="@+id/et_code_3"
+                    app:layout_constraintTop_toTopOf="@+id/et_otp_1"
+                    app:layout_constraintLeft_toRightOf="@+id/et_otp_3"
                     app:layout_constraintRight_toRightOf="parent"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
@@ -150,7 +150,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_code_4"
+                    app:layout_constraintTop_toBottomOf="@+id/et_otp_4"
                     android:text="@string/text_resend_otp"
                     android:paddingLeft="16dp"
                     android:paddingTop="13dp"

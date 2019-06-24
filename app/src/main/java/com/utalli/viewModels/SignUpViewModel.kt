@@ -96,7 +96,6 @@ class SignUpViewModel : ViewModel() {
 
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 Utils.hideProgressDialog()
-                Utils.showToast(mContext, response.body().toString())
 
                 if (response != null && response.body() != null){
                     verifyOTPResult!!.value = response.body()
@@ -104,13 +103,10 @@ class SignUpViewModel : ViewModel() {
                 else{
                     Log.e("TAG","Result Obtained verifyOtp ==="+response.body())
                     Utils.showToast(mContext, mContext.resources.getString(R.string.msg_common_error))
-
                 }
-
             }
 
         })
-
 
         return verifyOTPResult!!
     }

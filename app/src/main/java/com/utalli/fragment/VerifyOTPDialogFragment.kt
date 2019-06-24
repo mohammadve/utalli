@@ -14,6 +14,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.utalli.R
 import com.utalli.helpers.Utils
 import kotlinx.android.synthetic.main.dialog_verify_otp.*
+import kotlinx.android.synthetic.main.dialog_verify_otp.view.*
 
 class VerifyOTPDialogFragment() : BottomSheetDialogFragment(){
 
@@ -27,6 +28,16 @@ class VerifyOTPDialogFragment() : BottomSheetDialogFragment(){
         OTP = arguments!!.get("otp") as String
 
         var btnVerify = view.findViewById<Button>(R.id.btn_verify)
+
+
+        getEditText(view)
+
+
+
+
+
+
+
 
 
 
@@ -47,6 +58,97 @@ class VerifyOTPDialogFragment() : BottomSheetDialogFragment(){
         return view
     }
 
+
+
+    private fun getEditText(view: View) {
+
+        view.et_code_1.addTextChangedListener(object:TextWatcher {
+
+            override fun onTextChanged(s:CharSequence, start:Int, before:Int, count:Int) {
+
+
+            }
+            override fun beforeTextChanged(s:CharSequence, start:Int, count:Int, after:Int) {
+
+            }
+            override fun afterTextChanged(s:Editable) {
+                if (et_code_1.getText().toString().length === 1) {
+                    et_code_2.requestFocus()
+                }
+
+            }
+        })
+
+
+
+        view.et_code_2.addTextChangedListener(object: TextWatcher {
+
+            override fun onTextChanged(s:CharSequence, start:Int, before:Int, count:Int) {
+
+            }
+            override fun beforeTextChanged(s:CharSequence, start:Int, count:Int, after:Int) {
+
+
+            }
+            override fun afterTextChanged(s:Editable) {
+
+                if (et_code_2.getText().toString().length === 1) {
+                    et_code_3.requestFocus()
+                }
+                else if(et_code_2.text.toString().length == 0){
+                    et_code_1.requestFocus()
+                }
+
+            }
+        })
+
+
+        view.et_code_3.addTextChangedListener(object : TextWatcher{
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if(et_code_3.text.toString().length == 1){
+                    et_code_4.requestFocus()
+                }
+                else if(et_code_3.text.toString().length == 0){
+                    et_code_2.requestFocus()
+                }
+            }
+
+
+        })
+
+
+        view.et_code_4.addTextChangedListener(object : TextWatcher{
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+
+            override fun afterTextChanged(s: Editable?) {
+
+                if(et_code_4.text.toString().length == 0){
+                    et_code_3.requestFocus()
+                }
+
+            }
+
+
+        })
+
+    }
 
 
     @SuppressLint("ValidFragment")

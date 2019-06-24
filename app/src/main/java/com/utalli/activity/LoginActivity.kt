@@ -98,25 +98,27 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
 
                        if(it.has("data") && it.get("data") is JsonObject){
+
                            var dataObject = it.getAsJsonObject("data")
+
                            if (dataObject.has("id")){
+
                                AppPreference.getInstance(this).setId(dataObject.get("id").asInt)
                            }
 
-
-
                            AppPreference.getInstance(this).setUserData(it.get("data").toString())
-                           var user = AppPreference.getInstance(this).getUserData() as UserModel
+
+
+                           Utils.showToast(this, it.get("message").asString)
+
+                           Handler().postDelayed(Runnable {
+                               val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                               startActivity(intent)
+                               finish()
+                           }, 1000)
+
 
                        }
-
-                       Utils.showToast(this, it.get("message").asString)
-
-                       Handler().postDelayed(Runnable {
-                           val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-                           startActivity(intent)
-                           finish()
-                       }, 3500)
 
                    }
                    else {

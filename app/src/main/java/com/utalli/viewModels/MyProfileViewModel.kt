@@ -8,6 +8,7 @@ import com.utalli.R
 
 import com.utalli.helpers.AppPreference
 import com.utalli.helpers.Utils
+import com.utalli.models.UpdateProfileRequestModel
 import com.utalli.network.ApiClient
 import com.utalli.network.ApiService
 import okhttp3.MediaType
@@ -17,15 +18,15 @@ import retrofit2.Call
 import retrofit2.Response
 
 
-class MyProfileViewModel : ViewModel(){
+class MyProfileViewModel : ViewModel() {
 
-    private var myprofileResult : MutableLiveData<JsonObject>?= null
-    private var profilePicResult : MutableLiveData<JsonObject>?= null
+    private var myprofileResult: MutableLiveData<JsonObject>? = null
+    private var profilePicResult: MutableLiveData<JsonObject>? = null
+    private var updateProfileResult: MutableLiveData<JsonObject>? = null
     var preference: AppPreference? = null
 
 
-
-    fun myProfileUser(mContext: Context,id: Int) : MutableLiveData<JsonObject>{
+    fun myProfileUser(mContext: Context, id: Int): MutableLiveData<JsonObject> {
         myprofileResult = MutableLiveData()
 
         preference = AppPreference.getInstance(mContext)
@@ -35,19 +36,18 @@ class MyProfileViewModel : ViewModel(){
         var call = apiService.myProfileUser(token, id)
         Utils.showProgressDialog(mContext)
 
-        call.enqueue(object : retrofit2.Callback<JsonObject>{
+        call.enqueue(object : retrofit2.Callback<JsonObject> {
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                 Utils.hideProgressDialog()
                 Utils.showLog(t.message!!)
             }
 
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-               Utils.hideProgressDialog()
+                Utils.hideProgressDialog()
 
-                if(response != null && response.body() != null){
+                if (response != null && response.body() != null) {
                     myprofileResult!!.value = response.body()
-                }
-                else{
+                } else {
                     Utils.showToast(mContext, mContext.resources.getString(R.string.msg_common_error))
                 }
 
@@ -57,54 +57,95 @@ class MyProfileViewModel : ViewModel(){
 
         })
 
-    return myprofileResult!!
+        return myprofileResult!!
 
     }
 
 
-    fun updateProfilePic(mContext: Context, pic: MultipartBody.Part) : MutableLiveData<JsonObject>{
+    fun updateProfilePic(mContext: Context, pic: MultipartBody.Part): MutableLiveData<JsonObject> {
         preference = AppPreference.getInstance(mContext)
         val userModel = preference!!.getUserData()
 
-        if (profilePicResult == null)
-            profilePicResult = MutableLiveData()
 
+        profilePicResult = MutableLiveData()
 
 
         var apiService = ApiClient.getClient().create(ApiService::class.java)
 
-        val id = RequestBody.create(MediaType.parse("multipart/form-data"), userModel!!._id)
-        var call = apiService.updateProfilePic(id,pic)
+        var id = RequestBody.create(MediaType.parse("multipart/form-data"), "" + preference!!.getId() as Int)
+
+
+        var call = apiService.updateProfilePic(id, pic)
 
         Utils.showProgressDialog(mContext)
 
-        call.enqueue(object : retrofit2.Callback<JsonObject>{
+        call.enqueue(object : retrofit2.Callback<JsonObject> {
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                  Utils.hideProgressDialog()
-                  Utils.showLog(t.message!!)
+                Utils.hideProgressDialog()
+                Utils.showLog(t.message!!)
             }
+
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 Utils.hideProgressDialog()
-                if(response!= null && response.body() != null){
+                if (response != null && response.body() != null) {
                     profilePicResult!!.value = response.body()
+                }
+                else {
+                    Utils.showToast(mContext, mContext.resources.getString(R.string.msg_common_error))
                 }
             }
         })
 
 
-      return  profilePicResult!!
+        return profilePicResult!!
     }
 
 
-  //  fun updateProfile(mContext: Context, name :String,email : String, contactno : String, gender)
+    fun updateProfile(mContext: Context, updateProfileRequestMode: UpdateProfileRequestModel): MutableLiveData<JsonObject> {
+        preference = AppPreference.getInstance(mContext)
+        val token = preference!!.getAuthToken()
 
 
+        updateProfileResult = MutableLiveData()
+        var apiService = ApiClient.getClient().create(ApiService::class.java)
+
+        var call = apiService.updateProfile(
+            token,
+            updateProfileRequestMode.name,
+            updateProfileRequestMode.email,
+            updateProfileRequestMode.contactno,
+            updateProfileRequestMode.dob,
+            updateProfileRequestMode.gender,
+            updateProfileRequestMode.payment,
+            updateProfileRequestMode.emry_contact,
+            updateProfileRequestMode.u_address,
+            updateProfileRequestMode.id
+        )
+
+        Utils.showProgressDialog(mContext)
+
+        call.enqueue(object : retrofit2.Callback<JsonObject> {
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                Utils.hideProgressDialog()
+                Utils.showLog(t.message!!)
+            }
+
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                Utils.hideProgressDialog()
+
+                if (response != null && response.body() != null) {
+                    updateProfileResult!!.value = response.body()
+                } else {
+                    Utils.showToast(mContext, mContext.resources.getString(R.string.msg_common_error))
+                }
+            }
+
+        })
 
 
-
-
-
+        return updateProfileResult!!
+    }
 
 
 }
