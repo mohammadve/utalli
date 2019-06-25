@@ -14,9 +14,9 @@ import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
 import android.text.InputFilter
-
-
-
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import com.utalli.viewModels.AddPaymentCardViewModel
 
 
 class AddPaymentCardActivity : AppCompatActivity(), View.OnClickListener {
@@ -28,6 +28,7 @@ class AddPaymentCardActivity : AppCompatActivity(), View.OnClickListener {
     var strValidthrough : String ?= null
     var isDelete : Boolean = false
     var countValuee : Int = 0
+    var addPaymentCardViewModel : AddPaymentCardViewModel?= null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +45,8 @@ class AddPaymentCardActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun initViews() {
+
+        addPaymentCardViewModel = ViewModelProviders.of(this).get(AddPaymentCardViewModel::class.java)
 
         btn_next.setOnClickListener(this)
         btn_submit.setOnClickListener(this)
@@ -180,8 +183,6 @@ class AddPaymentCardActivity : AppCompatActivity(), View.OnClickListener {
                     ed_editText.setText("")
                 }
 
-              //  setCountValue(countValuee)
-
                 Log.e("TAG", "countValuee nextClick  ===  "+countValuee)
             }
 
@@ -214,37 +215,7 @@ class AddPaymentCardActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    private fun setCountValue(countValuee: Int) {
 
-        if(countValuee == 0){
-            tv_common.text = "Card number"
-            ed_editText.hint = "Card number"
-            ed_editText.inputType = InputType.TYPE_CLASS_NUMBER
-         /*   if(before==0){
-                isDelete=false
-            }
-            else{
-                isDelete=true
-            }*/
-        }
-
-        else if(countValuee == 1){
-            tv_common.text = "Name on card"
-            ed_editText.hint = "Name on card"
-        }
-        else if(countValuee == 2){
-            tv_common.text = "CVV"
-            ed_editText.hint = "CVV"
-        }
-
-        else if(countValuee == 3){
-            tv_common.text = "CVV"
-            ed_editText.hint = "CVV"
-            btn_next.visibility = View.GONE
-            btn_submit.visibility = View.VISIBLE
-        }
-
-    }
 
 
 }

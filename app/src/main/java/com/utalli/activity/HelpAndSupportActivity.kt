@@ -2,10 +2,18 @@ package com.utalli.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import com.google.gson.JsonObject
 import com.utalli.R
+import com.utalli.viewModels.HelpAndSupportViewModel
 import kotlinx.android.synthetic.main.activity_help_and_support.*
 
 class HelpAndSupportActivity : AppCompatActivity(){
+    var helpAndSupportViewModel : HelpAndSupportViewModel?= null
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +32,27 @@ class HelpAndSupportActivity : AppCompatActivity(){
 
 
     private fun initViews() {
+        helpAndSupportViewModel = ViewModelProviders.of(this).get(HelpAndSupportViewModel::class.java)
 
+        helpAndSupportViewModel!!.helpAndSupport(this).observe(this, Observer {
+
+            if(it!= null && it.has("status") && it.get("status").asString.equals("1")){
+
+                if(it.has("data") && it.get("data") is JsonObject){
+
+                    var dataObj = it.getAsJsonObject("data")
+
+                    if(dataObj.has("email") && dataObj.has("helpcontact")){
+                        tv_contactNumber.setText(dataObj.get("helpcontact").asString)
+                        tv_emailId.setText(dataObj.get("email").asString)
+                    }
+
+                }
+
+            }
+
+
+        })
 
 
     }

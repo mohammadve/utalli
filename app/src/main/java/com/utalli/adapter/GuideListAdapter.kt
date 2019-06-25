@@ -2,6 +2,7 @@ package com.utalli.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +31,7 @@ class GuideListAdapter(var mcontext: Context, var guidesList: List<GuideListMode
 
         holder.itemView.setOnClickListener {
             var intent = Intent(mcontext, GuideProfileDetailsActivity::class.java)
+            intent.putExtra("guideId", guidesList.get(position).id.toInt())
             mcontext.startActivity(intent)
         }
 

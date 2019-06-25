@@ -100,6 +100,9 @@
     <string name="txt_gallery">Gallery</string>
     <string name="txt_camera">Camera</string>
     <string name="txt_found_nothing">Found Nothing!</string>
+    <string name="text_pending_request">PENDING REQUEST</string>
+    <string name="text_accept_request">ACCEPT REQUEST</string>
+    <string name="text_chat">Chat</string>
 
 
 </resources>
