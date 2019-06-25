@@ -32,8 +32,11 @@ class ApiList {
         const val REQ_SEND_TO_GUIDE ="guide/requesttoguide"
         const val SEND_REQUEST_STATUS ="guide/cancelrequest"
         const val HELP_AND_SUPPORT = "guide/helpandsupport"
-
+        const val ADD_PAYMENT_CARD = "users/addcard"
+        const val GET_CARD_DETAILS = "users/getcards"
         const val UPDATE_DEVICE_TOKEN = "users/updatetoken"
+
+
         var ABOUT_US_URL = BASE_URL + "user/about"
         var TERMS_CONDITION_URL = BASE_URL + "user/terms-condition"
 

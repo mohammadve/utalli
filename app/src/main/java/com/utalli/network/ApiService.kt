@@ -231,7 +231,7 @@ interface ApiService {
     @POST(ApiList.SEND_REQUEST_STATUS)
     @FormUrlEncoded
     fun sendRequestStatus(
-        @Header("") token : String,
+        @Header("x-access-token") token : String,
         @Field("guideId") guideId: Int,
         @Field("requeststatus") requeststatus: Int,
         @Field("userId") userId : Int
@@ -242,6 +242,24 @@ interface ApiService {
     fun helpAndSupport(
         @Header("x-access-token") token : String
     ):Call<JsonObject>
+
+    @POST(ApiList.ADD_PAYMENT_CARD)
+    @FormUrlEncoded
+    fun addPaymentCard(
+        @Header("x-access-token") token : String,
+        @Field("userId") userId : Int,
+        @Field("cardnumber") cardnumber : String,
+        @Field("cardholdername") cardholdername : String,
+        @Field("cardcvv") cardcvv : String,
+        @Field("validthrough") validthrough : String
+    ):Call<JsonObject>
+
+    @POST(ApiList.GET_CARD_DETAILS)
+    @FormUrlEncoded
+    fun getCardDetails(
+        @Header("x-access-token") token: String,
+        @Field("userId") userId : Int
+    ): Call<JsonObject>
 
 
 

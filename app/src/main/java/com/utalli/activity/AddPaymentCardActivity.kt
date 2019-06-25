@@ -1,6 +1,7 @@
 package com.utalli.activity
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -14,8 +15,10 @@ import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
 import android.text.InputFilter
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.utalli.helpers.Utils
 import com.utalli.viewModels.AddPaymentCardViewModel
 
 
@@ -102,6 +105,15 @@ class AddPaymentCardActivity : AppCompatActivity(), View.OnClickListener {
         }
         else if(countValuee == 3){
             tv_validThrough.text = s.toString()
+
+            if(s.length == 0){
+                btn_submit.background = resources.getDrawable(R.drawable.rounded_rect_grey)
+                btn_submit.setTextColor(resources.getColor(R.color.color_blue))
+            }else if(s.length == 3){
+                btn_submit.background = resources.getDrawable(R.drawable.rounded_rect_blue)
+                btn_submit.setTextColor(resources.getColor(R.color.colorWhite))
+            }
+
         }
 
 
@@ -202,18 +214,40 @@ class AddPaymentCardActivity : AppCompatActivity(), View.OnClickListener {
                     Toast.makeText(this,"Please enter the card validity",Toast.LENGTH_SHORT).show()
                 }
                 else {
-                    var intent = Intent()
+
+                    addCardRequest(strCardNumber!!, strCardHolderName!!, strCvv!!, strValidthrough!!)
+              /*      var intent = Intent()
                     var dataCardNumber = CardItems(strCardNumber!!,strCardHolderName!!,strCvv!!,strValidthrough!!)
                     aadCardItemsList?.add(dataCardNumber)
                     intent.putExtra("cardItemsList",aadCardItemsList)
                     setResult(201,intent)
-                    finish()
+                    finish()*/
                 }
             }
 
         }
 
     }
+
+    private fun addCardRequest(cardNumber: String, cardHolderName: String, cvv: String, validthrough: String) {
+
+        addPaymentCardViewModel!!.addPaymentCard(this, cardNumber, cardHolderName, cvv, validthrough).observe(this, Observer {
+
+            if(it!= null && it.has("status") && it.get("status").asString.equals("1")){
+
+                Utils.showToast(this, it.get("message").asString)
+
+            }
+            else {
+                Utils.showToast(this, getString(R.string.msg_common_error))
+            }
+
+        })
+
+
+
+    }
+
 
 
 

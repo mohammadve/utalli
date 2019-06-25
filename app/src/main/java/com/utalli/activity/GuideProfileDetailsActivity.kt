@@ -20,6 +20,9 @@ import com.utalli.helpers.Utils
 import com.utalli.viewModels.GuideProfileDetailsViewModel
 import kotlinx.android.synthetic.main.activity_guide_profile_details.*
 
+
+
+
 class GuideProfileDetailsActivity : AppCompatActivity(), View.OnClickListener {
     var languageAdapter: LanguageAdapter? = null
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -59,6 +62,8 @@ class GuideProfileDetailsActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun getGuideDetails() {
 
+        Log.e("TAG", "GUIDE ID  guideDetails ==== " + guideId)
+
         guideProfileDetailsViewModel!!.guideDetails(this,guideId).observe(this, Observer {
 
             if(it != null && it.has("status") && it.get("status").asString.equals("1")){
@@ -68,7 +73,9 @@ class GuideProfileDetailsActivity : AppCompatActivity(), View.OnClickListener {
                     var dataObj = it.getAsJsonObject("data")
 
                     if(dataObj.has("name") && dataObj.get("name") != null){
-                        tv_name.setText(dataObj.get("name").asString)
+                        val upperString = dataObj.get("name").asString.substring(0, 1).toUpperCase() + dataObj.get("name").asString.substring(1)
+                        tv_name.setText(upperString)
+                        tv_about_place.setText("About "+upperString)
                     }
 
                    if(dataObj.has("guiderating") && dataObj.get("guiderating") != null){
@@ -85,6 +92,10 @@ class GuideProfileDetailsActivity : AppCompatActivity(), View.OnClickListener {
 
                     if(dataObj.has("guide_about") && dataObj.get("guide_about") != null){
                         tv_description.setText(dataObj.get("guide_about").asString)
+                    }
+
+                    if(dataObj.has("lang") && dataObj.get("lang") != null){
+                        list_languageKnown.setText(dataObj.get("lang").asString)
                     }
 
 
@@ -129,8 +140,13 @@ class GuideProfileDetailsActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun cancleAndAcceptReq(requestStatus: Int) {
+        Log.e("TAG", "CANCLE RQ guideId === " + guideId)
 
-        guideProfileDetailsViewModel!!.sendRequestStatus(this, guideId , requestStatus, userId).observe(this, Observer {
+        Log.e("TAG", "CANCLE RQ requestStatus === " + requestStatus)
+        Log.e("TAG", "CANCLE RQ userId === " + userId)
+
+
+        guideProfileDetailsViewModel!!.sendCancelRequestStatus(this, guideId , requestStatus, userId).observe(this, Observer {
 
              if(it!= null && it.has("status") && it.get("status").asString.equals("1")){
 

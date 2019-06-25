@@ -31,7 +31,7 @@ class GuideListAdapter(var mcontext: Context, var guidesList: List<GuideListMode
 
         holder.itemView.setOnClickListener {
             var intent = Intent(mcontext, GuideProfileDetailsActivity::class.java)
-            intent.putExtra("guideId", guidesList.get(position).id.toInt())
+            intent.putExtra("guideId", guidesList.get(position).guide_info.id.toInt())
             mcontext.startActivity(intent)
         }
 

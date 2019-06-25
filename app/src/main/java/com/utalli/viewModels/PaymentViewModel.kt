@@ -12,22 +12,22 @@ import com.utalli.network.ApiService
 import retrofit2.Call
 import retrofit2.Response
 
-class AddPaymentCardViewModel : ViewModel(){
+class PaymentViewModel : ViewModel(){
 
-    private var addCardResult : MutableLiveData<JsonObject> ?= null
+    private var getCardResult : MutableLiveData<JsonObject> ?= null
     var preference : AppPreference?= null
 
 
-    fun addPaymentCard(mContext : Context, cardNumber:String, cardHolderName:String, cvv:String, validthrough:String) : MutableLiveData<JsonObject>{
+    fun getCardDetails(mContext:Context) : MutableLiveData<JsonObject>{
 
         preference = AppPreference.getInstance(mContext)
         val token = preference!!.getAuthToken()
         val userId = preference!!.getId()
 
-        addCardResult = MutableLiveData()
+        getCardResult =  MutableLiveData()
 
         var apiService = ApiClient.getClient().create(ApiService::class.java)
-        var call = apiService.addPaymentCard(token, userId,cardNumber, cardHolderName, cvv, validthrough)
+        var call = apiService.getCardDetails(token,userId)
 
         Utils.showProgressDialog(mContext)
 
@@ -37,19 +37,19 @@ class AddPaymentCardViewModel : ViewModel(){
                 Utils.showLog(t.message!!)
             }
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-             Utils.hideProgressDialog()
+                Utils.hideProgressDialog()
                 if(response != null && response.body()!= null){
-                    addCardResult!!.value = response.body()
-                }else{
+                     getCardResult!!.value = response.body()
+                }
+                else{
                     Utils.showToast(mContext, mContext.resources.getString(R.string.msg_common_error))
                 }
-
             }
         })
 
-        return addCardResult!!
-    }
+        return  getCardResult!!
 
+    }
 
 
 

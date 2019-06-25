@@ -91,7 +91,7 @@ class GuideProfileDetailsViewModel : ViewModel(){
     }
 
 
-    fun sendRequestStatus(mContext: Context, guideId: Int, requeststatus: Int, userId: Int) : MutableLiveData<JsonObject>{
+    fun sendCancelRequestStatus(mContext: Context, guideId: Int, requeststatus: Int, userId: Int) : MutableLiveData<JsonObject>{
 
         preference = AppPreference.getInstance(mContext)
         val token = preference!!.getAuthToken()
