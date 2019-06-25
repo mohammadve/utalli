@@ -24,11 +24,14 @@ import android.widget.Toast
 import android.content.DialogInterface
 import android.location.Geocoder
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModelProviders
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
 import com.google.firebase.iid.FirebaseInstanceId
 import com.utalli.helpers.AppPreference
+import com.utalli.models.UserModel
+import com.utalli.viewModels.HomeViewModel
 import java.util.*
 
 
@@ -128,7 +131,7 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
     private var permissions = ArrayList<String>()
     // integer for permissions results request
     private var ALL_PERMISSIONS_RESULT = 1011
-
+    var homeViewModel: HomeViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -139,6 +142,8 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
 
     private fun initViews() {
 
+
+        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
         FirebaseApp.initializeApp(applicationContext)
         FirebaseInstanceId.getInstance().instanceId
@@ -152,7 +157,8 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
                 val token = task.result?.token
                 if (token != null) {
                     Utils.showLog("Device token :" + token)
-                    //sendTokenToServer(token)
+                    if (Utils.isInternetAvailable(this))
+                        sendTokenToServer(token)
                 }
             })
 
@@ -366,5 +372,16 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
         transaction.commit()
     }
 
+    private fun sendTokenToServer(token: String) {
+
+        var user = AppPreference.getInstance(this).getUserData() as UserModel
+        homeViewModel!!.updateDeviceToken(AppPreference.getInstance(this).getAuthToken(), user.id.toString(), token)
+            .observe(this, androidx.lifecycle.Observer {
+
+                Utils.showLog(it.toString())
+
+            })
+
+    }
 
 }
