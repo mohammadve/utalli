@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Utalii</string>
-
+    <string name="sendbird_app_id">AEBF2475-F805-47BA-A2F7-A36614BE6DD4</string>
     <string name="default_notification_channel_id">123</string>
 
     <string name="msg_no_internet">No internet connection, please check your internet connection and try again.</string>
@@ -34,10 +34,7 @@
     <string name="hint_type_message">Type a message</string>
 
 
-
-
     <string name="button_sign_up">SIGN UP</string>
-
 
 
     <string name="text_sign_up">SIGN UP</string>
@@ -100,6 +97,7 @@
     <string name="txt_gallery">Gallery</string>
     <string name="txt_camera">Camera</string>
     <string name="txt_found_nothing">Found Nothing!</string>
+    <string name="txt_no_chats_available">No Chats Available</string>
 
 
 </resources>
