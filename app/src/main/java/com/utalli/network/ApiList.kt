@@ -3,7 +3,7 @@ package com.utalli.network
 class ApiList {
     companion object {
 
-        val BASE_URL = "http://3.13.3.42:8000/api/v1/"    ///   "http://172.16.200.38:8000/api/v1/"      // liveApi = "http://3.13.3.42:8000/api/v1/"
+        val BASE_URL = "http://3.13.3.42:8000/api/v1/"    ///   "http://172.16.200.38:8000/api/v1/"      // liveApi = "http://3.13.3.42:8000/api/v1/"   //"http://192.168.6.47:8000/api/v1/"
         const val SIGNUP_URL = "users/register"
         const val VERIFY_OTP_URL = "users/register"
         const val LOGIN_URL = "users/login"
@@ -34,6 +34,10 @@ class ApiList {
         const val HELP_AND_SUPPORT = "guide/helpandsupport"
         const val ADD_PAYMENT_CARD = "users/addcard"
         const val GET_CARD_DETAILS = "users/getcards"
+        const val DELETE_CARD_DETAILS = "users/removecard"
+        const val UPCOMING_TOURS = "tours/upcomingtours"
+        const val CANCEL_TOURS = "tours/canceltour"
+
         const val UPDATE_DEVICE_TOKEN = "users/updatetoken"
 
 

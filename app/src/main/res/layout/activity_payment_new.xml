@@ -34,7 +34,7 @@
             android:layout_below="@+id/toolbar_payment"
             android:layout_width="match_parent"
             android:layout_marginTop="30dp"
-            android:layout_height="500dp"
+            android:layout_height="wrap_content"
             app:swipe_opacity="0.33"
             app:stack_rotation="0"
             android:layout_centerInParent="true"
@@ -43,10 +43,12 @@
 
      <RelativeLayout
             android:id="@+id/layout_no_card"
+            android:layout_below="@+id/toolbar_payment"
+            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:visibility="visible"
+            android:visibility="gone"
     >
 
 
@@ -127,6 +129,7 @@
                 android:textSize="14sp"
                 android:background="@drawable/rounded_rect_blue"
                 android:text="ADD CARD"
+                android:visibility="gone"
         />
 
 

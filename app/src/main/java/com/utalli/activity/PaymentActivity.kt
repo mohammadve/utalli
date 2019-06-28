@@ -13,6 +13,8 @@ import com.google.gson.JsonArray
 import com.google.gson.reflect.TypeToken
 import com.utalli.R
 import com.utalli.adapter.CardsAdapter
+import com.utalli.callBack.GuideListCallBack
+import com.utalli.callBack.PaymentCardDeleteCallBack
 import com.utalli.helpers.Utils
 import com.utalli.models.CardItems
 import com.utalli.viewModels.PaymentViewModel
@@ -27,9 +29,10 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener {
 
     var currentPosition: Int? = 0
     var cardStack: SwipeStack? = null
-    var cardItems = ArrayList<CardItems>()
+    var cardItemsList = ArrayList<CardItems>()
     var cardsAdapter: CardsAdapter? = null
     var paymentViewModel : PaymentViewModel ? = null
+
 
 
 
@@ -90,7 +93,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener {
 
 
 
-    public fun setCardStackAdapter() {
+     fun setCardStackAdapter() {
 
         paymentViewModel!!.getCardDetails(this).observe(this, Observer {
 
@@ -99,24 +102,53 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener {
                 if(it.has("data") && it.get("data") is JsonArray){
 
                     val type = object : TypeToken<List<CardItems>>() {}.type
-                    var cardItemLists = Gson().fromJson<ArrayList<CardItems>>(it.get("data"), type)
-                   // cardItems.addAll(cardItemLists)
+                    var cardNewLists = Gson().fromJson<ArrayList<CardItems>>(it.get("data"), type)
+                    cardItemsList.clear()
+                    cardItemsList.addAll(cardNewLists)
 
-                    if(cardItemLists != null && cardItemLists.size > 0){
+
+                    if(cardItemsList != null && cardItemsList.size > 0){
                         cardStack!!.setVisibility(View.VISIBLE)
+                        btn_add_card.visibility = View.VISIBLE
                         layout_no_card.visibility = View.GONE
+
 
                         if (cardsAdapter == null) {
                             cardsAdapter = CardsAdapter()
                             cardStack!!.setAdapter(cardsAdapter)
-                            cardsAdapter!!.setData(this, cardItemLists)
+
+                            cardsAdapter!!.setData(this, cardItemsList, object : PaymentCardDeleteCallBack{
+
+                                override fun deleteCardListener(itemDetails: CardItems) {
+
+                                    deleteCardRequest(itemDetails.id)
+                                   // cardItemsList.remove(itemDetails)
+                                   // cardsAdapter!!.notifyDataSetChanged()
+
+                                     if(cardItemsList.size > 0){
+                                         cardStack!!.setVisibility(View.VISIBLE)
+                                         btn_add_card.visibility = View.VISIBLE
+                                         layout_no_card.visibility = View.GONE
+                                     } else {
+                                         layout_no_card.visibility = View.VISIBLE
+                                         btn_add_card.visibility = View.VISIBLE
+                                         cardStack!!.setVisibility(View.GONE)
+                                     }
+
+
+                                }
+                            })
+
+
                         }
+
                         else {
                             cardsAdapter!!.notifyDataSetChanged()
                         }
 
-                    } else if(cardItemLists!!.size == 0){
+                    } else if(cardItemsList!!.size == 0){
                         layout_no_card.visibility = View.VISIBLE
+                        btn_add_card.visibility = View.VISIBLE
                         cardStack!!.setVisibility(View.GONE)
                     }
 
@@ -130,19 +162,6 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener {
 
 
         })
-
-
-
-        // var data1 =
-
-
-        /*cardItems!!.add(CardItems("1234    3456    4567    4567", "Huyen 1", "234","10/35"))
-        cardItems!!.add(CardItems("1234    3456    4567    4567", "DoHa 2", "133","10/25"))
-        cardItems!!.add(CardItems("1234    3456    4567    4567", "DongNhi 3", "133","10/25"))
-        cardItems!!.add(CardItems("1234    3456    4567    4567", "LeQuyen 4", "133","10/25"))
-        cardItems!!.add(CardItems("1234    3456    4567    4567", "Phuong 5", "133","10/25"))
-        cardItems!!.add(CardItems("1234    3456    4567    4567", "Phuon 6", "133","10/25"))
-        cardItems!!.add(CardItems("1234    3456    4567    4567", "HaHo 7", "133","10/25"))*/
 
 
 
@@ -166,6 +185,20 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    private fun deleteCardRequest(id: Int) {
+
+         paymentViewModel!!.deleteCardDetails(this,id).observe(this, Observer {
+
+             if(it != null && it.has("status") && it.get("status").asString.equals("1")){
+
+                 Utils.showToast(this, it.get("message").asString)
+                 //cardStack!!.invalidate()
+                 cardsAdapter!!.notifyDataSetChanged()
+             }
+         })
+
+    }
+
 
     override fun onClick(v: View?) {
 
@@ -176,24 +209,8 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener {
                // startActivityForResult(intent, 201)
             }
         }
-
     }
 
-
-  /*  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if(data!= null && requestCode == 201){
-
-            var  cardDetailsNew = data.getSerializableExtra("cardItemsList") as ArrayList<CardItems>
-
-            cardItems!!.addAll(cardDetailsNew)
-            setCardStackAdapter()
-
-        }
-
-
-    }*/
 
 
 }

@@ -59,18 +59,15 @@ class AddPaymentCardActivity : AppCompatActivity(), View.OnClickListener {
 
             override fun onTextChanged(cs: CharSequence, start: Int, before: Int, count: Int) {
                 Log.e("TAG", "onTextChanged  ===  ")
-               // Log.e("TAG", "count  ===  "+count + "  start === "+start + "   before === "+before)
-                setDataOfCardOnTextChanged(before)
+                setDataOfCardOnTextChanged(before,cs)
             }
 
             override fun beforeTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {
                 Log.e("TAG", "beforeTextChanged  ===  ")
-               // Toast.makeText(applicationContext, "before text change", Toast.LENGTH_LONG).show()
             }
 
             override fun afterTextChanged(s: Editable) {
                 Log.e("TAG", "afterTextChanged  ===  ")
-              //  Toast.makeText(applicationContext, "after text change", Toast.LENGTH_LONG).show()
                 setCardDataAfterTextChanged(s)
             }
         })
@@ -120,7 +117,7 @@ class AddPaymentCardActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-    private fun setDataOfCardOnTextChanged(before: Int) {
+    private fun setDataOfCardOnTextChanged(before: Int, cs:CharSequence) {
 
         Log.e("TAG", "countValuee  ===  "+countValuee)
         if(countValuee == 0){
@@ -166,11 +163,16 @@ class AddPaymentCardActivity : AppCompatActivity(), View.OnClickListener {
             btn_next.visibility = View.GONE
             btn_submit.visibility = View.VISIBLE
 
-            val maxLength = 10
+            var len = cs.toString().length
+            if(before == 0 && len == 2){
+                ed_editText.append("/")
+            }
+
+            val maxLength = 5
             val FilterArray = arrayOfNulls<InputFilter>(1)
             FilterArray[0] = InputFilter.LengthFilter(maxLength)
             ed_editText.setFilters(FilterArray)
-            ed_editText.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+            ed_editText.inputType = InputType.TYPE_CLASS_PHONE
         }
 
 

@@ -43,7 +43,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
             et_email_id.text.toString(),
             et_mobileNumber.text.toString(),
             et_newPassword.text.toString(),
-            et_dateOfBirth.text.toString(),
+            dob,
             genderValue.toString(),
             otp,
             device_token
@@ -81,11 +81,12 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
     var genderValue : String? = null
     var signupViewModel:SignUpViewModel?= null
     var otp: String = ""
+    var dob : String = ""
 
     var bottomSheetDialogFragment: VerifyOTPDialogFragment? = null
 
-    var device_token = "sdkjfdsjflksdjfklsdjfkljdsfddddddddddddddddssssssssssss"
-
+    //var device_token = "sdkjfdsjflksdjfklsdjfkljdsfddddddddddddddddssssssssssss"
+    var device_token = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -129,8 +130,10 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
             R.id.et_dateOfBirth -> {
                 val datePickerDialog = DatePickerDialog(this,R.style.DialogTheme, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
-                  //  et_dateOfBirth.setText("" + dayOfMonth + "-" + (monthOfYear+1) + "-" + year)
-                    et_dateOfBirth.setText("" + year + "-" + (monthOfYear+1) + "-" + dayOfMonth)
+                    et_dateOfBirth.setText("" + dayOfMonth + "-" + (monthOfYear+1) + "-" + year)
+                  //  et_dateOfBirth.setText("" + year + "-" + (monthOfYear+1) + "-" + dayOfMonth)
+
+                    dob = ("" + year + "-" + (monthOfYear+1) + "-" + dayOfMonth)
 
 
 
@@ -180,7 +183,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
 
     private fun signupUser() {
 
-        device_token = "sdkjfdsjflksdjfklsdjfkljdsfddddddddddddddddssssssssssss"
+        //device_token = ""
 
         Utils.hideSoftKeyboard(this)
 
@@ -193,7 +196,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
                 et_email_id.text.toString(),
                 et_mobileNumber.text.toString(),
                 et_newPassword.text.toString(),
-                et_dateOfBirth.text.toString(),
+                dob,
                 genderValue.toString(),
                 "",
                 device_token
@@ -270,7 +273,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
             Utils.showToast(this, resources.getString(R.string.msg_empty_gender))
             return false
         }
-        else if(et_dateOfBirth.text.toString().equals("")){
+        else if(dob.equals("")){
             Utils.showToast(this, resources.getString(R.string.msg_empty_dob))
             return false
         }

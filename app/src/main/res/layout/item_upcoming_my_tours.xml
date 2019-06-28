@@ -37,17 +37,18 @@
 
 
         <com.utalli.RobotoMediumTextView
+                android:id="@+id/tv_tour_dates"
                 app:layout_constraintTop_toBottomOf="@+id/tv_tour_status"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:text="25,26,27"
                 android:textSize="18sp"
                 android:paddingLeft="12dp"
-
                 app:layout_constraintRight_toRightOf="parent"
                 android:textColor="@color/colorBlack"
-                android:id="@+id/tv_tour_dates"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
 
-                android:layout_width="0dp" android:layout_height="wrap_content"/>
+
         <com.utalli.RobotoRegularTextView
                 android:id="@+id/tv_guide_status"
                 android:layout_width="0dp" android:layout_height="wrap_content"

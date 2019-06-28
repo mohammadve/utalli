@@ -104,6 +104,7 @@
                             android:backgroundTint="@color/colorPrimary"
                             android:textCursorDrawable="@drawable/cursor_drawable"
                             android:textSize="14sp"
+                            android:maxLength="30"
                             android:inputType="textPassword"
                             android:singleLine="true"
                             android:padding="15dp"
@@ -159,6 +160,9 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
+
+
+
         <com.utalli.RobotoRegularTextView
                 android:id="@+id/tv_new_user"
                 android:layout_width="wrap_content"

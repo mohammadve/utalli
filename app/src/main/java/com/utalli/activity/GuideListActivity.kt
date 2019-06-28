@@ -1,5 +1,6 @@
 package com.utalli.activity
 
+import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.transition.Slide
@@ -30,9 +31,11 @@ import com.google.gson.JsonArray
 import com.google.gson.reflect.TypeToken
 import com.transitionseverywhere.Recolor
 import com.transitionseverywhere.TransitionManager
+import com.utalli.callBack.GuideListCallBack
 import com.utalli.helpers.Utils
+import com.utalli.models.GuideInfoModel
 import com.utalli.models.GuideListModel
-import com.utalli.models.GuideSearchViewModel
+//import com.utalli.models.GuideSearchViewModel
 import com.utalli.viewModels.GuideListViewModel
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -48,6 +51,8 @@ class GuideListActivity : AppCompatActivity(), View.OnClickListener {
     var tourStartDate = ""
     var tourEndDate = ""
     lateinit var guideListViewModel: GuideListViewModel
+    var guideListCallBack : GuideListCallBack?= null
+    var selectedStatesId = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,15 +104,20 @@ class GuideListActivity : AppCompatActivity(), View.OnClickListener {
         toolbar_country_name_toVisit.text = selectedCountry.name
 
         var selectedStates = ""
+
         if (userSelectedStateList != null && userSelectedStateList.size > 0) {
 
             for (i in 0..userSelectedStateList.size - 1) {
 
-                if (i == 0)
+                if (i == 0){
                     selectedStates = userSelectedStateList.get(i).name
-                else if (i <= userSelectedStateList.size - 1)
-                    selectedStates = selectedStates + ", " + userSelectedStateList.get(i).name
+                    selectedStatesId = userSelectedStateList.get(i).id.toString()
+                }
 
+                else if (i <= userSelectedStateList.size - 1){
+                    selectedStates = selectedStates + ", " + userSelectedStateList.get(i).name
+                    selectedStatesId = selectedStatesId + "," + userSelectedStateList.get(i).id.toString()
+                }
 
 
                 //selectedStates = userSelectedStateList.get(i).name + ", " + selectedStates
@@ -180,9 +190,6 @@ class GuideListActivity : AppCompatActivity(), View.OnClickListener {
 
 
 
-
-
-
         guideListViewModel.searchGuide(this, selectedCountry.id, stateIdArray)
             .observe(this, androidx.lifecycle.Observer {
 
@@ -195,7 +202,21 @@ class GuideListActivity : AppCompatActivity(), View.OnClickListener {
                             var guidesList = Gson().fromJson<List<GuideListModel>>(it.get("data"), type)
 
                             if (guidesList != null && guidesList.size > 0) {
-                                rv_guide_list.adapter = GuideListAdapter(this, guidesList)
+
+                                rv_guide_list.adapter = GuideListAdapter(this, guidesList, object : GuideListCallBack{
+
+                                    override fun guideListData(itemDetails: GuideInfoModel) {
+
+                                        var intent = Intent(this@GuideListActivity, GuideProfileDetailsActivity::class.java)
+                                        intent.putExtra("guideId", itemDetails.id.toInt())
+                                        intent.putExtra("tourStartDate",tourStartDate)
+                                        intent.putExtra("tourEndDate", tourEndDate)
+                                        intent.putExtra("selectedStatesId",selectedStatesId)
+                                        startActivity(intent)
+
+                                    }
+
+                                })
                             }
 
 

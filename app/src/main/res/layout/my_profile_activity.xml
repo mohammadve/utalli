@@ -104,6 +104,16 @@
                             app:civ_border_color="@color/grey_2"
                             app:civ_border_width="1dp"
                     />
+                    
+                    <ProgressBar
+                            android:id="@+id/pb_image"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:visibility="gone"
+                    />
+                    
+                    
                     <ImageView
                             android:id="@+id/iv_image_picker"
                             android:layout_width="wrap_content"
@@ -180,8 +190,6 @@
                             android:padding="5dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             android:src="@drawable/edit_icon"
-
-
                     />
 
                     <com.utalli.RobotoMediumTextView
@@ -464,7 +472,7 @@
                     android:layout_marginTop="5dp"
                     android:textColor="@color/colorBlack_2"
                     android:textSize="14sp"
-                    android:text="Notification,Help and Privacy policy etc"
+                    android:text="Notification, Help and Privacy policy etc"
             />
 
 

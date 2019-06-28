@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.utalli.R
 import com.utalli.helpers.AppPreference
+import com.utalli.helpers.Utils
 import kotlinx.android.synthetic.main.activity_splash.*
 
 
@@ -42,9 +43,15 @@ class SplashActivity : AppCompatActivity(), View.OnClickListener {
                 tv_getStarted.visibility = View.VISIBLE
                 tv_learnMore.visibility = View.VISIBLE
             } else{
+
+                if(!Utils.isInternetAvailable(this)){
+                    Utils.showToast(this, resources.getString(R.string.msg_no_internet))
+                }else{
                     val intent = Intent(this@SplashActivity, HomeActivity::class.java)
                     startActivity(intent)
                     finish()
+                }
+
             }
 
         }, 1000)

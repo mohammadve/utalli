@@ -7,24 +7,29 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import com.google.android.material.textfield.TextInputEditText
+import androidx.constraintlayout.widget.ConstraintLayout
+
 import com.utalli.R
+import com.utalli.callBack.PaymentCardDeleteCallBack
 import com.utalli.models.CardItems
 
 class CardsAdapter : BaseAdapter() {
     lateinit var context : Context
-    var data: ArrayList<CardItems>?=null
+    var cardDataList: ArrayList<CardItems>?=null
+    lateinit var itemListener : PaymentCardDeleteCallBack
 
 
 
-    fun setData(context:Context,cardItems: ArrayList<CardItems> ){
+    fun setData(context:Context,cardItems: ArrayList<CardItems>,itemListener : PaymentCardDeleteCallBack ){
         this.context = context
-        this.data = cardItems
+        this.cardDataList = cardItems
+        this.itemListener = itemListener
+//        notifyDataSetChanged()
     }
 
 
     override fun getItem(position: Int): Any {
-        return data!!.get(position)
+        return cardDataList!!.get(position)
     }
 
 
@@ -36,7 +41,7 @@ class CardsAdapter : BaseAdapter() {
 
 
     override fun getCount(): Int {
-        return data!!.size
+        return cardDataList!!.size
     }
 
 
@@ -53,10 +58,24 @@ class CardsAdapter : BaseAdapter() {
             holder = view.tag as CardViewHolder
         }
 
-        holder.tvCardNumber.text = data!!.get(position).cardnumber
-        holder.tvCardHolderName.text = data!!.get(position).cardholdername
-        holder.tvCvv.text = data!!.get(position).cardcvv
-        holder.tvValidThrough.text = data!!.get(position).validthrough
+        holder.tvCardNumber.text = cardDataList!!.get(position).cardnumber
+        holder.tvCardHolderName.text = cardDataList!!.get(position).cardholdername
+        holder.tvCvv.text = cardDataList!!.get(position).cardcvv
+        holder.tvValidThrough.text = cardDataList!!.get(position).validthrough
+
+        holder.iv_delete_icon.setOnClickListener {
+           itemListener.deleteCardListener(cardDataList!!.get(position))
+        }
+
+
+        holder.cl_parent.setOnClickListener {
+
+
+        }
+
+
+
+
 
         return view!!
     }
@@ -67,6 +86,8 @@ class CardsAdapter : BaseAdapter() {
          var tvCardHolderName : TextView
          var  tvCvv : TextView
          var  tvValidThrough :TextView
+         var cl_parent: ConstraintLayout
+         var iv_delete_icon : ImageView
 
 
         init {
@@ -74,7 +95,8 @@ class CardsAdapter : BaseAdapter() {
             tvCardHolderName = view.findViewById(R.id.tv_card_holder_name) as TextView
             tvCvv = view.findViewById(R.id.tv_cvv) as TextView
             tvValidThrough  = view.findViewById(R.id.tv_validThrough) as TextView
-
+            cl_parent = view.findViewById(R.id.cl_parent) as ConstraintLayout
+            iv_delete_icon = view.findViewById(R.id.iv_delete_icon) as ImageView
         }
     }
 
