@@ -53,6 +53,10 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
             return
         }
 
+
+        Utils.showProgressDialog(this)
+
+
         // Permissions ok, we get last location
         location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
 
@@ -73,6 +77,13 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
 
             AppPreference.getInstance(this).setUserLastLocation("" + state + ", " + country)
 
+            if(isUserLocationEmpty)
+            {
+                loadNearMeFragment()
+                isUserLocationEmpty=false
+            }
+
+
             val intent = Intent()
             intent.putExtra("location", location)
             intent.action = "LOCATION_UPDATED"
@@ -80,18 +91,25 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
 
             Utils.showLog("Location Latitude : " + location!!.latitude + " Longitude : " + location!!.longitude)
         }
-
         startLocationUpdates();
     }
 
     override fun onConnectionSuspended(p0: Int) {
+
+        Utils.showLog("Google API client suspended")
+
     }
 
     override fun onConnectionFailed(p0: ConnectionResult) {
+
+        Utils.showLog("Google API client failed")
     }
 
     override fun onLocationChanged(mLocation: Location?) {
+        Utils.showLog("Google API client onLocationchange called")
         if (location != null) {
+
+            Utils.hideProgressDialog()
 
 
             var geocoder = Geocoder(this, Locale.getDefault());
@@ -107,6 +125,12 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
 
 
             AppPreference.getInstance(this).setUserLastLocation("" + state + ", " + country)
+
+            if (isUserLocationEmpty)
+                loadNearMeFragment()
+
+            isUserLocationEmpty = false
+
 
             val intent = Intent()
             intent.putExtra("location", location)
@@ -132,6 +156,8 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
     // integer for permissions results request
     private var ALL_PERMISSIONS_RESULT = 1011
     var homeViewModel: HomeViewModel? = null
+    var isUserLocationEmpty = true
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -186,8 +212,14 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
 
 
 
+        if (!AppPreference.getInstance(this).getUserLastLocation().equals(""))
+            isUserLocationEmpty = false
 
-        loadNearMeFragment()
+
+        if (!isUserLocationEmpty)
+            loadNearMeFragment()
+
+
         setupBottomNavigation()
     }
 
@@ -251,7 +283,8 @@ class HomeActivity : AppCompatActivity(), GoogleApiClient.ConnectionCallbacks,
 
                 } else {
                     if (googleApiClient != null) {
-                        googleApiClient!!.connect();
+
+                        googleApiClient!!.connect()
                     }
                 }
 

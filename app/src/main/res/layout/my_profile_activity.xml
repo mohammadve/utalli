@@ -354,6 +354,7 @@
                     android:textColor="@color/colorBlack_2"
                     android:background="@android:color/transparent"
                     android:textSize="14sp"
+                    android:inputType="phone"
                     android:text="+1 3342484232"
                     android:enabled="false"
             />

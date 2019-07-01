@@ -511,6 +511,11 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
                 selectedStateAdapter = TripDetailsStateListToVisitAdapter(this, object : StateNotToVisitCallBack {
                     override fun stateNotToVisitCallBack(itemDetails: IndividualStateDetail) {
 
+                        ////////////////////////////////////
+                        userSelectedStateList.remove(itemDetails)
+                        selectedStateAdapter!!.notifyDataSetChanged()
+                        //////////////////////////////////////////////
+
                         if (userSelectedStateList.size > 0) {
                             view1.visibility = View.VISIBLE
                             tv_states_you_want_to_visit.visibility = View.VISIBLE

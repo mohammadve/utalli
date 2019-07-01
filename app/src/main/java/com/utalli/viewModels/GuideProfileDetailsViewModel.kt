@@ -15,6 +15,8 @@ import retrofit2.Response
 class GuideProfileDetailsViewModel : ViewModel(){
 
     private var guideDetailsResult : MutableLiveData<JsonObject>? = null
+    private var tourReqToGuideResult : MutableLiveData<JsonObject>? = null
+    private var requestStatusResult : MutableLiveData<JsonObject> ?= null
     var preference : AppPreference ?= null
 
 
@@ -57,6 +59,68 @@ class GuideProfileDetailsViewModel : ViewModel(){
 
 
 
+    fun sendTourReqToGuide(mContext: Context, guideId: Int, requesttype : Int, userId : Int) : MutableLiveData<JsonObject>{
+
+        preference = AppPreference.getInstance(mContext)
+        val token = preference!!.getAuthToken()
+
+        tourReqToGuideResult = MutableLiveData()
+        var apiService = ApiClient.getClient().create(ApiService::class.java)
+        var call = apiService.sendTourReqToGuide(token,guideId,requesttype,userId)
+
+        Utils.showProgressDialog(mContext)
+
+        call.enqueue(object : retrofit2.Callback<JsonObject>{
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                Utils.hideProgressDialog()
+                Utils.showLog(t.message!!)
+            }
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                Utils.hideProgressDialog()
+                if(response != null && response.body()!= null){
+                    tourReqToGuideResult!!.value = response.body()
+                }
+                else {
+                    Utils.showToast(mContext, mContext.resources.getString(R.string.msg_common_error))
+                }
+            }
+
+        })
+
+         return tourReqToGuideResult!!
+    }
+
+
+    fun sendCancelRequestStatus(mContext: Context, guideId: Int, requeststatus: Int, userId: Int) : MutableLiveData<JsonObject>{
+
+        preference = AppPreference.getInstance(mContext)
+        val token = preference!!.getAuthToken()
+
+        requestStatusResult = MutableLiveData()
+        var apiService = ApiClient.getClient().create(ApiService::class.java)
+        var call = apiService.sendRequestStatus(token, guideId, requeststatus ,userId )
+
+        Utils.showProgressDialog(mContext)
+
+        call.enqueue(object : retrofit2.Callback<JsonObject>{
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                Utils.hideProgressDialog()
+                Utils.showLog(t.message!!)
+            }
+
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                Utils.hideProgressDialog()
+                if(response != null && response.body()!= null){
+                    requestStatusResult!!.value = response.body()
+                }
+                else{
+                    Utils.showToast(mContext, mContext.resources.getString(R.string.msg_common_error))
+                }
+            }
+        })
+
+        return requestStatusResult!!
+    }
 
 
 

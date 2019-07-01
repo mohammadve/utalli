@@ -53,10 +53,10 @@ class CardsAdapter : BaseAdapter() {
             holder = view.tag as CardViewHolder
         }
 
-        holder.tvCardNumber.text = data!!.get(position).cardNumber
-        holder.tvCardHolderName.text = data!!.get(position).cardHolderName
-        holder.tvCvv.text = data!!.get(position).cvv
-        holder.tvValidThrough.text = data!!.get(position).validThrough
+        holder.tvCardNumber.text = data!!.get(position).cardnumber
+        holder.tvCardHolderName.text = data!!.get(position).cardholdername
+        holder.tvCvv.text = data!!.get(position).cardcvv
+        holder.tvValidThrough.text = data!!.get(position).validthrough
 
         return view!!
     }

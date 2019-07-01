@@ -246,7 +246,7 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         android:backgroundTint="@color/colorPrimary"
-                        android:textCursorDrawable="@color/colorPrimary"
+                        android:textCursorDrawable="@drawable/cursor_drawable"
                         android:layout_marginTop="20dp"
                         android:textSize="14sp"
                         android:singleLine="true"
