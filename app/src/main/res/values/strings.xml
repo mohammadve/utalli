@@ -2,7 +2,7 @@
     <string name="app_name">Utalii</string>
 
     <string name="default_notification_channel_id">123</string>
-
+<string name="sendbird_app_id">AEBF2475-F805-47BA-A2F7-A36614BE6DD4</string>
     <string name="msg_no_internet">No internet connection, please check your internet connection and try again.</string>
     <string name="msg_invalid_name">Please enter valid name</string>
     <string name="msg_invalid_email">Please enter valid email id</string>

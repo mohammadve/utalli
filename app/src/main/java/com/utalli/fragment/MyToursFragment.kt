@@ -31,7 +31,7 @@ class MyToursFragment : Fragment(){
         var view = inflater.inflate(R.layout.fragment_my_tour, container, false)
 
         tabs = view!!.findViewById<TabLayout>(R.id.activities_tabs)
-        viewPager = view!!.findViewById<ViewPager>(R.id.view_pager)
+        viewPager = view!!.findViewById<ViewPager>(R.id.vp_tours)
 
 
         tabs!!.addTab(tabs!!.newTab().setText("Upcoming Tours"))

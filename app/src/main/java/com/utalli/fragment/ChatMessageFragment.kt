@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.utalli.R
 import com.utalli.adapter.ChatMessageAdapter
 import com.utalli.helpers.AppPreference
@@ -31,7 +33,7 @@ class ChatMessageFragment : Fragment() {
     var dateTimeList = ArrayList<String>()
     var mssg = ArrayList<String>()
     var name = ArrayList<String>()
-
+    var user: UserModel? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_chat_message, container, false)
@@ -45,18 +47,28 @@ class ChatMessageFragment : Fragment() {
             }
         })
 
-
+        Utils.showProgressDialog(activity!!)
         val channelListQuery = GroupChannel.createMyGroupChannelListQuery()
         channelListQuery.isIncludeEmpty = true
         channelListQuery.next(GroupChannelListQuery.GroupChannelListQueryResultHandler { list, e ->
+
+            Utils.hideProgressDialog()
+
+
             if (e != null) {    // Error.
                 return@GroupChannelListQueryResultHandler
             }
 
+
+
+
             Utils.showLog("Conversation List size : " + list.size)
             if (list.size == 0) {
-                cl_no_conversation_found.visibility = View.VISIBLE
-                recyclerView_messageList.visibility = View.GONE
+                if (isAdded() && isVisible() && getUserVisibleHint()) {
+                    cl_no_conversation_found.visibility = View.VISIBLE
+                    recyclerView_messageList.visibility = View.GONE
+                }
+
             }
 
         })
@@ -132,5 +144,19 @@ class ChatMessageFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        user = AppPreference.getInstance(activity!!).getUserData() as UserModel
+        if (user != null) {
 
+
+            Glide.with(this)
+                .load(user!!.profile_img)
+                .apply(RequestOptions().placeholder(R.drawable.dummy_icon).error(R.drawable.dummy_icon))
+                .into(profile_Pic)
+
+
+        }
+
+    }
 }

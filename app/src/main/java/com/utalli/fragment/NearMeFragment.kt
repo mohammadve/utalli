@@ -34,7 +34,13 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.transitionseverywhere.TransitionManager
 import com.utalli.R
 import android.location.Geocoder
+import android.os.Handler
+import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.utalli.helpers.AppPreference
+import com.utalli.models.UserModel
+import com.utalli.viewModels.NearMeViewModel
 import java.lang.Exception
 import java.util.*
 
@@ -47,14 +53,26 @@ class NearMeFragment : Fragment(), View.OnClickListener {
 
     private var mIsTheTitleVisible = false
     private var mIsTheTitleContainerVisible = true
-
-
+    private var nearMeViewModel: NearMeViewModel? = null
+    var user: UserModel? = null
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         toolbar_nearMe.title = ""
         activity!!.setActionBar(toolbar_nearMe)
         collapsing_toolbar.title = "hello hello"
+        shimmer_view_container.visibility = View.VISIBLE
+        shimmer_view_container.startShimmer()
+        Handler().postDelayed(Runnable {
+            shimmer_view_container.visibility = View.GONE
+            shimmer_view_container.stopShimmer()
+            rv_guide_list.setHasFixedSize(true)
+            rv_guide_list.layoutManager = LinearLayoutManager(activity)
+            rv_guide_list.adapter = activity?.let { HomeListGuideAdapter(it) }
+            rv_guide_list.visibility = View.VISIBLE
+
+        }, 1500)
+
 
 
 
@@ -103,15 +121,31 @@ class NearMeFragment : Fragment(), View.OnClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_near_me, container, false)
+        nearMeViewModel = ViewModelProviders.of(this).get(NearMeViewModel::class.java)
 
-        var recyclerView = view!!.findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = activity?.let { HomeListGuideAdapter(it) }
 
         registerReceiver()
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        user = AppPreference.getInstance(activity!!).getUserData() as UserModel
+        if (user != null) {
+            Glide.with(this)
+                .load(user!!.profile_img)
+                .apply(RequestOptions().placeholder(R.drawable.dummy_icon).error(R.drawable.dummy_icon))
+                .into(profile_Pic_toolbar)
+
+            Glide.with(this)
+                .load(user!!.profile_img)
+                .apply(RequestOptions().placeholder(R.drawable.dummy_icon).error(R.drawable.dummy_icon))
+                .into(profile_Pic)
+
+
+        }
+
     }
 
 
@@ -123,7 +157,6 @@ class NearMeFragment : Fragment(), View.OnClickListener {
         LocalBroadcastManager.getInstance(activity!!).registerReceiver(mReciever, filter)
 
 
-
     }
 
 
@@ -131,10 +164,13 @@ class NearMeFragment : Fragment(), View.OnClickListener {
         override fun onReceive(context: Context?, intent: Intent?) {
 
 
-            if (et_location != null)
+            if (et_location != null) {
                 et_location!!.text = AppPreference.getInstance(activity!!).getUserLastLocation()
+                if (pb_location != null && pb_location.visibility == View.VISIBLE) {
+                    pb_location.visibility = View.INVISIBLE
+                }
 
-
+            }
 
         }
     }
@@ -149,7 +185,6 @@ class NearMeFragment : Fragment(), View.OnClickListener {
         super.onDestroy()
 
     }
-
 
 
     override fun onClick(view: View?) {
