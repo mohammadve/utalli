@@ -77,17 +77,17 @@ class MyProfileViewModel : ViewModel() {
 
         var call = apiService.updateProfilePic(id, pic)
 
-        Utils.showProgressDialog(mContext)
+       // Utils.showProgressDialog(mContext)
 
         call.enqueue(object : retrofit2.Callback<JsonObject> {
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                Utils.hideProgressDialog()
+             //   Utils.hideProgressDialog()
                 Utils.showLog(t.message!!)
             }
 
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                Utils.hideProgressDialog()
+           //     Utils.hideProgressDialog()
                 if (response != null && response.body() != null) {
                     profilePicResult!!.value = response.body()
                 }

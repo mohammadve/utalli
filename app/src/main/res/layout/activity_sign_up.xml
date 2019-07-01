@@ -270,6 +270,8 @@
                     android:singleLine="true"
                     android:textColorHint="@color/grey"
                     android:textSize="14sp"
+                    android:maxLength="30"
+                    android:inputType="textPassword"
                     android:layout_marginTop="15dp"
                     android:padding="12dp"
                     android:hint="@string/hint_password"/>
@@ -286,6 +288,7 @@
                     android:textColorHint="@color/grey"
                     android:textCursorDrawable="@drawable/cursor_drawable"
                     android:textSize="14sp"
+                    android:maxLength="30"
                     android:layout_marginTop="15dp"
                     android:padding="12dp"
                     android:hint="@string/hint_confirm_password"/>

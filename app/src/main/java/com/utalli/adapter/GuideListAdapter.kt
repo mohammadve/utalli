@@ -10,9 +10,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.utalli.R
 import com.utalli.activity.GuideProfileDetailsActivity
+import com.utalli.callBack.GuideListCallBack
 import com.utalli.models.GuideListModel
 
-class GuideListAdapter(var mcontext: Context, var guidesList: List<GuideListModel>) :
+class GuideListAdapter(var mcontext: Context, var guidesList: List<GuideListModel>, var itemListener : GuideListCallBack) :
     RecyclerView.Adapter<GuideListAdapter.GuideViewHolder>() {
 
 
@@ -30,9 +31,13 @@ class GuideListAdapter(var mcontext: Context, var guidesList: List<GuideListMode
         holder.bind(guidesList.get(position))
 
         holder.itemView.setOnClickListener {
-            var intent = Intent(mcontext, GuideProfileDetailsActivity::class.java)
+
+            itemListener.guideListData(guidesList.get(position).guide_info)
+
+          /*  var intent = Intent(mcontext, GuideProfileDetailsActivity::class.java)
             intent.putExtra("guideId", guidesList.get(position).guide_info.id.toInt())
-            mcontext.startActivity(intent)
+            mcontext.startActivity(intent)*/
+
         }
 
     }
@@ -45,6 +50,7 @@ class GuideListAdapter(var mcontext: Context, var guidesList: List<GuideListMode
         var tvLanguages: TextView
         var tvGuideCharges: TextView
         var tvGuideChargesGroup: TextView
+        var guideName : String = ""
 
         init {
             tvGuideName = view.findViewById(R.id.tv_guide_name)
@@ -56,7 +62,8 @@ class GuideListAdapter(var mcontext: Context, var guidesList: List<GuideListMode
 
 
         fun bind(guideItem: GuideListModel) {
-            tvGuideName.text = guideItem.guide_info.name
+            val guideName = guideItem.guide_info.name.substring(0, 1).toUpperCase() + guideItem.guide_info.name.substring(1)
+            tvGuideName.text = guideName   //guideItem.guide_info.name
             tvRatingValue.text = guideItem.guide_info.guiderating
             tvLanguages.text = guideItem.guide_info.lang
             tvGuideCharges.text = "$ " + guideItem.guide_info.guide_private_price

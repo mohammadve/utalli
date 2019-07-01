@@ -177,9 +177,10 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         android:layout_marginTop="5dp"
-                        android:textSize="16sp"
+                        android:textSize="15sp"
                         android:textColor="@color/colorWhite"
-                        android:text="10/34"
+                        android:textColorHint="@color/colorWhite"
+                        android:hint="MM/YY (01/19)"
                 />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

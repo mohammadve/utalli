@@ -81,7 +81,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
      fun loginInUser() {
 
-         device_token = "sdkjfdsjflksdjfklsdjfkljdsfddddddddddddddddssssssssssss"
+        // device_token = "sdkjfdsjflksdjfklsdjfkljdsfddddddddddddddddssssssssssss"
 
 
         if(checkValidation()){

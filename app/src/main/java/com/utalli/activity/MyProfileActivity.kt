@@ -296,10 +296,10 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
                 val compressedImage = compressImage(imageFilePath)
 
 
-                Glide.with(this)
+              /*  Glide.with(this)
                     .load(compressedImage)
                     .apply(RequestOptions().placeholder(R.drawable.dummy_icon).error(R.drawable.dummy_icon))
-                    .into(iv_profile_image)
+                    .into(iv_profile_image)*/
 
                 uploadImage(compressedImage)
 
@@ -316,10 +316,10 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
 
                 val compressedImage = compressImage(selectedFilePath)
 
-                Glide.with(this)
+           /*     Glide.with(this)
                     .load(compressedImage)
                     .apply(RequestOptions().placeholder(R.drawable.dummy_icon).error(R.drawable.dummy_icon))
-                    .into(iv_profile_image)
+                    .into(iv_profile_image)*/
 
                  uploadImage(compressedImage)
 
@@ -333,6 +333,7 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
 
      fun uploadImage(imageUri: String) {
 
+         pb_image.visibility = View.VISIBLE
          var file = File(imageUri)
          var requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file)
          var img = MultipartBody.Part.createFormData("image", file.name,requestFile)
@@ -341,7 +342,8 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
 
              if(it != null && it.has("status") && it.get("status").asString.equals("1")){
 
-                 Utils.showToast(this, it.get("message").asString)
+
+                 pb_image.visibility = View.GONE
 
                  if(it.has("data") && it.get("data") is JsonObject){
 
@@ -353,6 +355,8 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
 
                          AppPreference.getInstance(this).setUserData(Gson().toJson(user))
 
+                         Utils.showToast(this, it.get("message").asString)
+
                          Glide.with(this)
                              .load(user!!.profile_img)
                              .apply(RequestOptions().placeholder(R.drawable.dummy_icon).error(R.drawable.dummy_icon))
@@ -361,6 +365,9 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
                      }
 
                  }
+             } else {
+
+                 pb_image.visibility = View.GONE
              }
 
          })
@@ -394,6 +401,14 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
                 if(it.has("data") && it.get("data") is JsonObject){
 
                     AppPreference.getInstance(this).setUserData(it.get("data").toString())
+
+                    tv_txt_save.visibility = View.GONE
+                    et_user_name.isEnabled = false
+                    et_user_number.isEnabled = false
+                    et_email_id.isEnabled = false
+                    et_address.isEnabled = false
+                    et_emergency_contact_number.isEnabled = false
+
                 }
 
             }

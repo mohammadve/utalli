@@ -225,7 +225,11 @@ interface ApiService {
         @Header("x-access-token") token: String,
         @Field("guideId") guideId : Int,
         @Field("requesttype") requesttype : Int,
-        @Field("userId") userId : Int
+        @Field("userId") userId : Int,
+        @Field("startdate") startdate : String,
+        @Field("enddate") enddate : String,
+        @Field("stateId") stateId : String,
+        @Field("poolId") poolId :String
     ):Call<JsonObject>
 
     @POST(ApiList.SEND_REQUEST_STATUS)
@@ -259,6 +263,41 @@ interface ApiService {
     fun getCardDetails(
         @Header("x-access-token") token: String,
         @Field("userId") userId : Int
+    ): Call<JsonObject>
+
+
+    @POST(ApiList.DELETE_CARD_DETAILS)
+    @FormUrlEncoded
+    fun deleteCardDetails(
+        @Header("x-access-token") token : String,
+        @Field("userId") userId : Int,
+        @Field("cardId") cardId : Int
+    ): Call<JsonObject>
+
+
+    @POST(ApiList.UPCOMING_TOURS)
+    @FormUrlEncoded
+    fun getUpcomigTours(
+        @Header("x-access-token") token  :String,
+        @Field("userId") userId : Int,
+        @Field("toursearchtype") toursearchtype : Int
+    ): Call<JsonObject>
+
+    @POST(ApiList.UPCOMING_TOURS)
+    @FormUrlEncoded
+    fun getRecentTours(
+        @Header("x-access-token") token  :String,
+        @Field("userId") userId : Int,
+        @Field("toursearchtype") toursearchtype : Int
+    ): Call<JsonObject>
+
+
+    @POST(ApiList.CANCEL_TOURS)
+    @FormUrlEncoded
+    fun cancelUpcomigTour(
+        @Header("x-access-token") token  :String,
+        @Field("userId") userId : Int,
+        @Field("tourId") tourId : Int
     ): Call<JsonObject>
 
 

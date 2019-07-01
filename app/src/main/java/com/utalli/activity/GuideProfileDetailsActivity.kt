@@ -19,8 +19,8 @@ import com.utalli.helpers.AppPreference
 import com.utalli.helpers.Utils
 import com.utalli.viewModels.GuideProfileDetailsViewModel
 import kotlinx.android.synthetic.main.activity_guide_profile_details.*
-
-
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
 
 class GuideProfileDetailsActivity : AppCompatActivity(), View.OnClickListener {
@@ -29,6 +29,10 @@ class GuideProfileDetailsActivity : AppCompatActivity(), View.OnClickListener {
     var requestSendDialog: Dialog? = null
     var guideId : Int =0
     var userId : Int =0
+    var tourStartDate = ""
+    var tourEndDate = ""
+    var selectedStatesId = ""
+    var poolId = ""
     var guideProfileDetailsViewModel : GuideProfileDetailsViewModel?= null
 
 
@@ -39,6 +43,30 @@ class GuideProfileDetailsActivity : AppCompatActivity(), View.OnClickListener {
 
         guideId = intent.getIntExtra("guideId",0)
         userId = AppPreference.getInstance(this).getId()
+        tourStartDate = intent.getStringExtra("tourStartDate")
+        tourEndDate = intent.getStringExtra("tourEndDate")
+        selectedStatesId = intent.getStringExtra("selectedStatesId")
+
+
+
+        var inputFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy")
+        var outputFormat:DateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+        var inputStartDate = tourStartDate
+        var startDate = inputFormat.parse(inputStartDate)
+         tourStartDate = outputFormat.format(startDate)
+
+
+
+        var inputEndDate = tourEndDate
+        var endDate = inputFormat.parse(inputEndDate)
+        tourEndDate = outputFormat.format(endDate)
+
+
+
+        Log.e("TAG", "tourStartDate 11 === "+ tourStartDate)
+        Log.e("TAG", "tourEndDate  11 === "+ tourEndDate)
+        Log.e("TAG", "selectedStatesId  11 === "+ selectedStatesId)
 
 
         initViews()
@@ -173,10 +201,15 @@ class GuideProfileDetailsActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun sendTourRequestToGuide(requestType: Int) {
-        // requeststatus: 1-panding, 2-accepted, 3-rejected
+        // requeststatus:  1-cancel, 2-accepted
         // requesttype: 1-private,  2-pool
 
-        guideProfileDetailsViewModel!!.sendTourReqToGuide(this,guideId, requestType, userId).observe(this, Observer {
+        Log.e("TAG", "  userId === " + userId)
+        Log.e("TAG", " guideId === " + guideId)
+        Log.e("TAG", "requestType === " + requestType)
+
+
+        guideProfileDetailsViewModel!!.sendTourReqToGuide(this,guideId, requestType, userId, tourStartDate, tourEndDate,selectedStatesId,poolId).observe(this, Observer {
 
             if(it != null && it.has("status") && it.get("status").asString.equals("1")){
 

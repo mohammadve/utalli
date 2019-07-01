@@ -9,26 +9,31 @@ import com.utalli.helpers.AppPreference
 import com.utalli.helpers.Utils
 import com.utalli.network.ApiClient
 import com.utalli.network.ApiService
+import okhttp3.internal.Util
 import retrofit2.Call
 import retrofit2.Response
 
-class GuideProfileDetailsViewModel : ViewModel(){
+class MyToursViewModel : ViewModel(){
 
-    private var guideDetailsResult : MutableLiveData<JsonObject>? = null
-    private var tourReqToGuideResult : MutableLiveData<JsonObject>? = null
-    private var requestStatusResult : MutableLiveData<JsonObject> ?= null
-    var preference : AppPreference ?= null
+    private var upComingToursResult : MutableLiveData<JsonObject> ?= null
+    private var recentToursResult : MutableLiveData<JsonObject> ?= null
+    private var cancelTourResult : MutableLiveData<JsonObject> ?= null
+
+    var preference: AppPreference? = null
 
 
-    fun guideDetails(mContext: Context, guidId: Int): MutableLiveData<JsonObject>{
+
+    fun getUpcomigTours(mContext : Context, tourSearchType : Int) : MutableLiveData<JsonObject>{
 
         preference = AppPreference.getInstance(mContext)
         val token = preference!!.getAuthToken()
+        val userId = preference!!.getId()
 
-        guideDetailsResult = MutableLiveData()
+
+        upComingToursResult = MutableLiveData()
 
         var apiService = ApiClient.getClient().create(ApiService::class.java)
-        var call = apiService.guideDetails(token,guidId)
+        var call = apiService.getUpcomigTours(token, userId, tourSearchType)
 
         Utils.showProgressDialog(mContext)
 
@@ -40,34 +45,30 @@ class GuideProfileDetailsViewModel : ViewModel(){
 
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 Utils.hideProgressDialog()
-
-                if(response != null && response.body()!= null){
-                    guideDetailsResult!!.value = response.body()
-                } else{
+                if(response!= null && response.body()!= null){
+                    upComingToursResult!!.value = response.body()
+                } else {
                     Utils.showToast(mContext, mContext.resources.getString(R.string.msg_common_error))
                 }
 
             }
 
-
         })
 
-        return guideDetailsResult!!
-
+        return upComingToursResult!!
 
     }
 
 
-
-    fun sendTourReqToGuide(mContext: Context, guideId: Int, requesttype : Int, userId : Int
-                           , tourStartDate: String, tourEndDate: String, selectedStatesId:String, poolId : String) : MutableLiveData<JsonObject>{
-
+    fun getRecentTours(mContext : Context, tourSearchType : Int): MutableLiveData<JsonObject>{
         preference = AppPreference.getInstance(mContext)
         val token = preference!!.getAuthToken()
+        val userId = preference!!.getId()
 
-        tourReqToGuideResult = MutableLiveData()
+        recentToursResult = MutableLiveData()
+
         var apiService = ApiClient.getClient().create(ApiService::class.java)
-        var call = apiService.sendTourReqToGuide(token,guideId,requesttype,userId, tourStartDate,tourEndDate,selectedStatesId,poolId)
+        var call = apiService.getRecentTours(token, userId, tourSearchType)
 
         Utils.showProgressDialog(mContext)
 
@@ -78,8 +79,42 @@ class GuideProfileDetailsViewModel : ViewModel(){
             }
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 Utils.hideProgressDialog()
-                if(response != null && response.body()!= null){
-                    tourReqToGuideResult!!.value = response.body()
+
+                if(response!= null && response.body()!= null){
+                    recentToursResult!!.value = response.body()
+                } else {
+                    Utils.showToast(mContext, mContext.resources.getString(R.string.msg_common_error))
+                }
+            }
+
+        })
+
+        return recentToursResult!!
+    }
+
+
+    fun cancleUpcomingTour(mContext : Context, tourId: Int): MutableLiveData<JsonObject>{
+        preference = AppPreference.getInstance(mContext)
+        val token = preference!!.getAuthToken()
+        val userId = preference!!.getId()
+
+        cancelTourResult = MutableLiveData()
+        var apiService = ApiClient.getClient().create(ApiService::class.java)
+        var call = apiService.cancelUpcomigTour(token, userId, tourId)
+
+        Utils.showProgressDialog(mContext)
+
+        call.enqueue(object : retrofit2.Callback<JsonObject>{
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                Utils.hideProgressDialog()
+                Utils.showLog(t.message!!)
+            }
+
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                Utils.hideProgressDialog()
+
+                if(response != null  && response.body()!= null){
+                    cancelTourResult!!.value = response.body()
                 }
                 else {
                     Utils.showToast(mContext, mContext.resources.getString(R.string.msg_common_error))
@@ -88,40 +123,16 @@ class GuideProfileDetailsViewModel : ViewModel(){
 
         })
 
-         return tourReqToGuideResult!!
+        return cancelTourResult!!
+
     }
 
 
-    fun sendCancelRequestStatus(mContext: Context, guideId: Int, requeststatus: Int, userId: Int) : MutableLiveData<JsonObject>{
 
-        preference = AppPreference.getInstance(mContext)
-        val token = preference!!.getAuthToken()
 
-        requestStatusResult = MutableLiveData()
-        var apiService = ApiClient.getClient().create(ApiService::class.java)
-        var call = apiService.sendRequestStatus(token, guideId, requeststatus ,userId )
 
-        Utils.showProgressDialog(mContext)
 
-        call.enqueue(object : retrofit2.Callback<JsonObject>{
-            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                Utils.hideProgressDialog()
-                Utils.showLog(t.message!!)
-            }
 
-            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                Utils.hideProgressDialog()
-                if(response != null && response.body()!= null){
-                    requestStatusResult!!.value = response.body()
-                }
-                else{
-                    Utils.showToast(mContext, mContext.resources.getString(R.string.msg_common_error))
-                }
-            }
-        })
-
-        return requestStatusResult!!
-    }
 
 
 
