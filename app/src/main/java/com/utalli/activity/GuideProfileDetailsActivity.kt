@@ -1,6 +1,8 @@
 package com.utalli.activity
 
+import android.app.Activity
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -13,10 +15,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.utalli.R
 import com.utalli.adapter.LanguageAdapter
+import com.utalli.helpers.AppConstants
 import com.utalli.helpers.AppPreference
 import com.utalli.helpers.Utils
+import com.utalli.models.GuideStateListModel
 import com.utalli.viewModels.GuideProfileDetailsViewModel
 import kotlinx.android.synthetic.main.activity_guide_profile_details.*
 import java.text.DateFormat
@@ -27,56 +33,61 @@ class GuideProfileDetailsActivity : AppCompatActivity(), View.OnClickListener {
     var languageAdapter: LanguageAdapter? = null
     private lateinit var linearLayoutManager: LinearLayoutManager
     var requestSendDialog: Dialog? = null
+    var isComingFrom : Int =0
     var guideId : Int =0
     var userId : Int =0
     var tourStartDate = ""
     var tourEndDate = ""
     var selectedStatesId = ""
-    var poolId = ""
+    var poolId: String = "0"
     var guideProfileDetailsViewModel : GuideProfileDetailsViewModel?= null
+    var guideLocation: ArrayList<GuideStateListModel>? = null
 
+    private val START_ACTIVITY_RESULT_CODE = 1001
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_guide_profile_details)
 
 
+        isComingFrom = intent.getIntExtra("IsComingFrom",0)
         guideId = intent.getIntExtra("guideId",0)
         userId = AppPreference.getInstance(this).getId()
-        tourStartDate = intent.getStringExtra("tourStartDate")
-        tourEndDate = intent.getStringExtra("tourEndDate")
-        selectedStatesId = intent.getStringExtra("selectedStatesId")
+        if (isComingFrom == AppConstants.GUIDE_PROFILE_SEE_FROM_HOME)
+        {
+
+        }
+        else if (isComingFrom == AppConstants.GUIDE_PROFILE_SEE_FROM_PLACE_SEARCH)
+        {
+            tourStartDate = intent.getStringExtra("tourStartDate")
+            tourEndDate = intent.getStringExtra("tourEndDate")
+            selectedStatesId = intent.getStringExtra("selectedStatesId")
+
+            var inputFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy")
+            var outputFormat:DateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+            var inputStartDate = tourStartDate
+            var startDate = inputFormat.parse(inputStartDate)
+            tourStartDate = outputFormat.format(startDate)
+
+
+            var inputEndDate = tourEndDate
+            var endDate = inputFormat.parse(inputEndDate)
+            tourEndDate = outputFormat.format(endDate)
 
 
 
-        var inputFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy")
-        var outputFormat:DateFormat = SimpleDateFormat("yyyy-MM-dd")
-
-        var inputStartDate = tourStartDate
-        var startDate = inputFormat.parse(inputStartDate)
-         tourStartDate = outputFormat.format(startDate)
-
-
-
-        var inputEndDate = tourEndDate
-        var endDate = inputFormat.parse(inputEndDate)
-        tourEndDate = outputFormat.format(endDate)
-
-
-
-        Log.e("TAG", "tourStartDate 11 === "+ tourStartDate)
-        Log.e("TAG", "tourEndDate  11 === "+ tourEndDate)
-        Log.e("TAG", "selectedStatesId  11 === "+ selectedStatesId)
-
-
+            Log.e("TAG", "tourStartDate 11 === "+ tourStartDate)
+            Log.e("TAG", "tourEndDate  11 === "+ tourEndDate)
+            Log.e("TAG", "selectedStatesId  11 === "+ selectedStatesId)
+        }
         initViews()
-
     }
 
 
     private fun initViews() {
         guideProfileDetailsViewModel = ViewModelProviders.of(this).get(GuideProfileDetailsViewModel::class.java)
-
+        guideLocation = ArrayList<GuideStateListModel>()
         getGuideDetails()
 
         btn_chat.setOnClickListener(this)
@@ -84,9 +95,8 @@ class GuideProfileDetailsActivity : AppCompatActivity(), View.OnClickListener {
         btn_hireHim.setOnClickListener(this)
         tv_requestPool.setOnClickListener(this)
         tv_cancelRequest.setOnClickListener(this)
-
-
     }
+
 
     private fun getGuideDetails() {
 
@@ -126,14 +136,22 @@ class GuideProfileDetailsActivity : AppCompatActivity(), View.OnClickListener {
                         list_languageKnown.setText(dataObj.get("lang").asString)
                     }
 
+                    if (dataObj.has("guide_locations"))
+                    {
+                        var locationArray = dataObj.getAsJsonArray("guide_locations")
 
+
+                        val listType = object : TypeToken<ArrayList<GuideStateListModel>>() {
+                        }.type
+                        val locationResponse: ArrayList<GuideStateListModel> = Gson().fromJson(locationArray, listType)
+                        if (locationResponse != null && locationResponse.size > 0)
+                        {
+                            guideLocation!!.addAll(locationResponse)
+                        }
+                    }
                 }
-
             }
-
         })
-
-
     }
 
 
@@ -160,11 +178,19 @@ class GuideProfileDetailsActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             R.id.btn_hireHim ->{
-                sendTourRequestToGuide(1)
+                if (isComingFrom == AppConstants.GUIDE_PROFILE_SEE_FROM_HOME)
+                {
+                    var intent = Intent(this, TripDetailsActivity::class.java)
+                    intent.putExtra("IsComingFrom", AppConstants.GUIDE_PROFILE_SEE_FROM_HOME)
+                    intent.putParcelableArrayListExtra("GuideStateList", guideLocation)
+                    startActivityForResult(intent, START_ACTIVITY_RESULT_CODE)
+                }
+                else
+                {
+                    sendTourRequestToGuide(1)
+                }
             }
-
         }
-
     }
 
     private fun cancleAndAcceptReq(requestStatus: Int) {
@@ -189,16 +215,52 @@ class GuideProfileDetailsActivity : AppCompatActivity(), View.OnClickListener {
                  } else{
                      Utils.showToast(this, getString(R.string.msg_common_error))
                  }
-
              }
-
         })
-
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode)
+        {
+            START_ACTIVITY_RESULT_CODE ->
+            {
+                when (resultCode) {
+                    Activity.RESULT_OK -> receivedReturnedResult(data)
+                }
+            }
+        }
+    }
+
+    private fun receivedReturnedResult(data: Intent?)
+    {
+        tourStartDate = data!!.getStringExtra("tourStartDate")
+        tourEndDate = data!!.getStringExtra("tourEndDate")
+        selectedStatesId = data!!.getStringExtra("selectedStatesId")
+
+        var inputFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy")
+        var outputFormat:DateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+        var inputStartDate = tourStartDate
+        var startDate = inputFormat.parse(inputStartDate)
+        tourStartDate = outputFormat.format(startDate)
+
+
+        var inputEndDate = tourEndDate
+        var endDate = inputFormat.parse(inputEndDate)
+        tourEndDate = outputFormat.format(endDate)
 
 
 
+        Log.e("TAG", "tourStartDate 11 === "+ tourStartDate)
+        Log.e("TAG", "tourEndDate  11 === "+ tourEndDate)
+        Log.e("TAG", "selectedStatesId  11 === "+ selectedStatesId)
+
+        if (isComingFrom == AppConstants.GUIDE_PROFILE_SEE_FROM_HOME)
+        {
+            sendTourRequestToGuide(1)
+        }
+    }
 
     private fun sendTourRequestToGuide(requestType: Int) {
         // requeststatus:  1-cancel, 2-accepted
@@ -208,7 +270,6 @@ class GuideProfileDetailsActivity : AppCompatActivity(), View.OnClickListener {
         Log.e("TAG", " guideId === " + guideId)
         Log.e("TAG", "requestType === " + requestType)
 
-
         guideProfileDetailsViewModel!!.sendTourReqToGuide(this,guideId, requestType, userId, tourStartDate, tourEndDate,selectedStatesId,poolId).observe(this, Observer {
 
             if(it != null && it.has("status") && it.get("status").asString.equals("1")){
@@ -216,10 +277,8 @@ class GuideProfileDetailsActivity : AppCompatActivity(), View.OnClickListener {
                 onOpenDialog()
 
             }
-
         })
     }
-
 
 
     private fun onOpenDialog() {
@@ -239,10 +298,6 @@ class GuideProfileDetailsActivity : AppCompatActivity(), View.OnClickListener {
             cl_requesType_Pool_Private.visibility = View.GONE
 
             requestSendDialog!!.dismiss()
-
         }
-
     }
-
-
 }

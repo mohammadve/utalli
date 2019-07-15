@@ -34,7 +34,6 @@ class RecentTourAdapter(var mcontext: Context, var recentComingTourList: List<Re
         holder.tv_tour_charges.text = recentComingTourList.get(position).tourcost
     }
 
-
     inner class MyRecentTourViewHolder(view : View) : RecyclerView.ViewHolder(view) {
 
         var tv_tour_states : TextView
@@ -47,11 +46,6 @@ class RecentTourAdapter(var mcontext: Context, var recentComingTourList: List<Re
             tv_tourDate = view.findViewById(R.id.tv_tourDate)
         }
 
-
-
-
     }
-
-
 
 }

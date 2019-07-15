@@ -15,6 +15,7 @@ import com.utalli.R
 import com.utalli.activity.TripDetailsActivity
 import android.app.Activity
 import com.utalli.activity.SearchActivity
+import com.utalli.helpers.AppConstants
 import com.utalli.models.LocationSearchDataItems
 
 
@@ -51,6 +52,7 @@ class SearchPlaceAdapter(var mcontext: Context, var languageList: ArrayList<Loca
             var intent = Intent(mcontext, TripDetailsActivity::class.java)
             //intent.putExtra("countryName",languageList.get(position).name)
             //intent.putExtra("countryId",languageList.get(position).id)
+            intent.putExtra("IsComingFrom", AppConstants.GUIDE_PROFILE_SEE_FROM_PLACE_SEARCH)
             intent.putExtra("selectedCountry", languageList.get(position))
             mcontext.startActivity(intent)
             // (mcontext as Activity).finish()

@@ -35,6 +35,7 @@
             android:textSize="10sp"
             android:textColor="@color/colorBlack"
             android:text="Australia"
+            android:maxLines="1"
     />
 
 

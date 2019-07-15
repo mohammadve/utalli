@@ -4,10 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.utalli.R
+import com.utalli.RobotoMediumTextView
+import com.utalli.helpers.Utils
+import com.utalli.models.Notification.NotificationResponse
 
-class NotificationAdapter (var mcontext : Context) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>(){
+class NotificationAdapter (var mContext : Context, var mNotificationList: ArrayList<NotificationResponse>) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>(){
 
 
 
@@ -21,29 +25,28 @@ class NotificationAdapter (var mcontext : Context) : RecyclerView.Adapter<Notifi
 
 
     override fun getItemCount(): Int {
-        return 20
+        return mNotificationList.count()
     }
-
-
 
     override fun onBindViewHolder(holder: NotificationAdapter.NotificationViewHolder, position: Int) {
 
+        var notificationData: NotificationResponse = mNotificationList.get(position)
+        holder.tv_notification_title.text = notificationData.getTitle()
+        holder.tv_notificationTime.text = Utils.getHumanReadableTimeFromUTCString(notificationData.getNotificationTime()!!)
+        holder.tv_notification_description.text = notificationData.getNotificationDetails()
         holder.bindNotificationView()
-
     }
 
-
-
-
-
     class NotificationViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        // var rv_notification_list : RecyclerView
+        var tv_notification_title: TextView
+        var tv_notificationTime: TextView
+        var tv_notification_description: TextView
 
         init {
-        //    rv_notification_list = itemView.findViewById(R.id.notification_list)
-
+            tv_notification_title = itemView.findViewById(R.id.tv_notification_title)
+            tv_notificationTime = itemView.findViewById(R.id.tv_notificationTime)
+            tv_notification_description = itemView.findViewById(R.id.tv_notification_description)
         }
-
 
         fun bindNotificationView(){
 

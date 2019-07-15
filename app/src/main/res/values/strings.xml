@@ -105,5 +105,16 @@
     <string name="text_accept_request">ACCEPT REQUEST</string>
     <string name="text_chat">Chat</string>
 
+    <string name="no_guide_available">No Guides Available</string>
+    <string name="nearest_guid_not_available">We don\'t have any guides near by you</string>
+
+    <string name="no_upcoming_tour_available">No Upcoming Tour Available</string>
+    <string name="you_don_t_have_any_upcoming_tour">You don\'t have any upcoming tour</string>
+
+    <string name="no_recent_tour_available">No Recent Tour Available</string>
+    <string name="you_don_t_have_any_recent_tour">You don\'t have any recent tour</string>
+    <string name="no_notification_available">No Notification Available</string>
+    <string name="you_don_t_have_any_notification">You don\'t have any notification</string>
+
 
 </resources>

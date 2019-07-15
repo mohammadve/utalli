@@ -2,16 +2,14 @@ package com.utalli.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import com.utalli.fragment.RecentToursFragment
 import com.utalli.fragment.UpcomingToursFragment
 
 
 /*
 class MyToursViewPager : FragmentStatePagerAdapter() {
-
-
-
 }*/
 
 
@@ -24,22 +22,14 @@ class MyToursViewPager(fm: FragmentManager, internal var tabCount: Int) : Fragme
             0 -> {
                 return UpcomingToursFragment()
             }
-
             1 -> {
                 return RecentToursFragment()
             }
-
             else -> return null!!
         }
     }
 
-
-
-
     override fun getCount(): Int {
         return tabCount
     }
-
-
-
 }

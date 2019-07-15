@@ -32,6 +32,7 @@ import com.google.gson.reflect.TypeToken
 import com.transitionseverywhere.Recolor
 import com.transitionseverywhere.TransitionManager
 import com.utalli.callBack.GuideListCallBack
+import com.utalli.helpers.AppConstants
 import com.utalli.helpers.Utils
 import com.utalli.models.GuideInfoModel
 import com.utalli.models.GuideListModel
@@ -208,14 +209,13 @@ class GuideListActivity : AppCompatActivity(), View.OnClickListener {
                                     override fun guideListData(itemDetails: GuideInfoModel) {
 
                                         var intent = Intent(this@GuideListActivity, GuideProfileDetailsActivity::class.java)
+                                        intent.putExtra("IsComingFrom", AppConstants.GUIDE_PROFILE_SEE_FROM_PLACE_SEARCH)
                                         intent.putExtra("guideId", itemDetails.id.toInt())
                                         intent.putExtra("tourStartDate",tourStartDate)
                                         intent.putExtra("tourEndDate", tourEndDate)
                                         intent.putExtra("selectedStatesId",selectedStatesId)
                                         startActivity(intent)
-
                                     }
-
                                 })
                             }
 

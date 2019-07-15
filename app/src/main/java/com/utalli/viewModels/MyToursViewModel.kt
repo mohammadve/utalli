@@ -15,13 +15,42 @@ import retrofit2.Response
 
 class MyToursViewModel : ViewModel(){
 
+    private var currentToursResult : MutableLiveData<JsonObject> ?= null
     private var upComingToursResult : MutableLiveData<JsonObject> ?= null
     private var recentToursResult : MutableLiveData<JsonObject> ?= null
     private var cancelTourResult : MutableLiveData<JsonObject> ?= null
 
     var preference: AppPreference? = null
 
+    fun getCurrentTours(mContext : Context): MutableLiveData<JsonObject>{
+        preference = AppPreference.getInstance(mContext)
+        val token = preference!!.getAuthToken()
+        val userId = preference!!.getId()
 
+        currentToursResult = MutableLiveData()
+
+        var apiService = ApiClient.getClient().create(ApiService::class.java)
+        var call = apiService.getCurrentTours(token, userId)
+
+        Utils.showProgressDialog(mContext)
+
+        call.enqueue(object : retrofit2.Callback<JsonObject>{
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                Utils.hideProgressDialog()
+                Utils.showLog(t.message!!)
+            }
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                Utils.hideProgressDialog()
+
+                if(response!= null && response.body()!= null){
+                    currentToursResult!!.value = response.body()
+                } else {
+                    Utils.showToast(mContext, mContext.resources.getString(R.string.msg_common_error))
+                }
+            }
+        })
+        return currentToursResult!!
+    }
 
     fun getUpcomigTours(mContext : Context, tourSearchType : Int) : MutableLiveData<JsonObject>{
 
@@ -50,13 +79,9 @@ class MyToursViewModel : ViewModel(){
                 } else {
                     Utils.showToast(mContext, mContext.resources.getString(R.string.msg_common_error))
                 }
-
             }
-
         })
-
         return upComingToursResult!!
-
     }
 
 
@@ -68,7 +93,7 @@ class MyToursViewModel : ViewModel(){
         recentToursResult = MutableLiveData()
 
         var apiService = ApiClient.getClient().create(ApiService::class.java)
-        var call = apiService.getRecentTours(token, userId, tourSearchType)
+        var call = apiService.getUpcomigTours(token, userId, tourSearchType)
 
         Utils.showProgressDialog(mContext)
 
@@ -86,9 +111,7 @@ class MyToursViewModel : ViewModel(){
                     Utils.showToast(mContext, mContext.resources.getString(R.string.msg_common_error))
                 }
             }
-
         })
-
         return recentToursResult!!
     }
 
@@ -124,17 +147,5 @@ class MyToursViewModel : ViewModel(){
         })
 
         return cancelTourResult!!
-
     }
-
-
-
-
-
-
-
-
-
-
-
 }

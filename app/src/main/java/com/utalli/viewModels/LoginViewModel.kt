@@ -35,12 +35,7 @@ class LoginViewModel : ViewModel(){
                 Utils.hideProgressDialog()
                 Utils.showLog(t.message!!)
             }
-
         })
-
         return loginResult!!
     }
-
-
-
 }

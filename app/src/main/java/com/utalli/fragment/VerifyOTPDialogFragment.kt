@@ -205,6 +205,4 @@ class VerifyOTPDialogFragment() : BottomSheetDialogFragment(){
         fun onSubmitClick()
 
     }
-
-
 }

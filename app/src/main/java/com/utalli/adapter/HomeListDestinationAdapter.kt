@@ -1,17 +1,20 @@
 package com.utalli.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.utalli.R
-import com.utalli.activity.GuideProfileDetailsActivity
+import com.utalli.RobotoRegularTextView
+import com.utalli.models.Dashboard.PopulardestinationList
 import kotlinx.android.synthetic.main.item_row_list_destination_home.view.*
 
 
-class HomeListDestinationAdapter (var mcontext : Context) : RecyclerView.Adapter<HomeListDestinationAdapter.HomeListDestinationViewHolder>(){
+class HomeListDestinationAdapter(var mcontext: Context, var popularDestinationList: List<PopulardestinationList>?) : RecyclerView.Adapter<HomeListDestinationAdapter.HomeListDestinationViewHolder>(){
 
 
 
@@ -20,33 +23,35 @@ class HomeListDestinationAdapter (var mcontext : Context) : RecyclerView.Adapter
 
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_row_list_destination_home, parent, false)
         return HomeListDestinationViewHolder(v)
-
     }
 
 
     override fun getItemCount(): Int {
-       return 10
+       return popularDestinationList!!.size
     }
 
-
-
     override fun onBindViewHolder(holder: HomeListDestinationViewHolder, position: Int) {
-
-        holder.itemView.setOnClickListener {
-            var intent = Intent(mcontext,GuideProfileDetailsActivity::class.java)
-            mcontext.startActivity(intent)
-
-        }
-
+        var popularLocation: PopulardestinationList = popularDestinationList!!.get(position)
+        Glide.with(mcontext)
+            .load(popularLocation.getTripImage())
+            .apply(RequestOptions().placeholder(R.drawable.dummy_icon).error(R.drawable.dummy_icon))
+            .into(holder.iv_place_pic)
+        holder.tv_place_name.text = popularLocation.getLocationName()
+//        holder.itemView.setOnClickListener {
+//            var intent = Intent(mcontext,GuideProfileDetailsActivity::class.java)
+//            mcontext.startActivity(intent)
+//        }
     }
 
 
 
      inner class HomeListDestinationViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+         var iv_place_pic: ImageView
+         var tv_place_name: RobotoRegularTextView
 
-         val ivPlacepic = itemView.iv_place_pic
-
-
+         init {
+             iv_place_pic = itemView.findViewById(R.id.iv_place_pic)
+             tv_place_name = itemView.findViewById(R.id.tv_place_name)
+         }
     }
-
 }

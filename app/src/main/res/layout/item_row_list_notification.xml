@@ -25,7 +25,7 @@
     />
 
     <TextView
-            android:id="@+id/iv_editProfile_icon"
+            android:id="@+id/tv_notificationTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
@@ -37,7 +37,7 @@
     />
 
     <com.utalli.RobotoRegularTextView
-            android:id="@+id/tv_notification_descp"
+            android:id="@+id/tv_notification_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -58,7 +58,7 @@
             android:background="@color/grey_1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_notification_descp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_notification_description"
             android:layout_marginTop="16dp"
     />
 

@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.location.Location
 import android.os.Bundle
-import android.transition.Transition
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,6 @@ import android.view.animation.AlphaAnimation
 
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 
 
@@ -27,22 +25,25 @@ import com.utalli.adapter.HomeListGuideAdapter
 import com.utalli.helpers.Utils
 import kotlinx.android.synthetic.main.fragment_near_me.*
 
-import android.view.animation.AnimationUtils.loadAnimation
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.transitionseverywhere.TransitionManager
 import com.utalli.R
-import android.location.Geocoder
 import android.os.Handler
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.gson.Gson
+import com.utalli.activity.GuideProfileDetailsActivity
+import com.utalli.helpers.AppConstants
 import com.utalli.helpers.AppPreference
+import com.utalli.models.Dashboard.DashboardArrayList
+import com.utalli.models.Dashboard.GuidListData
+import com.utalli.models.Dashboard.NearByGuidResponse
+import com.utalli.models.Dashboard.PopulardestinationList
 import com.utalli.models.UserModel
 import com.utalli.viewModels.NearMeViewModel
-import java.lang.Exception
-import java.util.*
+import kotlin.collections.ArrayList
+import com.utalli.activity.HomeActivity as HomeActivity
 
 
 class NearMeFragment : Fragment(), View.OnClickListener {
@@ -55,6 +56,13 @@ class NearMeFragment : Fragment(), View.OnClickListener {
     private var mIsTheTitleContainerVisible = true
     private var nearMeViewModel: NearMeViewModel? = null
     var user: UserModel? = null
+    private var mLocation: Location? = null
+
+    var mHomeDashboardAdapterModel:DashboardArrayList? = null
+    var nearByGuidListAdapter: HomeListGuideAdapter? = null
+    var isCall: Boolean = false;
+
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -68,14 +76,9 @@ class NearMeFragment : Fragment(), View.OnClickListener {
             shimmer_view_container.stopShimmer()
             rv_guide_list.setHasFixedSize(true)
             rv_guide_list.layoutManager = LinearLayoutManager(activity)
-            rv_guide_list.adapter = activity?.let { HomeListGuideAdapter(it) }
             rv_guide_list.visibility = View.VISIBLE
 
         }, 1500)
-
-
-
-
 
         appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
@@ -115,18 +118,48 @@ class NearMeFragment : Fragment(), View.OnClickListener {
         profile_Pic.setOnClickListener(this)
         profile_Pic_toolbar.setOnClickListener(this)
         tv_searchSecond_toolbar.setOnClickListener(this)
-
     }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_near_me, container, false)
         nearMeViewModel = ViewModelProviders.of(this).get(NearMeViewModel::class.java)
-
-
+        mHomeDashboardAdapterModel = DashboardArrayList()
         registerReceiver()
-
+        receiveCurrentLocation()
         return view
+    }
+
+    private fun receiveCurrentLocation()
+    {
+        mLocation =  (activity as HomeActivity).receivedLocation()
+        if (mLocation != null)
+        {
+            isCall = false;
+            getNearbyGuides()
+        }
+        else
+        {
+            isCall = true;
+        }
+    }
+
+    private fun setupGuidList()
+    {
+        nearByGuidListAdapter = HomeListGuideAdapter(activity!!, mHomeDashboardAdapterModel)
+        rv_guide_list.adapter = nearByGuidListAdapter
+        nearByGuidListAdapter!!.setItemClickListener(object : HomeListGuideAdapter.ListItemClickListener {
+            override
+            fun listItemClickListener(guidProfileModel: GuidListData) {
+                if (guidProfileModel != null)
+                {
+                    var intent = Intent(activity, GuideProfileDetailsActivity::class.java)
+                    intent.putExtra("IsComingFrom", AppConstants.GUIDE_PROFILE_SEE_FROM_HOME)
+                    intent.putExtra("guideId", guidProfileModel.getId()!!.toInt())
+                    startActivity(intent)
+                }
+            }
+        })
     }
 
     override fun onResume() {
@@ -142,12 +175,8 @@ class NearMeFragment : Fragment(), View.OnClickListener {
                 .load(user!!.profile_img)
                 .apply(RequestOptions().placeholder(R.drawable.dummy_icon).error(R.drawable.dummy_icon))
                 .into(profile_Pic)
-
-
         }
-
     }
-
 
     private fun registerReceiver() {
 
@@ -155,35 +184,32 @@ class NearMeFragment : Fragment(), View.OnClickListener {
 
         filter.addAction("LOCATION_UPDATED")
         LocalBroadcastManager.getInstance(activity!!).registerReceiver(mReciever, filter)
-
-
     }
 
 
     var mReciever = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-
-
             if (et_location != null) {
                 et_location!!.text = AppPreference.getInstance(activity!!).getUserLastLocation()
                 if (pb_location != null && pb_location.visibility == View.VISIBLE) {
                     pb_location.visibility = View.INVISIBLE
                 }
-
             }
-
+            mLocation = intent!!.getParcelableExtra("location")
+            if (isCall)
+            {
+                getNearbyGuides()
+                isCall = false
+            }
         }
     }
 
     override fun onStop() {
         super.onStop()
-
-
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
     }
 
 
@@ -210,5 +236,58 @@ class NearMeFragment : Fragment(), View.OnClickListener {
         v.startAnimation(alphaAnimation)
     }
 
+    /**
+     * The purpose of this method is use to Get Near By Guides
+     */
+    private fun getNearbyGuides() {
+        if (mLocation != null)
+        {
+            var latitude = mLocation?.latitude
+            var longitude = mLocation?.longitude
+            var countryCode = AppPreference.getInstance(activity!!).getCountryCode()
+            nearMeViewModel!!.getNearbyGuides(activity!!, AppPreference.getInstance(activity!!).getAuthToken(), latitude.toString(), longitude.toString(), countryCode)
+                .observe(this, androidx.lifecycle.Observer {
+                    if (it!= null && it.has("status") && it.get("status").asString.equals("1"))
+                    {
+                        var response: NearByGuidResponse = Gson().fromJson(it, NearByGuidResponse::class.java)
 
+                        var popularDestinationArray = response.getPopulardestinations()
+                        var nearByGuidArray = response.getData()
+                        if (popularDestinationArray != null && popularDestinationArray.size > 0)
+                        {
+                            mHomeDashboardAdapterModel!!.setPopulardestinations(popularDestinationArray)
+                        }
+                        else
+                        {
+
+                        }
+
+                        if (nearByGuidArray != null && nearByGuidArray.size > 0)
+                        {
+                            mHomeDashboardAdapterModel!!.setData(nearByGuidArray)
+                        }
+                        else
+                        {
+
+                        }
+                        if (mHomeDashboardAdapterModel!!.getData()!!.size > 0)
+                        {
+                            cl_parentLayout.visibility = View.VISIBLE
+                            cl_no_GuideFound.visibility = View.GONE
+                            setupGuidList()
+                        }
+                        else
+                        {
+                            cl_parentLayout.visibility = View.GONE
+                            cl_no_GuideFound.visibility = View.VISIBLE
+                        }
+                    }
+                    else {
+                        if (it!= null && it.has("message")){
+                            Utils.showToast(activity!!, it.get("message").asString)
+                        }
+                    }
+                })
+        }
+    }
 }

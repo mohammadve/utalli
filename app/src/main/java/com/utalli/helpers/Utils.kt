@@ -12,7 +12,12 @@ import com.utalli.BuildConfig
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
+
+
+
+
 
 class Utils {
     companion object {
@@ -138,8 +143,35 @@ class Utils {
 
         }
 
+        fun getHumanReadableTimeFromUTCString(time: String): String? {
+            val utcFormat = SimpleDateFormat("HH:mm:ss")
+            val humanFormat = SimpleDateFormat("HH:mm")
+            utcFormat.timeZone = TimeZone.getTimeZone("UTC")
+            try {
+                return humanFormat.format(utcFormat.parse(time))
+            } catch (e: ParseException) {
+                e.printStackTrace()
+                return null
+            }
+        }
 
+        fun getTourDaysCount(startDate: String?, endDate:String?) : Int
+        {
+            var dateFormat = SimpleDateFormat("yyyy-MM-dd")
+            var calenderDate = Calendar.getInstance().time
+            var tourStartDate = dateFormat.parse(startDate)
+            var tourEndDate = dateFormat.parse(endDate)
+
+            //in milliseconds
+            var diff = tourEndDate.getTime() - calenderDate.getTime()
+            //val diff = (tourEndDate.getTime() - calenderDate.getTime()) / 86400000
+            val diffSeconds = diff / 1000 % 60
+            val diffMinutes = diff / (60 * 1000) % 60
+            val diffHours = diff / (60 * 60 * 1000) % 24
+            val diffDays = diff / (24 * 60 * 60 * 1000)
+
+            //var tourDays = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)
+            return diffDays.toInt()
+        }
     }
-
-
 }

@@ -37,11 +37,6 @@ class UpcomingTourAdapter(var mcontext: Context, var upComingTourList: List<Upco
         holder.tv_cancel.setOnClickListener {
             itemListener.upComingTourListener(upComingTourList.get(position))
         }
-
-
-
-
-
     }
 
 

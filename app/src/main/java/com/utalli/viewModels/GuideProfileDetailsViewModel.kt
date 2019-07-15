@@ -122,8 +122,4 @@ class GuideProfileDetailsViewModel : ViewModel(){
 
         return requestStatusResult!!
     }
-
-
-
-
 }

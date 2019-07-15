@@ -13,5 +13,4 @@ class UserModel (
     var profile_img : String = "",
     var payment : String="",
     var emry_contact : String=""
-
 )

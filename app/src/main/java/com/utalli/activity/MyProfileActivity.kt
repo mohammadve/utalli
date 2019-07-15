@@ -640,9 +640,4 @@ class MyProfileActivity : AppCompatActivity(), View.OnClickListener, PopupMenu.O
         startActivity(intent)
         finish()
     }
-
-
-
-
-
 }

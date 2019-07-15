@@ -220,8 +220,6 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener, VerifyOTPDialo
                             bottomSheetDialogFragment!!.show(supportFragmentManager, "VerifyOTPDialogFragment")
                      //   }
 
-
-
                     } else {
                         Utils.showToast(this, getString(R.string.msg_common_error))
                     }

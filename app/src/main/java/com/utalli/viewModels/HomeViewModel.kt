@@ -20,7 +20,6 @@ class HomeViewModel : ViewModel() {
         var apiService = ApiClient.getClient().create(ApiService::class.java)
         var call = apiService.updateDeviceToken(authToken, userId.toInt(), deviceToken)
 
-
         call.enqueue(object : retrofit2.Callback<JsonObject> {
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -31,15 +30,8 @@ class HomeViewModel : ViewModel() {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 //Utils.hideProgressDialog()
                 updateTokenResult!!.value = response.body()
-
             }
-
         })
-
-
-
-
-
 
         return updateTokenResult!!
 

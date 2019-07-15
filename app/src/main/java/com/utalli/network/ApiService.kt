@@ -283,12 +283,11 @@ interface ApiService {
         @Field("toursearchtype") toursearchtype : Int
     ): Call<JsonObject>
 
-    @POST(ApiList.UPCOMING_TOURS)
+    @POST(ApiList.CURRENT_TOURS)
     @FormUrlEncoded
-    fun getRecentTours(
+    fun getCurrentTours(
         @Header("x-access-token") token  :String,
-        @Field("userId") userId : Int,
-        @Field("toursearchtype") toursearchtype : Int
+        @Field("userId") userId : Int
     ): Call<JsonObject>
 
 
@@ -308,6 +307,22 @@ interface ApiService {
         @Header("x-access-token") token: String,
         @Field("userId") id: Int,
         @Field("device_token") deviceToken: String
+    ): Call<JsonObject>
+
+    @POST(ApiList.GET_NEAR_BY_GUID)
+    @FormUrlEncoded
+    fun getNearByGuid(
+        @Header("x-access-token") token: String,
+        @Field("latitude") latitude: String,
+        @Field("longitude") longitude: String,
+        @Field("coutryCode") countryCode: String
+    ): Call<JsonObject>
+
+    @POST(ApiList.GET_NOTIFICATION)
+    @FormUrlEncoded
+    fun getNOTIFICATION(
+        @Header("x-access-token") token: String,
+        @Field("userId") latitude: Int
     ): Call<JsonObject>
 
 }

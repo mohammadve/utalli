@@ -1,5 +1,6 @@
 package com.utalli.activity
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -18,7 +19,10 @@ import com.utalli.adapter.TripDetailsStateListToVisitAdapter
 import com.utalli.adapter.TripDetailsStateListAdapter
 import com.utalli.callBack.StateNotToVisitCallBack
 import com.utalli.callBack.TripDetailsStateListCallBack
+import com.utalli.helpers.AppConstants
+import com.utalli.helpers.AppPreference
 import com.utalli.helpers.Utils
+import com.utalli.models.GuideStateListModel
 import com.utalli.models.IndividualStateDetail
 import com.utalli.models.LocationSearchDataItems
 import com.utalli.models.SubStateData
@@ -63,6 +67,9 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
     var getStateByCountryIdViewModel: TripDetailsViewModel? = null
     var selectedCountry: LocationSearchDataItems? = null
 
+    var isComingFrom : Int =0
+    var guideLocation: ArrayList<GuideStateListModel>? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,25 +85,30 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
         countryId = intent.getIntExtra("countryId", 0)
 */
 
-        selectedCountry = intent.getParcelableExtra("selectedCountry")
+        getStateByCountryIdViewModel = ViewModelProviders.of(this).get(TripDetailsViewModel::class.java)
+        isComingFrom = intent.getIntExtra("IsComingFrom",0)
+        if (isComingFrom == AppConstants.GUIDE_PROFILE_SEE_FROM_HOME)
+        {
+            var guideLocation: ArrayList<GuideStateListModel>  = intent.getParcelableArrayListExtra("GuideStateList")
+            countryName = AppPreference.getInstance(this).getCountryName();
+            tv_change.visibility = View.GONE
+            setUpGuideStateListUI(guideLocation)
+        }
+        else if (isComingFrom == AppConstants.GUIDE_PROFILE_SEE_FROM_PLACE_SEARCH)
+        {
+            selectedCountry = intent.getParcelableExtra("selectedCountry")
 
-        countryName = selectedCountry!!.name
-        countryId = selectedCountry!!.id
-
-
-        //tv_selected_country_name.text = countryName
-
+            countryName = selectedCountry!!.name
+            countryId = selectedCountry!!.id
+            tv_change.visibility = View.VISIBLE
+            getData(countryId!!)
+        }
 
         initViews()
-        getData(countryId!!)
-
     }
 
 
     private fun initViews() {
-
-        getStateByCountryIdViewModel = ViewModelProviders.of(this).get(TripDetailsViewModel::class.java)
-
 
         button_confirm.setOnClickListener(this)
         tv_date_of_arrival.setOnClickListener(this)
@@ -118,8 +130,27 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
         } else {
             tv_departure_date_change.visibility = View.VISIBLE
         }
+    }
 
+    private fun setUpGuideStateListUI(guideLocation: ArrayList<GuideStateListModel>)
+    {
+        if (guideLocation != null && guideLocation.size > 0)
+        {
+            for (item in guideLocation) {
+                var individualStateList = IndividualStateDetail(item.getStateId()!!, item.getStatename()!!,
+                    item.getCountryId()!!, false)
+                individualStateDetail.add(individualStateList)
+            }
 
+            if (individualStateDetail != null && individualStateDetail.size > 0)
+            {
+                setupAdapter()
+            }
+        }
+        else
+        {
+            Utils.showToast(this, "Guide State list not available")
+        }
     }
 
 
@@ -145,92 +176,97 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
                                 stateDataArryList
                             )
                         )
-
                         Log.e("TAG", "individualStateDetail.size() ====  " + individualStateDetail.size)
-
                     }
-
-
-                    tv_selected_country_name.text = countryName
-
-
-
-                    if (individualStateDetail.size > 5) {
-                        tv_view_all.visibility = View.VISIBLE
-                    } else {
-                        tv_view_all.visibility = View.GONE
-                    }
-
-                    val layoutManager = FlexboxLayoutManager(this)
-                    layoutManager.flexDirection = FlexDirection.ROW
-                    layoutManager.justifyContent = JustifyContent.SPACE_AROUND
-                    rv_states_list.layoutManager = layoutManager
-
-
-                    tripDetailsStateListAdapter = TripDetailsStateListAdapter(this, this, "TripDetailsActivity")
-                    rv_states_list.adapter = tripDetailsStateListAdapter
-
-
-                    if (individualStateDetail.size > 5) {
-                        visibleStateList = ArrayList(individualStateDetail.subList(0, 4))
-                        remainingStateList = ArrayList(individualStateDetail.subList(4, individualStateDetail.size))
-
-                    } else if (individualStateDetail.size < 5) {
-                        visibleStateList = individualStateDetail
-                        remainingStateList = ArrayList()
-                    }
-
-                    //   tripDetailsStateListAdapter?.setStateList(ArrayList<StateDetailsData>(stateList.subList(0, 4)), this)
-                    tripDetailsStateListAdapter?.setStateList(visibleStateList, this)
-
-
+                    setupAdapter()
                 }
-
 
             } else {
                 Utils.showToast(this, getString(R.string.msg_common_error))
             }
-
-
         })
-
-
     }
 
+    private fun setupAdapter()
+    {
+        tv_selected_country_name.text = countryName
+
+        if (individualStateDetail.size > 5) {
+            tv_view_all.visibility = View.VISIBLE
+        } else {
+            tv_view_all.visibility = View.GONE
+        }
+
+        val layoutManager = FlexboxLayoutManager(this)
+        layoutManager.flexDirection = FlexDirection.ROW
+        layoutManager.justifyContent = JustifyContent.SPACE_AROUND
+        rv_states_list.layoutManager = layoutManager
+
+        tripDetailsStateListAdapter = TripDetailsStateListAdapter(this, this, "TripDetailsActivity")
+        rv_states_list.adapter = tripDetailsStateListAdapter
+
+        if (individualStateDetail.size > 5) {
+            visibleStateList = ArrayList(individualStateDetail.subList(0, 4))
+            remainingStateList = ArrayList(individualStateDetail.subList(4, individualStateDetail.size))
+
+        } else if (individualStateDetail.size < 5) {
+            visibleStateList = individualStateDetail
+            remainingStateList = ArrayList()
+        }
+
+        tripDetailsStateListAdapter?.setStateList(visibleStateList, this)
+    }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.button_confirm -> {
                 if (tv_date_of_arrival.text.toString().equals("")) {
-                    Toast.makeText(this, "Please choose arrival date", Toast.LENGTH_SHORT).show()
+                    Utils.showToast(this, "Please choose arrival date")
                 } else if (tv_date_of_departure.text.toString().equals("")) {
-                    Toast.makeText(this, "Please choose departure date", Toast.LENGTH_SHORT).show()
+                    Utils.showToast(this, "Please choose departure date")
                 } else if (ddArrivalDate!!.compareTo(ddDepartureDate) > 0) {
-                    Toast.makeText(
-                        this,
-                        "Please choose arrival date smaller or equal to departure date",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Utils.showToast(this, "Please choose arrival date smaller or equal to departure date")
                 }
-                /*     else if (ddArrivalDate!!.compareTo(ddDepartureDate) < 0) {
-                         System.out.println("start is before end");
-                     } */
-                /*   else if (ddArrivalDate!!.compareTo(ddArrivalDate) == 0) {
-                       System.out.println("start is equal to end");
-                   }*/
+                else if (userSelectedStateList.size == 0)
+                {
+                    Utils.showToast(this, "Please select state")
+                }
                 else {
-                    var intent = Intent(this@TripDetailsActivity, GuideListActivity::class.java)
+                    if(isComingFrom == AppConstants.GUIDE_PROFILE_SEE_FROM_HOME)
+                    {
+                        var selectedStatesId = ""
+                        if (userSelectedStateList != null && userSelectedStateList.size > 0) {
 
+                            for (i in 0..userSelectedStateList.size - 1) {
 
-                    intent.putExtra("selectedCountry", selectedCountry)
-                    intent.putExtra("selectedStates", userSelectedStateList)
-                    intent.putExtra("tourStartDate", tv_date_of_arrival.text.toString())
-                    intent.putExtra("tourEndDate", tv_date_of_departure.text.toString())
+                                if (i == 0){
+                                    selectedStatesId = userSelectedStateList.get(i).id.toString()
+                                }
 
-                    startActivity(intent)
+                                else if (i <= userSelectedStateList.size - 1){
+                                    selectedStatesId = selectedStatesId + "," + userSelectedStateList.get(i).id.toString()
+                                }
+                            }
+                        }
 
+                        var returnIntent = Intent()
+                        returnIntent.putExtra("selectedStatesId", selectedStatesId)
+                        returnIntent.putExtra("tourStartDate", tv_date_of_arrival.text.toString())
+                        returnIntent.putExtra("tourEndDate", tv_date_of_departure.text.toString())
+                        setResult(Activity.RESULT_OK, returnIntent)
+                        finish()
+                    }
+                    else if(isComingFrom == AppConstants.GUIDE_PROFILE_SEE_FROM_PLACE_SEARCH)
+                    {
+                        var intent = Intent(this@TripDetailsActivity, GuideListActivity::class.java)
+
+                        intent.putExtra("selectedCountry", selectedCountry)
+                        intent.putExtra("selectedStates", userSelectedStateList)
+                        intent.putExtra("tourStartDate", tv_date_of_arrival.text.toString())
+                        intent.putExtra("tourEndDate", tv_date_of_departure.text.toString())
+                        startActivity(intent)
+                    }
                 }
-
             }
             R.id.tv_change -> {
                 var intent = Intent(this@TripDetailsActivity, SearchActivity::class.java)
@@ -486,8 +522,6 @@ class TripDetailsActivity : AppCompatActivity(), View.OnClickListener, TripDetai
             tripDetailsStateListAdapter!!.notifyItemInserted(visibleStateList.size - 1)
 
         }
-
-
     }
 
 

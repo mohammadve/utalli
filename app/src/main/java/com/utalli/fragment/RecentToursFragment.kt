@@ -1,6 +1,7 @@
 package com.utalli.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import com.utalli.helpers.Utils
 import com.utalli.models.RecentTourListModel
 import com.utalli.models.UpcomingTourListModel
 import com.utalli.viewModels.MyToursViewModel
+import kotlinx.android.synthetic.main.fragment_recent_tours.*
 import kotlinx.android.synthetic.main.fragment_upcoming_tours.*
 
 class RecentToursFragment : Fragment() {
@@ -29,24 +31,20 @@ class RecentToursFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        rv_my_tours.setHasFixedSize(true)
-        rv_my_tours.layoutManager = LinearLayoutManager(activity!!)
+        rv_recentTours.setHasFixedSize(true)
+        rv_recentTours.layoutManager = LinearLayoutManager(activity!!)
     }
 
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_upcoming_tours, container, false)
-
+        val view = inflater.inflate(R.layout.fragment_recent_tours, container, false)
         myToursViewModel = ViewModelProviders.of(activity!!).get(MyToursViewModel::class.java)
-
         getRecentToursData()
-
         return view
     }
 
     private fun getRecentToursData() {
-
         myToursViewModel!!.getRecentTours(activity!!,2).observe(this, Observer {
 
             if(it != null && it.has("status") && it.get("status").asString.equals("1")){
@@ -58,12 +56,17 @@ class RecentToursFragment : Fragment() {
 
                     if(recentComingTourList != null && recentComingTourList.size >0){
 
-                        rv_my_tours.adapter = RecentTourAdapter(activity!!, recentComingTourList)
+                        rv_recentTours.visibility = View.VISIBLE
+                        cl_no_recentTourFound.visibility = View.GONE
+
+                        rv_recentTours.adapter = RecentTourAdapter(activity!!, recentComingTourList)
                     }
-
-
+                    else
+                    {
+                        cl_no_recentTourFound.visibility = View.VISIBLE
+                        rv_recentTours.visibility = View.GONE
+                    }
                 }
-
                 else {
                     if (it.has("message"))
                         Utils.showToast(activity!!, it.get("message").asString)
@@ -71,22 +74,7 @@ class RecentToursFragment : Fragment() {
                         Utils.showToast(activity!!, getString(R.string.msg_common_error))
                     }
                 }
-
-
-
-
             }
-
-
-
-
-
-
         })
     }
-
-
-
-
-
 }

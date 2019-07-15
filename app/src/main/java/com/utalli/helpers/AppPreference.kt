@@ -16,9 +16,10 @@ class AppPreference()
     var TOKEN = "TOKEN"
     var ID = "id"
     var PROFILE_PIC = "PROFILE_PIC"
+    var COUNTRY_CODE = "COUNTRY_CODE"
+    var COUNTRY_NAME = "COUNTRY_NAME"
 
     var mPreference: SharedPreferences? = null
-
 
     constructor(mContext: Context) : this() {
         this.mContext = mContext
@@ -113,12 +114,6 @@ class AppPreference()
 
 
 
-
-
-
-
-
-
     fun getUserData(): UserModel? {
         try {
             val type = object : TypeToken<UserModel>() {}.type
@@ -133,6 +128,21 @@ class AppPreference()
         setString(USER_DATA, userData)
     }
 
+    fun setCountryCode(countryCode: String) {
+        setString(COUNTRY_CODE, countryCode)
+    }
 
+    fun getCountryCode(): String
+    {
+        return getString(COUNTRY_CODE)
+    }
 
+    fun setCountryName(countryName: String) {
+        setString(COUNTRY_NAME, countryName)
+    }
+
+    fun getCountryName(): String
+    {
+        return getString(COUNTRY_NAME)
+    }
 }

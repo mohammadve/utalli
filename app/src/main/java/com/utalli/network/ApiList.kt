@@ -35,10 +35,14 @@ class ApiList {
         const val ADD_PAYMENT_CARD = "users/addcard"
         const val GET_CARD_DETAILS = "users/getcards"
         const val DELETE_CARD_DETAILS = "users/removecard"
+        const val CURRENT_TOURS = "tours/currenttours"
         const val UPCOMING_TOURS = "tours/upcomingtours"
         const val CANCEL_TOURS = "tours/canceltour"
 
         const val UPDATE_DEVICE_TOKEN = "users/updatetoken"
+
+        const val GET_NEAR_BY_GUID = "deshboard/dashboard"
+        const val GET_NOTIFICATION = "tours/fungetnotificationction"
 
 
         var ABOUT_US_URL = BASE_URL + "user/about"
